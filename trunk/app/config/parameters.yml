@@ -1,14 +1,14 @@
-# This file is auto-generated during the composer install
 parameters:
     database_driver: pdo_mysql
-    database_host: 127.0.0.1
+    database_host: remote-mysql3.servage.net
     database_port: null
-    database_name: symfony
-    database_user: root
-    database_password: null
+    database_name: nov2013meet
+    database_user: nov2013meet
+    database_password: passwords123
     mailer_transport: smtp
     mailer_host: 127.0.0.1
     mailer_user: null
     mailer_password: null
     locale: en
-    secret: ThisTokenIsNotSoSecretChangeIt
+    secret: daafcd040dec7f846951214ed5d4401ef275f136
+    database_path: null
