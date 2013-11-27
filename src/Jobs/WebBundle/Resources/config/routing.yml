@@ -6,6 +6,10 @@ jobs_web_register:
     pattern:  /user/register
     defaults: { _controller: JobsWebBundle:User:register }
 
+jobs_web_registercomplete:
+    pattern:  /user/register/complete
+    defaults: { _controller: JobsWebBundle:User:registercomplete }
+
 jobs_web_forgot:
     pattern:  /user/forgot
     defaults: { _controller: JobsWebBundle:User:forgot }
