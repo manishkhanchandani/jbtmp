@@ -38,6 +38,8 @@
 		}
 
 </script>
+
+<h1>Job Site::Register</h1>
 <!-- apply the module and controller to our body so angular is applied to that -->
 <div ng-app="formApp" ng-controller="formController">
     <!-- SHOW ERROR/SUCCESS MESSAGES -->
