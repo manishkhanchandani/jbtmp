@@ -1,0 +1,7 @@
+parameters:
+#    jobs_web.example.class: Jobs\WebBundle\Example
+
+services:
+#    jobs_web.example:
+#        class: %jobs_web.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

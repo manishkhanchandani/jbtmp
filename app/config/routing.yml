@@ -1,0 +1,8 @@
+jobs_service:
+    resource: "@JobsServiceBundle/Resources/config/routing.yml"
+    prefix:   /
+
+jobs_web:
+    resource: "@JobsWebBundle/Resources/config/routing.yml"
+    prefix:   /
+
