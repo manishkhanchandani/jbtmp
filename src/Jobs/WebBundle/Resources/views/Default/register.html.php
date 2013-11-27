@@ -17,7 +17,7 @@
 			$scope.processForm = function() {
                 $http({
                     method  : 'POST',
-                    url     : 'register/complete',
+                    url     : 'http://core.10000projects.info/meetup/web/app_dev.php/api/user/add',
                     data    : $.param($scope.formData),  // pass in data as strings
                     headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
                 })
