@@ -22,3 +22,14 @@ jobs_web_logout:
     pattern:  /user/logout
     defaults: { _controller: JobsWebBundle:User:logout }
 
+jobs_web_auth_register:
+    pattern:  /auth/register
+    defaults: { _controller: JobsWebBundle:Auth:register }
+
+jobs_web_auth_login:
+    pattern:  /auth/login
+    defaults: { _controller: JobsWebBundle:Auth:login }
+
+jobs_web_auth_forgot:
+    pattern:  /auth/forgotPassword
+    defaults: { _controller: JobsWebBundle:Auth:forgetPassword }    
