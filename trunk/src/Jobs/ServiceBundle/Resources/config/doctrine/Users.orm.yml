@@ -6,12 +6,10 @@ Jobs\ServiceBundle\Entity\Users:
         userId:
             id: true
             type: string
-            length: 50
+            length: 100
             fixed: false
             nullable: false
             column: user_id
-            generator:
-                strategy: IDENTITY
         email:
             type: string
             length: 150
@@ -34,41 +32,6 @@ Jobs\ServiceBundle\Entity\Users:
             fixed: false
             nullable: true
         lastname:
-            type: string
-            length: 50
-            fixed: false
-            nullable: true
-        phone:
-            type: string
-            length: 20
-            fixed: false
-            nullable: true
-        address:
-            type: string
-            length: 255
-            fixed: false
-            nullable: true
-        address2:
-            type: string
-            length: 255
-            fixed: false
-            nullable: true
-        city:
-            type: string
-            length: 50
-            fixed: false
-            nullable: true
-        state:
-            type: string
-            length: 50
-            fixed: false
-            nullable: true
-        zip:
-            type: string
-            length: 15
-            fixed: false
-            nullable: true
-        country:
             type: string
             length: 50
             fixed: false
