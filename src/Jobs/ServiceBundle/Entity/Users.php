@@ -40,41 +40,6 @@ class Users
     private $lastname;
 
     /**
-     * @var string
-     */
-    private $phone;
-
-    /**
-     * @var string
-     */
-    private $address;
-
-    /**
-     * @var string
-     */
-    private $address2;
-
-    /**
-     * @var string
-     */
-    private $city;
-
-    /**
-     * @var string
-     */
-    private $state;
-
-    /**
-     * @var string
-     */
-    private $zip;
-
-    /**
-     * @var string
-     */
-    private $country;
-
-    /**
      * @var integer
      */
     private $created;
@@ -89,6 +54,19 @@ class Users
      */
     private $userType;
 
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Users
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    
+        return $this;
+    }
 
     /**
      * Get userId
@@ -213,167 +191,6 @@ class Users
     public function getLastname()
     {
         return $this->lastname;
-    }
-
-    /**
-     * Set phone
-     *
-     * @param string $phone
-     * @return Users
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-    
-        return $this;
-    }
-
-    /**
-     * Get phone
-     *
-     * @return string 
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
-     * Set address
-     *
-     * @param string $address
-     * @return Users
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-    
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return string 
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * Set address2
-     *
-     * @param string $address2
-     * @return Users
-     */
-    public function setAddress2($address2)
-    {
-        $this->address2 = $address2;
-    
-        return $this;
-    }
-
-    /**
-     * Get address2
-     *
-     * @return string 
-     */
-    public function getAddress2()
-    {
-        return $this->address2;
-    }
-
-    /**
-     * Set city
-     *
-     * @param string $city
-     * @return Users
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-    
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return string 
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * Set state
-     *
-     * @param string $state
-     * @return Users
-     */
-    public function setState($state)
-    {
-        $this->state = $state;
-    
-        return $this;
-    }
-
-    /**
-     * Get state
-     *
-     * @return string 
-     */
-    public function getState()
-    {
-        return $this->state;
-    }
-
-    /**
-     * Set zip
-     *
-     * @param string $zip
-     * @return Users
-     */
-    public function setZip($zip)
-    {
-        $this->zip = $zip;
-    
-        return $this;
-    }
-
-    /**
-     * Get zip
-     *
-     * @return string 
-     */
-    public function getZip()
-    {
-        return $this->zip;
-    }
-
-    /**
-     * Set country
-     *
-     * @param string $country
-     * @return Users
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
-    
-        return $this;
-    }
-
-    /**
-     * Get country
-     *
-     * @return string 
-     */
-    public function getCountry()
-    {
-        return $this->country;
     }
 
     /**
