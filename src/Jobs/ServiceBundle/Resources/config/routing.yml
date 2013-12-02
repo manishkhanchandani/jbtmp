@@ -1,3 +1,14 @@
 jobs_service_users_add:
     pattern:  /api/user/add
     defaults: { _controller: JobsServiceBundle:Users:add }
+
+jobs_service_users_addui:
+    pattern:  /ui/user/add
+    defaults: { _controller: JobsServiceBundle:Account:register2 }
+jobs_service_users_addui2:
+    pattern:  /ui/user/add
+    defaults: { _controller: JobsServiceBundle:Account:register }
+
+account_create:
+    pattern:  /api/user/add
+    defaults: { _controller: JobsServiceBundle:Users:add }
