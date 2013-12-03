@@ -17,6 +17,7 @@ class UsersController extends Controller
     const CODE_EMAIL_INVALID = 1001;
     const CODE_PASSWORD_INVALID = 1002;
     const CODE_CONFIRM_INVALID = 1003;
+    const CODE_EMAIL_IN_DB = 1004;
 
     public function addAction(Request $request)
     {
@@ -57,7 +58,7 @@ class UsersController extends Controller
             $repository = $this->getDoctrine()->getRepository('JobsServiceBundle:Users');
             $userData = $repository->findOneByEmail($users->getEmail());
             if (!empty($userData)) {
-                throw new \Exception('Email already in database.');
+                throw new \Exception(ErrorCode::getError(self::CODE_EMAIL_IN_DB), self::CODE_EMAIL_IN_DB);
             }
             $em = $this->getDoctrine()->getManager();
             $em->persist($users);
