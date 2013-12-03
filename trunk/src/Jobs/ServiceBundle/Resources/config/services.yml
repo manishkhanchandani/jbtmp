@@ -1,7 +1,11 @@
 parameters:
 #    jobs_service.example.class: Jobs\ServiceBundle\Example
+    jobs_service.cache.class: Jobs\ServiceBundle\Models\Cache
 
 services:
 #    jobs_service.example:
 #        class: %jobs_service.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+    jobs_service.cache:
+      class: "%jobs_service.cache.class%"
+      arguments: ["@service_container"]

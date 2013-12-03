@@ -1,6 +1,9 @@
 jobs_service_users_add:
     pattern:  /api/user/add
     defaults: { _controller: JobsServiceBundle:Users:add }
+jobs_service_users_login:
+    pattern:  /api/user/login
+    defaults: { _controller: JobsServiceBundle:Users:login }
 
 jobs_service_users_addui:
     pattern:  /ui/user/add
