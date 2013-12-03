@@ -1,3 +1,4 @@
+# This file is auto-generated during the composer install
 parameters:
     database_driver: pdo_mysql
     database_host: remote-mysql3.servage.net
@@ -11,4 +12,3 @@ parameters:
     mailer_password: null
     locale: en
     secret: daafcd040dec7f846951214ed5d4401ef275f136
-    database_path: null
