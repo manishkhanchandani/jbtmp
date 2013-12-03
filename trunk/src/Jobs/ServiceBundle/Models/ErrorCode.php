@@ -14,6 +14,7 @@ class ErrorCode
         $errorCodes[1002] = 'Invalid Password';
         $errorCodes[1003] = 'Password does not match with confirm password';
         $errorCodes[1004] = 'Email already in database.';
+        $errorCodes[1005] = 'User does not exists in our database.';
         return $errorCodes;
     }
 

@@ -12,28 +12,27 @@ use \Jobs\ServiceBundle\Models\ErrorCode;
 
 class UsersController extends Controller
 {
-    private $errors = array();
 
     const CODE_EMAIL_INVALID = 1001;
     const CODE_PASSWORD_INVALID = 1002;
     const CODE_CONFIRM_INVALID = 1003;
     const CODE_EMAIL_IN_DB = 1004;
+    const CODE_INVALID_USER = 1005;
 
     public function addAction(Request $request)
     {
         $result = 0;
         $msg = '';
         $code = 200;
-        $this->errors = array();
         try {
             $email = $request->request->get('email');
-            if (empty($email)) {
-                throw new \Exception(ErrorCode::getError(self::CODE_EMAIL_INVALID), self::CODE_EMAIL_INVALID);
-            }
             $password = $request->request->get('password');
             $confirm = $request->request->get('confirm');
             $password = trim($password);
             $confirm = trim($confirm);
+            if (empty($email)) {
+                throw new \Exception(ErrorCode::getError(self::CODE_EMAIL_INVALID), self::CODE_EMAIL_INVALID);
+            }
             if (empty($password)) {
                 throw new \Exception(ErrorCode::getError(self::CODE_PASSWORD_INVALID), self::CODE_PASSWORD_INVALID);
             }
@@ -71,9 +70,6 @@ class UsersController extends Controller
             $code = $e->getCode();
         }
         $arr = array('success' => $result, 'message' => $msg, 'code' => $code);
-        if ($request->query->get('admin')) {
-            $arr['postVars'] = $_POST;
-        }
         $json = json_encode($arr);
         return new Response($json);
     }
@@ -83,28 +79,32 @@ class UsersController extends Controller
     {
         $result = 0;
         $msg = '';
-        $this->errors = array();
+        $code = 200;
         try {
             $email = $request->request->get('email');
             $password = $request->request->get('password');
             $password = trim($password);
             $email = trim($email);
-            if (empty($email) || empty($password)) {
-                throw new \Exception('Email and Password are required.');
+            if (empty($email)) {
+                throw new \Exception(ErrorCode::getError(self::CODE_EMAIL_INVALID), self::CODE_EMAIL_INVALID);
+            }
+            if (empty($password)) {
+                throw new \Exception(ErrorCode::getError(self::CODE_PASSWORD_INVALID), self::CODE_PASSWORD_INVALID);
             }
             $repository = $this->getDoctrine()->getRepository('JobsServiceBundle:Users');
             $userData = $repository->findOneByEmail($email);
             if (empty($userData)) {
-                throw new \Exception('User does not exists in our database.');
+                throw new \Exception(ErrorCode::getError(self::CODE_INVALID_USER), self::CODE_INVALID_USER);
             }
             $passwd = $userData->getPassword();
             if ($passwd !== $password) {
-                throw new \Exception('Password is incorrect.');
+                throw new \Exception(ErrorCode::getError(self::CODE_PASSWORD_INVALID), self::CODE_PASSWORD_INVALID);
             }
             $userId = $userData->getUserId();
             $cache = $this->get('jobs_service.cache')->load('users');
             $key    = md5($userId);
             //update this key for this user
+            $cache->removeItem($key);
             $result = $cache->getItem($key, $success);
             if (!$success) {
                 $result = $userData;
@@ -115,11 +115,9 @@ class UsersController extends Controller
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $result = 0;
+            $code = $e->getCode();
         }
-        $arr = array('success' => $result, 'message' => $msg, 'accessToken' => !empty($key) ? $key : '');
-        if ($request->query->get('admin')) {
-            $arr['postVars'] = $_POST;
-        }
+        $arr = array('success' => $result, 'message' => $msg, 'accessToken' => !empty($key) ? $key : '', 'code' => $code);
         $json = json_encode($arr);
         return new Response($json);
     }
