@@ -15,3 +15,7 @@ jobs_service_users_addui2:
 account_create:
     pattern:  /api/user/add
     defaults: { _controller: JobsServiceBundle:Users:add }
+
+examples:
+    pattern:  /examples/index/{name}
+    defaults: { _controller: JobsServiceBundle:Default:index }
