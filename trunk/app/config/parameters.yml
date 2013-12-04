@@ -7,8 +7,8 @@ parameters:
     database_user: nov2013meet
     database_password: passwords123
     mailer_transport: smtp
-    mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
+    mailer_host: smtp.gmail.com
+    mailer_user: cintel.jobs@gmail.com
+    mailer_password: shaklee1
     locale: en
     secret: daafcd040dec7f846951214ed5d4401ef275f136
