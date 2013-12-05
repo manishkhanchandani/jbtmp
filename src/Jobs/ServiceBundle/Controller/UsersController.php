@@ -62,10 +62,10 @@ class UsersController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($users);
             $em->flush();
-            $msg = 'Success';
-            $result = 1;
             $params = array('name' => $firstname.' '.$lastname, 'to' => $email, 'from' => $this->container->getParameter('from_email'), 'subject' => 'New Member Registration');
             $this->get('jobs_service.email')->send('add.html.php', $params);
+            $msg = 'Success';
+            $result = 1;
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $result = 0;
@@ -120,6 +120,40 @@ class UsersController extends Controller
             $code = $e->getCode();
         }
         $arr = array('success' => $result, 'message' => $msg, 'accessToken' => !empty($key) ? $key : '', 'code' => $code);
+        $json = json_encode($arr);
+        return new Response($json);
+    }
+    
+    
+    public function forgotAction(Request $request)
+    {
+        $result = 0;
+        $msg = '';
+        $code = 200;
+        try {
+            $email = $request->request->get('email');
+            $email = trim($email);
+            if (empty($email)) {
+                throw new \Exception(ErrorCode::getError(self::CODE_EMAIL_INVALID), self::CODE_EMAIL_INVALID);
+            }
+            $repository = $this->getDoctrine()->getRepository('JobsServiceBundle:Users');
+            $userData = $repository->findOneByEmail($email);
+            if (empty($userData)) {
+                throw new \Exception(ErrorCode::getError(self::CODE_INVALID_USER), self::CODE_INVALID_USER);
+            }
+            $passwd = $userData->getPassword();
+            $firstname = $userData->getFirstname();
+            $lastname = $userData->getLastname();
+            $params = array('name' => $firstname.' '.$lastname, 'to' => $email, 'from' => $this->container->getParameter('from_email'), 'subject' => 'Forgot Password', 'password' => $passwd);
+            $this->get('jobs_service.email')->send('forgot.html.php', $params);
+            $msg = 'Success';
+            $result = 1;
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $result = 0;
+            $code = $e->getCode();
+        }
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code);
         $json = json_encode($arr);
         return new Response($json);
     }
