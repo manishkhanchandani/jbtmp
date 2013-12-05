@@ -66,3 +66,7 @@ swiftmailer:
     spool:     { type: memory }
     encryption: ssl
     auth_mode:  login
+
+parameters:
+    custom:
+        host_url: http://core.10000projects.info/meetup

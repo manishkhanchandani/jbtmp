@@ -19,3 +19,6 @@ account_create:
 examples:
     pattern:  /examples/index/{name}
     defaults: { _controller: JobsServiceBundle:Default:index }
+examples_vars:
+    pattern:  /examples/vars
+    defaults: { _controller: JobsServiceBundle:Default:vars }
