@@ -8,9 +8,13 @@ class DefaultController extends Controller
 {
     public function indexAction($name)
     {
-        /*$params = array('name' => 'manish', 'to' => 'naveenkhanchandani@gmail.com', 'from' => 'mkgxy@mkgalaxy.com', 'subject' => 'Sub');
-        $this->get('jobs_service.email')->send('add.html.php', $params);*/
-        
+        try {
+        $params = array('name' => 'manish khanchandani', 'to' => 'naveenkhanchandani@gmail.com', 'from' => 'cintel.jobs@gmail.com', 'subject' => 'Sub');
+        $this->get('jobs_service.email')->send('add.html.php', $params);
+        echo 'done';
+        } catch(\Exception $e) {
+            
+        }
             $name = 'manish';
             $message = \Swift_Message::newInstance()
                 ->setSubject('Hello Email')

@@ -29,8 +29,8 @@ class Email
                 )
                 )
         ;
+        
         $this->mailer->send($message);
-        pr($this->mailer);
         return true;
     }
 }
