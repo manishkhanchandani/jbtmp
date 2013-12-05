@@ -1,6 +1,7 @@
 parameters:
 #    jobs_service.example.class: Jobs\ServiceBundle\Example
     jobs_service.cache.class: Jobs\ServiceBundle\Models\Cache
+    jobs_service.email.class: Jobs\ServiceBundle\Models\Email
 
 services:
 #    jobs_service.example:
@@ -9,3 +10,6 @@ services:
     jobs_service.cache:
       class: "%jobs_service.cache.class%"
       arguments: ["@service_container"]
+    jobs_service.email:
+        class:     "%jobs_service.email.class%"
+        arguments: ["@mailer", "@templating"]
