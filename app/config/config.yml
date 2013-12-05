@@ -68,5 +68,5 @@ swiftmailer:
     auth_mode:  login
 
 parameters:
-    custom:
-        host_url: http://core.10000projects.info/meetup
+    host_url: http://core.10000projects.info/meetup
+    from_email: cintel.jobs@gmail.com

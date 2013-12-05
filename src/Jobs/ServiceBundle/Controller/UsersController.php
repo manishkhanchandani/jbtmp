@@ -64,6 +64,8 @@ class UsersController extends Controller
             $em->flush();
             $msg = 'Success';
             $result = 1;
+            $params = array('name' => $firstname.' '.$lastname, 'to' => $email, 'from' => $this->container->getParameter('from_email'), 'subject' => 'New Member Registration');
+            $this->get('jobs_service.email')->send('add.html.php', $params);
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $result = 0;
