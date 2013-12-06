@@ -68,6 +68,6 @@ swiftmailer:
     auth_mode:  login
 
 parameters:
-    host_url: http://core.10000projects.info/meetup
+    host_url: http://jobs.mkgalaxy.com
     from_email: cintel.jobs@gmail.com
-    base_path: /web/
+    base_path: /
