@@ -75,7 +75,7 @@ function ($scope) {
         // process $scope.session
         alert('logged in!');
     };
-    $scope.login();
+    //$scope.login();
 }];
 
 
