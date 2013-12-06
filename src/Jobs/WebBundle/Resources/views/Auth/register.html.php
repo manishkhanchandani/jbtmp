@@ -5,9 +5,9 @@
 
 <div  ng-app="App" ng-controller="Controller">
     <form novalidate class="form-horizontal" ng-submit="submit()" name="form">
-        <h3>site name Registration</h3><hr>
+        <h3>workOnOpt Registration</h3><hr>
          <div class="form-group">
-             <label class="col-md-3">I will be using site name as </label>
+             <label class="col-md-3">I will be using workOnOpt as </label>
             <div class="col-md-5">
                   <input class="btn-group" type="radio" ng-model="user.user_type" value="1" name="user_type" required> a job seeker
                   <input class="btn-group" type="radio" ng-model="user.user_type" value="2" name="user_type" required> an employer
