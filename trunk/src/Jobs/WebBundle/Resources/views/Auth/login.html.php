@@ -8,11 +8,11 @@
         <div class="col-xs-12 col-sm-6 col-sm-offset-3">
             <h1>Login</h1>
             <form name="loginForm" novalidate ng-app="LoginApp" ng-controller="LoginController" rc-submit="login()">
-                <div class="form-group" ng-class="{'has-error': rc.loginForm.needsAttention(loginForm.username)}">
+                <div class="form-group" ng-class="{'has-error': (loginForm.username | shouldDisplayError:loginForm)}">
                     <input class="form-control" name="username" type="text" placeholder="Username" required ng-model="session.username" />
                     <span class="help-block" ng-show="loginForm.username.$error.required">Required</span>
                 </div>
-                <div class="form-group" ng-class="{'has-error': rc.loginForm.needsAttention(loginForm.password)}">
+                <div class="form-group" ng-class="{'has-error': (loginForm.password | shouldDisplayError:loginForm)}">
                     <input class="form-control" name="password" type="password" placeholder="Password" required ng-model="session.password" />
                     <span class="help-block" ng-show="loginForm.password.$error.required">Required</span>
                 </div>
@@ -23,6 +23,7 @@
                         <span>Login</span>
                     </button>
                 </div>
+                <div class="response_messages" ng-show="message">{{ message }}</div>
             </form>
         </div>
     </div>
