@@ -1,67 +1,56 @@
 // define custom submit directive
 var rcSubmitDirective = {
-    'rcSubmit': ['$parse', function ($parse) {
+    'rcSubmit': ['$http', function ($http) {
         return {
             restrict: 'A',
-            require: ['rcSubmit', '?form'],
-            controller: ['$scope', function ($scope) {
-                this.attempted = false;
-                
-                var formController = null;
-                
-                this.setAttempted = function() {
-                    this.attempted = true;
-                };
-                
-                this.setFormController = function(controller) {
-                  formController = controller;
-                };
-                
-                this.needsAttention = function (fieldModelController) {
-                    if (!formController) return false;
-                    
-                    if (fieldModelController) {
-                        return fieldModelController.$invalid && (fieldModelController.$dirty || this.attempted);
-                    } else {
-                        return formController && formController.$invalid && (formController.$dirty || this.attempted);
+            link: function(scope, formElement, attributes) {
+
+                formElement.bind('submit', function () {
+                    scope.$apply(function() {
+                        //we try to submit the form
+                        //setting 'attemped' to true to make the errors displayable
+                        scope[attributes.name].attempted = true;
+                    });
+                    // if form is not valid cancel it.
+                    if (!scope[attributes.name].$valid) {
+                        return false;
                     }
-                };
-            }],
-            compile: function(cElement, cAttributes, transclude) {
-                return {
-                    pre: function(scope, formElement, attributes, controllers) {
-                      
-                        var submitController = controllers[0];
-                        var formController = (controllers.length > 1) ? controllers[1] : null;
-                        
-                        submitController.setFormController(formController);
-                        
-                        scope.rc = scope.rc || {};
-                        scope.rc[attributes.name] = submitController;
-                    },
-                    post: function(scope, formElement, attributes, controllers) {
-                      
-                        var submitController = controllers[0];
-                        var formController = (controllers.length > 1) ? controllers[1] : null;
-                        var fn = $parse(attributes.rcSubmit);
-                        
-                        formElement.bind('submit', function () {
-                            submitController.setAttempted();
-                            if (!scope.$$phase) scope.$apply();
-                            
-                            if (!formController.$valid) return false;
-                    
-                            scope.$apply(function() {
-                                fn(scope, {$event:event});
-                            });
+
+                    //form valid, final submit
+                    console.log('valid');
+                    scope.$apply(function() {
+                        $http({
+                            method: 'POST',
+                            url: globals.path + 'api/user/login',
+                            data: $.param(scope.session), // pass in data as strings
+                            headers: {'Content-Type': 'application/x-www-form-urlencoded'}  // set the headers so angular passing info as form data (not request payload)
+                        })
+                        .success(function(data) {
+                            console.log(data);
+
+                            if (!data.success) {
+                                // if not successful, bind errors to error variables
+                                scope.message = data.message;
+                            } else {
+                                // if successful, bind success message to message
+                                scope.message = data.message;
+                            }
                         });
-                    }
-              };
+                    });
+                });
             }
         };
     }]
 };
 
+var shouldDisplayErrorFilter = function(){
+    return function(formField, form) {
+      if(!form.attempted){
+        form.attempted = false;
+      }
+      return formField.$invalid && (formField.$dirty || form.attempted);
+    };
+};
 
 
 
@@ -75,13 +64,13 @@ function ($scope) {
         // process $scope.session
         alert('logged in!');
     };
-    //$scope.login();
 }];
 
 
 // create a module to make it easier to include in the app module
 angular.module('rcForm', [])
-.directive(rcSubmitDirective);
+.directive(rcSubmitDirective)
+.filter('shouldDisplayError', shouldDisplayErrorFilter);
 
 // define module for app
 angular.module('LoginApp', ['rcForm']);

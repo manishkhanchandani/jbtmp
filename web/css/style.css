@@ -4,13 +4,23 @@
 */
 
 .form-horizontal input.ng-invalid.ng-dirty {
-    border: solid 2px #FA787E;
+    border-color: #e74c3c;
 }
 
 .form-horizontal input.ng-valid.ng-dirty {
-    border: solid 2px #78FA89;
+    border-color: #2ecc71;
 }
 
 .response_messages{
     color:blueviolet;
+}
+
+form[novalidate] input{
+    border-left-width: 8px;
+    border-color: #3498db;
+    border-style: solid;
+}
+
+input[required].ng-prestine{
+    border-color: #e74c3c;
 }
