@@ -4,6 +4,7 @@
         <div class="pull-right padding-top">
             <div>Employers: <a>Post Jobs</a> | <a>Search Resumes</a></div>
             <div>Job Seekers: <a>Post Resume</a> | <a>Find Jobs</a></div>
+            <div><a href="login">Login</a>/<a href="register">Register</a></div>
         </div>
     </div>
 </header>
