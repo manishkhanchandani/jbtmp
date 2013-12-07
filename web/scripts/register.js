@@ -1,15 +1,14 @@
-angular.module('App', []);
+var appModule = angular.module('App', []);
 
-function Controller($scope, $http) {
-    
+appModule.controller('Controller', function($scope, $http){
     $scope.user = {};
 
     $scope.submit = function() {
         $http({
             method: 'POST',
             url: globals.path + 'api/user/add',
-            data: $.param($scope.user), // pass in data as strings
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}  // set the headers so angular passing info as form data (not request payload)
+            data: $.param($scope.user), /* pass in data as strings*/
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}  /* set the headers so angular passing info as form data (not request payload)*/
         })
         .success(function(data) {
             console.log(data);
@@ -23,9 +22,10 @@ function Controller($scope, $http) {
             }
         });
     }
-}
+});
 
-function countriesController($scope) {
+
+appModule.controller('countriesController', function($scope) {
     $scope.countries = [{
             "name": "USA",
             "id": 1
@@ -59,9 +59,9 @@ function countriesController($scope) {
         $scope.availableStates = [];
 
         angular.forEach($scope.states, function(value) {
-            if (value.countryId == $scope.user.country.id) {
+            if (value.countryId === $scope.user.country.id) {
                 $scope.availableStates.push(value);
             }
         });
     }
-}
+});
