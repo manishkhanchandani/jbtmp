@@ -20,7 +20,9 @@ form[novalidate] input{
     border-color:#00306B; //#3498db;
     border-style: solid;
 }
-
+.form-control:focus, a{
+    border-color:#00306B;
+}
 input[required].ng-prestine{
     border-color: #e74c3c;
 }
@@ -42,4 +44,7 @@ input[required].ng-prestine{
     padding: 10px;
     text-align: left;
     vertical-align: baseline;
+}
+.btn-primary {
+    background-color: #00306B;
 }

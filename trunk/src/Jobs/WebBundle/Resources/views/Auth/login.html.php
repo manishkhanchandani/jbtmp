@@ -9,8 +9,8 @@
         <div class="col-xs-12 col-sm-4 col-sm-offset-3">
             <form name="loginForm" novalidate ng-app="LoginApp" ng-controller="LoginController" rc-submit="login()">
                 <small>The feature you requested is only avalable to members.Please sign in to continue...</small><br><br>
-                <div class="form-group" ng-class="{'has-error': (loginForm.username | shouldDisplayError:loginForm)}">
-                    <input class="form-control" name="username" type="text" placeholder="Email Address" required ng-model="session.username" />
+                <div class="form-group" ng-class="{'has-error': (loginForm.email | shouldDisplayError:email)}">
+                    <input class="form-control" name="username" type="text" placeholder="Email Address" required ng-model="session.email" />
 <!--                    <span class="help-block" ng-show="loginForm.username.$error.required">Required</span>-->
                 </div>
                 <div class="form-group" ng-class="{'has-error': (loginForm.password | shouldDisplayError:loginForm)}">
