@@ -20,7 +20,7 @@ form[novalidate] input{
     border-color:#00306B; //#3498db;
     border-style: solid;
 }
-.form-control:focus, a{
+.form-control:focus{
     border-color:#00306B;
 }
 input[required].ng-prestine{
@@ -47,4 +47,7 @@ input[required].ng-prestine{
 }
 .btn-primary {
     background-color: #00306B;
+}
+a{
+    color:#00306B;
 }
