@@ -1,0 +1,9 @@
+To get entity xml
+php app/console doctrine:mapping:import --force JobsServiceBundle yml 
+
+Add this in each doctrine xml
+
+    repositoryClass: Jobs\ServiceBundle\Entity\UsersRepository
+
+To generate entity
+php app/console doctrine:generate:entities JobsServiceBundle --no-backup
