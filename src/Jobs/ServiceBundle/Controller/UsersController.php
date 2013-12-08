@@ -76,7 +76,7 @@ class UsersController extends Controller
         return new Response($json);
     }
 
-    
+    ///api/user/login
     public function loginAction(Request $request)
     {
         $result = 0;
