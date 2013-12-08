@@ -1,21 +1,26 @@
 <!-- src/Jobs/WebBundle/Resources/views/Auth/forgotPassword.html.php -->
 <?php $view->extend('JobsWebBundle::layout.html.php') ?>
+<script src="<?php echo $view['assets']->getUrl('scripts/forgotPassword.js') ?>"></script>
 
 <h1>Forgot Your Password </h1>
-<h3>Please enter your UserName.</h3><br />
-<!--label class="col-md-2" for="inputFirstName">User Name</label> <br />-->
+<h3>Please enter your E-mail address.</h3><br />
 
-<div class="col-xs-12 col-sm-6">
-<div class="form-group" ng-class="{'has-error': rc.loginForm.needsAttention(loginForm.username)}">
-     <input class="form-control ng-pristine ng-invalid ng-invalid-required" 
-            name="username" type="text" placeholder="Username" required="" ng-model="session.username">
-     <span class="help-block" ng-show="loginForm.username.$error.required">Required</span>
+<div  ng-app="App" ng-controller="Controller">
+    <form novalidate class="form-horizontal" ng-submit="submit()" name="form">
+        
+        <div class="form-group">
+            <label class="col-md-2">Email Address</label>
+            <div class="col-md-4"><input class="form-control" type="email" ng-model="user.email" name="email" required></div>
+        </div>
+       
+       <div class="form-group">
+            <div class="col-md-5">
+              <button class="btn btn-default" ng-disabled="form.$invalid">Continue</button>
+            </div>
+       </div>
+       <div class="response_messages" ng-show="message">{{ message }}</div>
+</form>
 </div>
-</div>
-<div class="form-group">
-     <button type="submit" class="btn btn-primary" value="Continue">
-             <span>Continue</span>
-     </button>
-</div>
+
 
 
