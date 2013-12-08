@@ -10,8 +10,6 @@ Jobs\ServiceBundle\Entity\Resumes:
             fixed: false
             nullable: false
             column: resume_id
-            generator:
-                strategy: IDENTITY
         userId:
             type: string
             length: 100
