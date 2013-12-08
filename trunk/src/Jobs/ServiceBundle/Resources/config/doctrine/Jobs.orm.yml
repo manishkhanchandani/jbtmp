@@ -10,8 +10,6 @@ Jobs\ServiceBundle\Entity\Jobs:
             fixed: false
             nullable: false
             column: job_id
-            generator:
-                strategy: IDENTITY
         userId:
             type: string
             length: 100
