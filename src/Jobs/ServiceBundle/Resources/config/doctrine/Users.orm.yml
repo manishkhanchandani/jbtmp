@@ -41,7 +41,7 @@ Jobs\ServiceBundle\Entity\Users:
             nullable: true
         modified:
             type: bigint
-            nullable: false
+            nullable: true
         deletedDt:
             type: bigint
             nullable: true
@@ -49,7 +49,7 @@ Jobs\ServiceBundle\Entity\Users:
         deleted:
             type: integer
             unsigned: false
-            nullable: false
+            nullable: true
         status:
             type: integer
             unsigned: false
@@ -65,4 +65,39 @@ Jobs\ServiceBundle\Entity\Users:
             fixed: false
             nullable: true
             column: temp_password
+        phone:
+            type: string
+            length: 50
+            fixed: false
+            nullable: true
+        address:
+            type: string
+            length: 255
+            fixed: false
+            nullable: true
+        address2:
+            type: string
+            length: 255
+            fixed: false
+            nullable: true
+        country:
+            type: string
+            length: 50
+            fixed: false
+            nullable: true
+        city:
+            type: string
+            length: 50
+            fixed: false
+            nullable: true
+        state:
+            type: string
+            length: 50
+            fixed: false
+            nullable: true
+        zip:
+            type: string
+            length: 15
+            fixed: false
+            nullable: true
     lifecycleCallbacks: {  }
