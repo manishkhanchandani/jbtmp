@@ -261,4 +261,116 @@ class Users
     {
         return $this->userType;
     }
+    /**
+     * @var integer
+     */
+    private $modified;
+
+    /**
+     * @var integer
+     */
+    private $deletedDt;
+
+    /**
+     * @var integer
+     */
+    private $deleted;
+
+    /**
+     * @var string
+     */
+    private $tempPassword;
+
+
+    /**
+     * Set modified
+     *
+     * @param integer $modified
+     * @return Users
+     */
+    public function setModified($modified)
+    {
+        $this->modified = $modified;
+    
+        return $this;
+    }
+
+    /**
+     * Get modified
+     *
+     * @return integer 
+     */
+    public function getModified()
+    {
+        return $this->modified;
+    }
+
+    /**
+     * Set deletedDt
+     *
+     * @param integer $deletedDt
+     * @return Users
+     */
+    public function setDeletedDt($deletedDt)
+    {
+        $this->deletedDt = $deletedDt;
+    
+        return $this;
+    }
+
+    /**
+     * Get deletedDt
+     *
+     * @return integer 
+     */
+    public function getDeletedDt()
+    {
+        return $this->deletedDt;
+    }
+
+    /**
+     * Set deleted
+     *
+     * @param integer $deleted
+     * @return Users
+     */
+    public function setDeleted($deleted)
+    {
+        $this->deleted = $deleted;
+    
+        return $this;
+    }
+
+    /**
+     * Get deleted
+     *
+     * @return integer 
+     */
+    public function getDeleted()
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * Set tempPassword
+     *
+     * @param string $tempPassword
+     * @return Users
+     */
+    public function setTempPassword($tempPassword)
+    {
+        $this->tempPassword = $tempPassword;
+    
+        return $this;
+    }
+
+    /**
+     * Get tempPassword
+     *
+     * @return string 
+     */
+    public function getTempPassword()
+    {
+        return $this->tempPassword;
+    }
 }

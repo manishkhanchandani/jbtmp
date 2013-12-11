@@ -17,7 +17,7 @@ Jobs\ServiceBundle\Entity\Users:
             nullable: true
         password:
             type: string
-            length: 32
+            length: 50
             fixed: false
             nullable: true
         accessLevel:
@@ -39,6 +39,17 @@ Jobs\ServiceBundle\Entity\Users:
         created:
             type: bigint
             nullable: true
+        modified:
+            type: bigint
+            nullable: false
+        deletedDt:
+            type: bigint
+            nullable: true
+            column: deleted_dt
+        deleted:
+            type: integer
+            unsigned: false
+            nullable: false
         status:
             type: integer
             unsigned: false
@@ -48,4 +59,10 @@ Jobs\ServiceBundle\Entity\Users:
             unsigned: false
             nullable: true
             column: user_type
+        tempPassword:
+            type: string
+            length: 50
+            fixed: false
+            nullable: true
+            column: temp_password
     lifecycleCallbacks: {  }
