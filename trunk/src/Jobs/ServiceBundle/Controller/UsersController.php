@@ -58,6 +58,13 @@ class UsersController extends Controller
             $users->setTempPassword($password);
             $users->setDeleted(0);
             $users->setDeletedDt(0);
+            $users->setPhone($request->request->get('phone'));
+            $users->setAddress($request->request->get('address'));
+            $users->setAddress2($request->request->get('address2'));
+            $users->setCity($request->request->get('city'));
+            $users->setState($request->request->get('state'));
+            $users->setCountry($request->request->get('country'));
+            $users->setZip($request->request->get('zip'));
             $repository = $this->getDoctrine()->getRepository('JobsServiceBundle:Users');
             $userData = $repository->findOneByEmail($users->getEmail());
             if (!empty($userData)) {
