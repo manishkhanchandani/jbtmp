@@ -752,4 +752,17 @@ class Jobs
     {
         return $this->jobStatus;
     }
+
+    /**
+     * Set jobId
+     *
+     * @param string $jobId
+     * @return Jobs
+     */
+    public function setJobId($jobId)
+    {
+        $this->jobId = $jobId;
+    
+        return $this;
+    }
 }

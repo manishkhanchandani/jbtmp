@@ -332,4 +332,17 @@ class Resumes
     {
         return $this->resumeDeleted;
     }
+
+    /**
+     * Set resumeId
+     *
+     * @param string $resumeId
+     * @return Resumes
+     */
+    public function setResumeId($resumeId)
+    {
+        $this->resumeId = $resumeId;
+    
+        return $this;
+    }
 }

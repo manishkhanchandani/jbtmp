@@ -54,6 +54,10 @@ class UsersController extends Controller
             $users->setFirstname($firstname);
             $users->setLastname($lastname);
             $users->setUserType($user_type);
+            $users->setModified($created);
+            $users->setTempPassword($password);
+            $users->setDeleted(0);
+            $users->setDeletedDt(0);
             $repository = $this->getDoctrine()->getRepository('JobsServiceBundle:Users');
             $userData = $repository->findOneByEmail($users->getEmail());
             if (!empty($userData)) {
@@ -62,8 +66,14 @@ class UsersController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($users);
             $em->flush();
-            $params = array('name' => $firstname.' '.$lastname, 'to' => $email, 'from' => $this->container->getParameter('from_email'), 'subject' => 'New Member Registration');
-            $this->get('jobs_service.email')->send('add.html.php', $params);
+            $site_name = $this->container->getParameter('site_name');
+            $host_url = $this->container->getParameter('host_url');
+            $site_name_url = $this->container->getParameter('site_name_url');
+            $params = array('name' => $firstname.' '.$lastname, 'to' => $email, 'from' => $this->container->getParameter('from_email'), 'subject' => $site_name.' Registration Confirmation', 'site_name' => $site_name, 'host_url' => $host_url, 'site_name_url' => $site_name_url);
+            if ($user_type == 1)
+                $this->get('jobs_service.email')->send('add.html.php', $params);
+            else if ($user_type == 2)
+                $this->get('jobs_service.email')->send('add_emp.html.php', $params);
             $msg = 'Success';
             $result = 1;
         } catch (\Exception $e) {
@@ -99,7 +109,8 @@ class UsersController extends Controller
                 throw new \Exception(ErrorCode::getError(self::CODE_INVALID_USER), self::CODE_INVALID_USER);
             }
             $passwd = $userData->getPassword();
-            if ($passwd !== $password) {
+            $passwdTemp = $userData->getTempPassword();
+            if (!($passwd === $password || $passwdTemp === $password)) {
                 throw new \Exception(ErrorCode::getError(self::CODE_PASSWORD_INVALID), self::CODE_PASSWORD_INVALID);
             }
             $userId = $userData->getUserId();
@@ -136,7 +147,8 @@ class UsersController extends Controller
             if (empty($email)) {
                 throw new \Exception(ErrorCode::getError(self::CODE_EMAIL_INVALID), self::CODE_EMAIL_INVALID);
             }
-            $repository = $this->getDoctrine()->getRepository('JobsServiceBundle:Users');
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('JobsServiceBundle:Users');
             $userData = $repository->findOneByEmail($email);
             if (empty($userData)) {
                 throw new \Exception(ErrorCode::getError(self::CODE_INVALID_USER), self::CODE_INVALID_USER);
@@ -144,7 +156,15 @@ class UsersController extends Controller
             $passwd = $userData->getPassword();
             $firstname = $userData->getFirstname();
             $lastname = $userData->getLastname();
-            $params = array('name' => $firstname.' '.$lastname, 'to' => $email, 'from' => $this->container->getParameter('from_email'), 'subject' => 'Forgot Password', 'password' => $passwd);
+            $newPassword = substr(md5(rand(1, 1000)), 3, 7);
+            $userData->setTempPassword($newPassword);
+            $modified = tstobts(time());
+            $userData->setModified($modified);
+            $em->flush();
+            $site_name = $this->container->getParameter('site_name');
+            $host_url = $this->container->getParameter('host_url');
+            $site_name_url = $this->container->getParameter('site_name_url');
+            $params = array('name' => $firstname.' '.$lastname, 'to' => $email, 'from' => $this->container->getParameter('from_email'), 'subject' => 'Your '.$site_name.' account password has been reset', 'password' => $newPassword, 'site_name' => $site_name, 'host_url' => $host_url, 'site_name_url' => $site_name_url);
             $this->get('jobs_service.email')->send('forgot.html.php', $params);
             $msg = 'Success';
             $result = 1;
