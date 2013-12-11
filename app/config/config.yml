@@ -71,3 +71,5 @@ parameters:
     host_url: http://jobs.mkgalaxy.com
     from_email: cintel.jobs@gmail.com
     base_path: /
+    site_name: WorkonOPT
+    site_name_url: workonOPT.com
