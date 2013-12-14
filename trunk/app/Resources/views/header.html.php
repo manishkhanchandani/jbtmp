@@ -1,11 +1,9 @@
 <header class="navbar navbar header-outer" role="banner">
     <div class="container form-inline">
-        <a class="logo"><img src="http://dummyimage.com/44x20/000/fff&amp;text=logo" width="160" height="100px"></a>
+        <a class="logo"><img src="<?php echo $view['assets']->getUrl('images/work_on_opt_logo.jpg') ?>" width="280" height=""></a>
         <div class="pull-right padding-top">
-            <div>Employers: <a>Post Jobs</a> | <a>Search Resumes</a></div>
-            <div>Job Seekers: <a>Post Resume</a> | <a>Find Jobs</a></div>
-            <div><a href="login">Login</a>/<a href="register">Register</a></div>
-        </div>
+            <div><span class="orange">Employers:</span> <a href="login">Post Jobs</a> | <a href="login">Search Resumes</a></div>
+            <div><span class="orange">Job Seekers:</span> <a href="login">Post Resume</a> | <a href="jobs">Find Jobs</a></div>
     </div>
 </header>
 
@@ -18,17 +16,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Nav Place Holder</a>
+<!--        <a class="navbar-brand" href="#">Nav Place Holder</a>-->
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
+            <li><a href="#">Find Jobs</a></li>
+            <li><a href="#">Post Resumes</a></li>
+            <li><a href="#">Employers</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Contact Us</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Contact</a></li>
+            <!--<li><a href="#">Contact Us</a></li>-->
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
