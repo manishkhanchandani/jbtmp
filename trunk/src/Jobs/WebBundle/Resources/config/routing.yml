@@ -1,26 +1,6 @@
-jobs_web_login:
-    pattern:  /user/login
-    defaults: { _controller: JobsWebBundle:User:login }
-
-jobs_web_register:
-    pattern:  /user/register
-    defaults: { _controller: JobsWebBundle:User:register }
-
-jobs_web_registercomplete:
-    pattern:  /user/register/complete
-    defaults: { _controller: JobsWebBundle:User:registercomplete }
-
-jobs_web_forgot:
-    pattern:  /user/forgot
-    defaults: { _controller: JobsWebBundle:User:forgot }
-
-jobs_web_change:
-    pattern:  /user/change
-    defaults: { _controller: JobsWebBundle:User:change }
-
 jobs_web_logout:
-    pattern:  /user/logout
-    defaults: { _controller: JobsWebBundle:User:logout }
+    pattern:  /auth/logout
+    defaults: { _controller: JobsWebBundle:Auth:logout }
 
 jobs_web_auth_register:
     pattern:  /auth/register
@@ -37,3 +17,7 @@ jobs_web_auth_forgot:
 jobs_web_auth_reset:
     pattern:  /auth/resetPassword
     defaults: { _controller: JobsWebBundle:Auth:resetPassword }
+
+jobs_web_employer_post:
+    pattern:  /employer/post
+    defaults: { _controller: JobsWebBundle:Employer:post }
