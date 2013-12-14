@@ -21,3 +21,7 @@ jobs_web_auth_reset:
 jobs_web_employer_post:
     pattern:  /employer/post
     defaults: { _controller: JobsWebBundle:Employer:post }
+
+jobs_web_jobseeker_post:
+    pattern:  /jobseeker/post
+    defaults: { _controller: JobsWebBundle:Jobseeker:post }
