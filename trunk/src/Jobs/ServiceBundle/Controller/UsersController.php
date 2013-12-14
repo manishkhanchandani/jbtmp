@@ -2,15 +2,16 @@
 
 namespace Jobs\ServiceBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Jobs\ServiceBundle\Controller\MainController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 use Jobs\ServiceBundle\Entity\Users;
 use Jobs\ServiceBundle\Form\Type\UsersType;
 use Jobs\ServiceBundle\Entity\UsersRepository;
-use \Jobs\ServiceBundle\Models\ErrorCode;
+use Jobs\ServiceBundle\Models\ErrorCode;
 
-class UsersController extends Controller
+class UsersController extends MainController
 {
 
     const CODE_EMAIL_INVALID = 1001;
@@ -121,9 +122,17 @@ class UsersController extends Controller
                 throw new \Exception(ErrorCode::getError(self::CODE_PASSWORD_INVALID), self::CODE_PASSWORD_INVALID);
             }
             $userId = $userData->getUserId();
-            $cache = $this->get('jobs_service.cache')->load('users');
             $key    = md5($userId);
+            $tm = 0;
+            $remember = $request->request->get('remember');
+            if ($remember) {
+                $tm = time() + (60 *60 * 24* 365);
+            }
+            setcookie('userId', $userId, $tm, '/');
+            setcookie('email', $email, $tm, '/');
+            setcookie('accessToken', $key, $tm, '/');
             //update this key for this user
+            $cache = $this->get('jobs_service.cache')->load('users');
             $cache->removeItem($key);
             $result = $cache->getItem($key, $success);
             if (!$success) {
@@ -173,6 +182,47 @@ class UsersController extends Controller
             $site_name_url = $this->container->getParameter('site_name_url');
             $params = array('name' => $firstname.' '.$lastname, 'to' => $email, 'from' => $this->container->getParameter('from_email'), 'subject' => 'Your '.$site_name.' account password has been reset', 'password' => $newPassword, 'site_name' => $site_name, 'host_url' => $host_url, 'site_name_url' => $site_name_url);
             $this->get('jobs_service.email')->send('forgot.html.php', $params);
+            $msg = 'Success';
+            $result = 1;
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $result = 0;
+            $code = $e->getCode();
+        }
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code);
+        $json = json_encode($arr);
+        return new Response($json);
+    }
+
+    public function resetAction(Request $request)
+    {
+        $result = 0;
+        $msg = '';
+        $code = 200;
+        try {
+            $this->init($request);
+            $password = $request->request->get('password');
+            $confirm = $request->request->get('confirm');
+            $password = trim($password);
+            $confirm = trim($confirm);
+            if (empty($password)) {
+                throw new \Exception(ErrorCode::getError(self::CODE_PASSWORD_INVALID), self::CODE_PASSWORD_INVALID);
+            }
+            if ($password != $confirm) {
+                throw new \Exception(ErrorCode::getError(self::CODE_CONFIRM_INVALID), self::CODE_CONFIRM_INVALID);
+            }
+            $repository = $this->getDoctrine()->getRepository('JobsServiceBundle:Users');
+            $userData = $repository->find($this->userId);
+            if (empty($userData)) {
+                throw new \Exception(ErrorCode::getError(self::CODE_INVALID_USER), self::CODE_INVALID_USER);
+            }
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('JobsServiceBundle:Users');
+            $userData->setTempPassword($password);
+            $userData->setPassword($password);
+            $modified = tstobts(time());
+            $userData->setModified($modified);
+            $em->flush();
             $msg = 'Success';
             $result = 1;
         } catch (\Exception $e) {

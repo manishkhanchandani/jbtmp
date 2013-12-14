@@ -7,6 +7,9 @@ jobs_service_users_login:
 jobs_service_users_forgot:
     pattern:  /api/user/forgot
     defaults: { _controller: JobsServiceBundle:Users:forgot }
+jobs_service_users_reset:
+    pattern:  /api/user/reset
+    defaults: { _controller: JobsServiceBundle:Users:reset }
 examples:
     pattern:  /examples/index/{name}
     defaults: { _controller: JobsServiceBundle:Default:index }
