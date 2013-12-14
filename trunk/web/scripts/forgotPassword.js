@@ -15,10 +15,11 @@ appModule.controller('Controller', function($scope, $http){
 
             if (!data.success) {
                 // if not successful, display an error message
-                $scope.message = data.message;
+                $scope.message = "Invalid e-mail address.";
             } else {
                 // if successful, display the following message
-                $scope.message = "Your temporary password has been sent to your e-mail address.";
+                $scope.message = "Your password has been sent to your e-mail address.";
+                $scope.user.email = "";
                 //alert("Your password has been sent to your e-mail.")
             }
         });
