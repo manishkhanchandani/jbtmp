@@ -5,12 +5,21 @@ namespace Jobs\ServiceBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class MainController extends Controller
 {
     
     protected $userId;
     protected $email;
+    protected $userType;
+    protected $session;
+    public function __construct()
+    {
+        $this->session = new Session();
+        $this->session->start();
+    }
+
     public function init($request)
     {
         if (!isset($_COOKIE['userId']) || !isset($_COOKIE['email'])) {
@@ -26,9 +35,11 @@ class MainController extends Controller
             $cache->touchItem($token);
             $this->userId = $result->getUserId();
             $this->email = $result->getEmail();
+            $this->userType = $result->getUserType();
         } else if (isset($_COOKIE['userId']) && isset($_COOKIE['email'])) {
             $this->userId = $_COOKIE['userId'];
             $this->email = $_COOKIE['email'];
+            $this->userType = $_COOKIE['userType'];
         } else {
             throw new \Exception('Unauthorised Accesscode', 404);
         }
