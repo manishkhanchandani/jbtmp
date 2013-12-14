@@ -19,4 +19,8 @@ class AuthController extends Controller
     {
         return $this->render('JobsWebBundle:Auth:forgotPassword.html.php', array());
     }
+    public function logoutAction()
+    {
+        return $this->render('JobsWebBundle:Auth:forgotPassword.html.php', array());
+    }
 }
