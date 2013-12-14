@@ -32,4 +32,8 @@ jobs_web_auth_login:
 
 jobs_web_auth_forgot:
     pattern:  /auth/forgotPassword
-    defaults: { _controller: JobsWebBundle:Auth:forgetPassword }    
+    defaults: { _controller: JobsWebBundle:Auth:forgetPassword }
+
+jobs_web_auth_reset:
+    pattern:  /auth/resetPassword
+    defaults: { _controller: JobsWebBundle:Auth:resetPassword }
