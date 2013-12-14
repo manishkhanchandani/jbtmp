@@ -8,7 +8,7 @@
         <h3>workOnOpt Registration</h3><hr>
          <div class="form-group">
              <label class="col-md-3">I will be using workOnOpt as </label>
-            <div class="col-md-5">
+            <div class="col-md-7">
                   <input class="btn-group" type="radio" ng-model="user.user_type" value="1" name="user_type" required> a job seeker
                   <input class="btn-group" type="radio" ng-model="user.user_type" value="2" name="user_type" required> an employer
                   <input class="btn-group" type="radio" ng-model="user.user_type" value="3" name="user_type" required> a staffing agency representative
@@ -84,7 +84,7 @@
         
         <div class="form-group">
             <div class="col-md-5">
-                <button class="btn btn-default" ng-disabled="form.$invalid">Register Now</button>
+                <button class="btn register" ng-disabled="form.$invalid">Register Now</button>
             </div>
         </div>
         <div class="response_messages" ng-show="message">{{ message }}</div>

@@ -2,7 +2,18 @@
     Created on : Dec 5, 2013, 11:14:30 AM
     Author     : spaipalle
 */
+.container {
+    width: 970px;
+    padding:0px;
+}
 
+#workOpt.container {
+    box-shadow: 0 8px 15px 1px #CACACA;
+}
+.logo{
+    display: inline-block;
+    margin: 20px 20px 0;
+}
 input[required].ng-invalid.ng-dirty {
     border-color: #e74c3c;
 }
@@ -31,23 +42,70 @@ input[required].ng-prestine{
     border: 1px solid #CCCCCC;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    padding: 0 20px 20px;
+    padding: 0;
+}
+
+/*  login   */
+.signin_title,.signup_title  {
+    color: #FFFFFF;
+    font-size: 14px;
+    height: 35px;
+    margin: 0;
+    padding: 10px;
+    text-align: left;
+    vertical-align: baseline;
 }
 
 .signin_title {
     background: none repeat scroll 0 0 #FF6600;
     border: 1px solid #FF6600;
-    color: #FFFFFF;
-    font-size: 14px;
-    height: 35px;
-    margin-bottom: 0;
-    padding: 10px;
-    text-align: left;
-    vertical-align: baseline;
+}
+
+.signup_title {
+    background: none repeat scroll 0 0 #00306B;
+    border: 1px solid #00306B;
+}
+.signUp .btn-primary, .register {
+    background-color: #00306B;
+    border-color:#003068;
+    color:#FFF;
 }
 .btn-primary {
-    background-color: #00306B;
+    background-color: #FF6600;
+    border-color:#FF6600;
+}
+.col-sm-offset-3 {
+    margin: 35px 10px;
 }
 a{
     color:#00306B;
+}
+
+.orange{
+    color:#FF6600;
+}
+
+/* Nav bar Styles */
+
+.navbar-default {
+    background-color: #FF6600;
+    border-color: #FF6600;
+    border-bottom-color: #FFFFFF;
+}
+.navbar-default .navbar-brand, .navbar-default .navbar-nav > li > a  {
+    color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    background-color: #FFFFFF;
+    color: #00306B;
+}
+.pull-right{
+    margin: 0 30px;
+}
+.loginMargin{
+    padding:0 20px 20px;
+}
+.container .signIn {
+    margin-left: 185px;
 }

@@ -1,3 +1,3 @@
 <footer>
-    <div>Copyright ©2014. All rights reserved. </div>
+    <div style="text-align: center;">Copyright ©2014. All rights reserved. </div>
 </footer>

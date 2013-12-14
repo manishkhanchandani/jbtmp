@@ -29,10 +29,10 @@
         <script src="<?php echo $view['assets']->getUrl('scripts/app.js') ?>"></script>
     </head>
     <body>
-        <div class="container">
+        <div class="container" id="workOpt">
             <?php echo $view->render('::header.html.php') ?>
 
-            <div class="starter-template" style="margin-top: 65px;margin-bottom: 40px; min-height: 450px;">
+            <div class="starter-template" style="margin: 50px; min-height: 450px;">
                 <?php $view['slots']->output('_content') ?>
             </div>
 
