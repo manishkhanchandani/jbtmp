@@ -2,8 +2,8 @@
     <div class="container form-inline">
         <a class="logo"><img src="<?php echo $view['assets']->getUrl('images/work_on_opt_logo.jpg') ?>" width="280" height=""></a>
         <div class="pull-right padding-top">
-            <div><span class="orange">Employers:</span> <a href="login">Post Jobs</a> | <a href="login">Search Resumes</a></div>
-            <div><span class="orange">Job Seekers:</span> <a href="login">Post Resume</a> | <a href="jobs">Find Jobs</a></div>
+            <div><span class="orange">Employers:</span> <a href="<?php echo $view['router']->generate('jobs_web_employer_post'); ?>">Post Jobs</a> | <a href="login">Search Resumes</a></div>
+            <div><span class="orange">Job Seekers:</span> <a href="<?php echo $view['router']->generate('jobs_web_jobseeker_post'); ?>">Post Resume</a> | <a href="jobs">Find Jobs</a></div>
     </div>
 </header>
 
