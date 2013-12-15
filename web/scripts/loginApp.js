@@ -17,7 +17,7 @@ var rcSubmitDirective = {
                     }
 
                     //form valid, final submit
-                    console.log('valid');
+                    //console.log('valid');
                     scope.$apply(function() {
                         $http({
                             method: 'POST',
@@ -26,7 +26,7 @@ var rcSubmitDirective = {
                             headers: {'Content-Type': 'application/x-www-form-urlencoded'}  // set the headers so angular passing info as form data (not request payload)
                         })
                         .success(function(data) {
-                            console.log(data);
+                            //console.log(data);
 
                             if (!data.success) {
                                 // if not successful, bind errors to error variables
@@ -34,6 +34,9 @@ var rcSubmitDirective = {
                             } else {
                                 // if successful, bind success message to message
                                 scope.message = data.message;
+                                if (data.redirectUrl) {
+                                    window.location.href = data.redirectUrl;
+                                }
                             }
                         });
                     });

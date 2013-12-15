@@ -147,7 +147,8 @@ class UsersController extends MainController
             $result = 0;
             $code = $e->getCode();
         }
-        $arr = array('success' => $result, 'message' => $msg, 'accessToken' => !empty($key) ? $key : '', 'code' => $code);
+        $redirectUrl = $this->session->get('_redirectURL');
+        $arr = array('success' => $result, 'message' => $msg, 'accessToken' => !empty($key) ? $key : '', 'code' => $code, 'redirectUrl' => $redirectUrl);
         $json = json_encode($arr);
         return new Response($json);
     }
@@ -224,6 +225,40 @@ class UsersController extends MainController
             $modified = tstobts(time());
             $userData->setModified($modified);
             $em->flush();
+            $msg = 'Success';
+            $result = 1;
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $result = 0;
+            $code = $e->getCode();
+        }
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code);
+        $json = json_encode($arr);
+        return new Response($json);
+    }
+    
+    
+    ///api/user/logout
+    public function logoutAction(Request $request)
+    {
+        $result = 0;
+        $msg = '';
+        $code = 200;
+        try {
+            $tm = time() - 300;
+            $userId = isset($_COOKIE['userId']) ? $_COOKIE['userId'] : '';
+            $key = md5($userId);
+            setcookie('userId', '', $tm, '/');
+            setcookie('email', '', $tm, '/');
+            setcookie('accessToken', '', $tm, '/');
+            setcookie('userType', '', $tm, '/');
+            unset($_COOKIE['userId']);
+            unset($_COOKIE['email']);
+            unset($_COOKIE['accessToken']);
+            unset($_COOKIE['userType']);
+            //update this key for this user
+            $cache = $this->get('jobs_service.cache')->load('users');
+            $cache->removeItem($key);
             $msg = 'Success';
             $result = 1;
         } catch (\Exception $e) {
