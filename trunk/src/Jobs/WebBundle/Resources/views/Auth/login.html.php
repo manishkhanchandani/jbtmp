@@ -3,30 +3,35 @@
 
 <script src="<?php echo $view['assets']->getUrl('scripts/loginApp.js') ?>"></script>
 
-<div class="container">
+<div class="container" ng-app="loginApp">
     <div class="row">
         <div class="signIn">
             <div class="col-xs-12 col-sm-4 col-sm-offset-3">
                 <h6 class="signin_title">Registered users: Sign in here</h6><br>
 
-                <form name="loginForm" novalidate ng-app="LoginApp" ng-controller="LoginController" rc-submit="login()" class="loginMargin">
+                <form name="loginForm" novalidate ng-controller="LoginController" ng-submit="login()" class="loginMargin">
                     <small>The feature you requested is only avalable to members.Please sign in to continue...</small><br><br>
-                    <div class="form-group" ng-class="{'has-error': (loginForm.email | shouldDisplayError:email)}">
-                        <input class="form-control" name="username" type="text" placeholder="Email Address" required ng-model="session.email" />
-                        <!--<span class="help-block" ng-show="loginForm.username.$error.required">Required</span>-->
+                    <div class="form-group">
+                        <input class="form-control" name="email" type="email" placeholder="Email Address" required ng-model="session.email" />
+                        <div class="custom-error" ng-show="loginForm.email.$dirty && loginForm.email.$invalid">Username is required.
+                            <!--<span ng-show="loginForm.email.$error.required">Username is required.</span>-->
+                        </div>
                     </div>
-                    <div class="form-group" ng-class="{'has-error': (loginForm.password | shouldDisplayError:loginForm)}">
+                    <div class="form-group">
                         <input class="form-control" name="password" type="password" placeholder="Password" required ng-model="session.password" />
-                        <!--<span class="help-block" ng-show="loginForm.password.$error.required">Required</span>-->
+                        <div class="custom-error" ng-show="loginForm.password.$dirty && loginForm.password.$invalid">Password is required.
+                            <!--<span ng-show="loginForm.password.$error.required">Password is required.</span>-->
+                        </div>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" 
-                                value="Login" title="Signin">
+                                value="Login" title="Signin"
+                                ng-disabled="loginForm.email.$pristine || loginForm.email.$dirty && loginForm.email.$invalid">
                             <span>Signin</span>
                         </button>
                     </div>
                     <div><a href="forgotPassword">Forgot Password?</a></div>
-                    <div class="response_messages" ng-show="message">{{ message}}</div>
+                    <div class="response_messages" ng-show="message">{{ message}} {{$invalid}}</div>
                 </form>
             </div>
         </div>
@@ -44,7 +49,7 @@
                         Job recommendations
                     </p>
                     <a href="register" class="btn btn-primary" 
-                            value="SignUp" title="SignUp">
+                       value="SignUp" title="SignUp">
                         <span>Sign up Now!</span>
                     </a>
                 </div>
