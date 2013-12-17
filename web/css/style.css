@@ -84,6 +84,14 @@ a{
 .orange{
     color:#FF6600;
 }
+.custom-error {
+    color:#FF0000;
+}
+[type='submit'] {
+    background-color:grey !important;
+    border-color:grey !important;
+}
+
 
 /* Nav bar Styles */
 
