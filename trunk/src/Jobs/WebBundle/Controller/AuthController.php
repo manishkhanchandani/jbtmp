@@ -23,4 +23,8 @@ class AuthController extends Controller
     {
         return $this->render('JobsWebBundle:Auth:forgotPassword.html.php', array());
     }
+    public function resetPasswordAction()
+    {
+        return $this->render('JobsWebBundle:Auth:resetPassword.html.php', array());
+    }
 }
