@@ -63,8 +63,12 @@ class UsersController extends MainController
             $users->setAddress($request->request->get('address'));
             $users->setAddress2($request->request->get('address2'));
             $users->setCity($request->request->get('city'));
-            $users->setState($request->request->get('state'));
-            $users->setCountry($request->request->get('country'));
+            $state = $request->request->get('state');
+            $sname = isset($state['name']) ? $state['name'] : NULL;
+            $users->setState($sname);
+            $country = $request->request->get('country');
+            $cname = isset($country['name']) ? $country['name'] : NULL;
+            $users->setCountry($sname);
             $users->setZip($request->request->get('zip'));
             $repository = $this->getDoctrine()->getRepository('JobsServiceBundle:Users');
             $userData = $repository->findOneByEmail($users->getEmail());
@@ -89,7 +93,7 @@ class UsersController extends MainController
             $result = 0;
             $code = $e->getCode();
         }
-        $arr = array('success' => $result, 'message' => $msg, 'code' => $code);
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'post' => $_POST);
         $json = json_encode($arr);
         return new Response($json);
     }
