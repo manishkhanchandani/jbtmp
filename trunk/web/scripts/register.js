@@ -16,12 +16,13 @@ appModule.controller('Controller', function($scope, $http){
             if (!data.success) {
                 // if not successful, bind errors to error variables
                 $scope.message = data.message;
+                $location.path( "/login" );
             } else {
                 // if successful, bind success message to message
                 $scope.message = data.message;
             }
         });
-    }
+    };
 });
 
 
@@ -63,5 +64,5 @@ appModule.controller('countriesController', function($scope) {
                 $scope.availableStates.push(value);
             }
         });
-    }
+    };
 });

@@ -31,6 +31,10 @@ form[novalidate] input{
     border-color:#00306B; //#3498db;
     border-style: solid;
 }
+.form-control {
+    width: 96%;
+    height: 30px;
+}
 .form-control:focus{
     border-color:#00306B;
 }
@@ -116,4 +120,11 @@ a{
 }
 .container .signIn {
     margin-left: 185px;
+}
+
+/*Employer Post */
+
+select.form-control {
+    border-color: #00306B;
+    height: 132px;
 }
