@@ -20,7 +20,7 @@ class MainController extends Controller
         $this->session->start();
     }
 
-    public function init($request)
+    protected function init($request)
     {
         if (!isset($_COOKIE['userId']) || !isset($_COOKIE['email'])) {
             $token = $request->query->get('accessToken');
@@ -43,6 +43,14 @@ class MainController extends Controller
         } else {
             throw new \Exception('Unauthorised Accesscode', 404);
         }
+    }
+
+    protected function setCheckbox($value)
+    {
+        if (empty($value)) return 0;
+        else if ($value === "true") return 1;
+        else if ($value === "false") return 0;
+        return 0;
     }
 }
 ?>

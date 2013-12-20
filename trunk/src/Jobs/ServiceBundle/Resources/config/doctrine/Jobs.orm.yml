@@ -61,8 +61,9 @@ Jobs\ServiceBundle\Entity\Jobs:
             type: text
             nullable: true
         applicationMethod:
-            type: integer
-            unsigned: false
+            type: string
+            length: 10
+            fixed: false
             nullable: true
             column: application_method
         applicationEmail:
@@ -84,39 +85,36 @@ Jobs\ServiceBundle\Entity\Jobs:
             nullable: true
             column: application_url
         showName:
-            type: integer
-            unsigned: false
-            nullable: false
+            type: boolean
+            nullable: true
             column: show_name
         showAddress1:
-            type: integer
-            unsigned: false
-            nullable: false
+            type: boolean
+            nullable: true
             column: show_address1
         showAddress2:
-            type: integer
-            unsigned: false
-            nullable: false
+            type: boolean
+            nullable: true
             column: show_address_2
         showCity:
-            type: integer
-            unsigned: false
-            nullable: false
+            type: boolean
+            nullable: true
             column: show_city
+        showState:
+            type: boolean
+            nullable: true
+            column: show_state
         showZipcode:
-            type: integer
-            unsigned: false
-            nullable: false
+            type: boolean
+            nullable: true
             column: show_zipcode
         showPhone:
-            type: integer
-            unsigned: false
-            nullable: false
+            type: boolean
+            nullable: true
             column: show_phone
         showEmail:
-            type: integer
-            unsigned: false
-            nullable: false
+            type: boolean
+            nullable: true
             column: show_email
         jobCreatedDt:
             type: bigint
