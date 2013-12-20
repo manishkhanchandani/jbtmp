@@ -22,6 +22,10 @@ jobs_web_employer_post:
     pattern:  /employer/post
     defaults: { _controller: JobsWebBundle:Employer:post }
 
+jobs_web_employer_post_confirm:
+    pattern:  /employer/post/confirm
+    defaults: { _controller: FrameworkBundle:Template:template, template: 'JobsWebBundle:Employer:confirm.html.php' }
+
 jobs_web_jobseeker_post:
     pattern:  /jobseeker/post
     defaults: { _controller: JobsWebBundle:Jobseeker:post }

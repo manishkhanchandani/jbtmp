@@ -45,6 +45,7 @@ jobPostModule.controller('PostJobController', function($scope, $http) {
             } else {
                 // if successful, bind success message to message
                 $scope.message = data.message;
+                window.location.href = globals.path + 'employer/post/confirm';
             }
         });
     };
