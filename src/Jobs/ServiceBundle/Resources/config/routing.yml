@@ -19,3 +19,6 @@ examples:
 examples_vars:
     pattern:  /examples/vars
     defaults: { _controller: JobsServiceBundle:Default:vars }
+jobs_service_employer_post:
+    pattern:  /api/employer/post
+    defaults: { _controller: JobsServiceBundle:Employer:post }

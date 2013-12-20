@@ -765,4 +765,32 @@ class Jobs
     
         return $this;
     }
+    /**
+     * @var integer
+     */
+    private $showState;
+
+
+    /**
+     * Set showState
+     *
+     * @param integer $showState
+     * @return Jobs
+     */
+    public function setShowState($showState)
+    {
+        $this->showState = $showState;
+    
+        return $this;
+    }
+
+    /**
+     * Get showState
+     *
+     * @return integer 
+     */
+    public function getShowState()
+    {
+        return $this->showState;
+    }
 }
