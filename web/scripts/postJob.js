@@ -2,7 +2,7 @@
 
 var jobPostModule = angular.module('postJob', []);
 
-jobPostModule.controller('PostJobController', function($scope) {
+jobPostModule.controller('PostJobController', function($scope, $http) {
     
     $scope.jobPosition = [{
             "position": "Full-time",
@@ -33,7 +33,7 @@ jobPostModule.controller('PostJobController', function($scope) {
         $http({
             method: 'POST',
             url: globals.path + 'api/employer/post',
-            data: $.param($scope.user), /* pass in data as strings*/
+            data: $.param($scope.job), /* pass in data as strings*/
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}  /* set the headers so angular passing info as form data (not request payload)*/
         })
         .success(function(data) {

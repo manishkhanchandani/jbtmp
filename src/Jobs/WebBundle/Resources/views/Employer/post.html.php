@@ -32,10 +32,10 @@
         <div class="form-group">
             <div class="col-md-5 text-right">
                 <input class="btn-group" type="radio" 
-                         ng-model="job.applyEmail" value="email" 
+                         ng-model="job.apply" value="email" 
                          name="apply" required> Apply to Email
                   <input class="btn-group" type="radio" 
-                         ng-model="job.applyUrl" value="url" 
+                         ng-model="job.apply" value="url" 
                          name="apply" required> Apply to Url
             </div>
         </div>
