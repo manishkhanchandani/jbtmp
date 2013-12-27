@@ -48,6 +48,8 @@ class EmployerController extends MainController
             $jobs->setShowEmail($this->setCheckbox($request->request->get('contact_email')));
             $jobs->setShowPhone($this->setCheckbox($request->request->get('contact_phone')));
             $jobs->setShowZipcode($this->setCheckbox($request->request->get('contact_zip')));
+            $jobs->setLatitude($request->request->get('latitude'));
+            $jobs->setLongitude($request->request->get('longitude'));
             $jobs->setJobCreatedDt($created);
             $jobs->setJobDeleted(0);
             $jobs->setJobDeletedDt(0);
