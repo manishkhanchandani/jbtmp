@@ -22,3 +22,12 @@ examples_vars:
 jobs_service_employer_post:
     pattern:  /api/employer/post
     defaults: { _controller: JobsServiceBundle:Employer:post }
+jobs_service_geo_countries:
+    pattern:  /api/geo/countries
+    defaults: { _controller: JobsServiceBundle:Geo:country }
+jobs_service_geo_states:
+    pattern:  /api/geo/states
+    defaults: { _controller: JobsServiceBundle:Geo:state }
+jobs_service_geo_cities:
+    pattern:  /api/geo/cities
+    defaults: { _controller: JobsServiceBundle:Geo:city }
