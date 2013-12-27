@@ -1,0 +1,32 @@
+Jobs\ServiceBundle\Entity\GeoCities:
+    type: entity
+    repositoryClass: Jobs\ServiceBundle\Entity\GeoCitiesRepository
+    table: geo_cities
+    fields:
+        ctyId:
+            id: true
+            type: bigint
+            nullable: false
+            column: cty_id
+            generator:
+                strategy: IDENTITY
+        staId:
+            type: bigint
+            nullable: false
+            column: sta_id
+        conId:
+            type: bigint
+            nullable: false
+            column: con_id
+        name:
+            type: string
+            length: 250
+            fixed: false
+            nullable: false
+        latitude:
+            type: float
+            nullable: false
+        longitude:
+            type: float
+            nullable: false
+    lifecycleCallbacks: {  }

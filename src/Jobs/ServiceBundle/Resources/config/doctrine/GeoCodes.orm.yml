@@ -1,0 +1,36 @@
+Jobs\ServiceBundle\Entity\GeoCodes:
+    type: entity
+    repositoryClass: Jobs\ServiceBundle\Entity\GeoCodesRepository
+    table: geo_codes
+    fields:
+        codeId:
+            id: true
+            type: bigint
+            nullable: false
+            column: code_id
+            generator:
+                strategy: IDENTITY
+        conId:
+            type: bigint
+            nullable: false
+            column: con_id
+        code:
+            type: string
+            length: 250
+            fixed: false
+            nullable: false
+        latitude:
+            type: float
+            nullable: false
+        longitude:
+            type: float
+            nullable: false
+        ctyId:
+            type: bigint
+            nullable: false
+            column: cty_id
+        staId:
+            type: bigint
+            nullable: false
+            column: sta_id
+    lifecycleCallbacks: {  }

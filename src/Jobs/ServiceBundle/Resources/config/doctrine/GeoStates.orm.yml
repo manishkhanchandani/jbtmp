@@ -1,0 +1,22 @@
+Jobs\ServiceBundle\Entity\GeoStates:
+    type: entity
+    repositoryClass: Jobs\ServiceBundle\Entity\GeoStatesRepository
+    table: geo_states
+    fields:
+        staId:
+            id: true
+            type: bigint
+            nullable: false
+            column: sta_id
+            generator:
+                strategy: IDENTITY
+        conId:
+            type: bigint
+            nullable: false
+            column: con_id
+        name:
+            type: string
+            length: 250
+            fixed: false
+            nullable: false
+    lifecycleCallbacks: {  }
