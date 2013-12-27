@@ -1,0 +1,18 @@
+Jobs\ServiceBundle\Entity\GeoCountries:
+    type: entity
+    repositoryClass: Jobs\ServiceBundle\Entity\GeoCountriesRepository
+    table: geo_countries
+    fields:
+        conId:
+            id: true
+            type: bigint
+            nullable: false
+            column: con_id
+            generator:
+                strategy: IDENTITY
+        name:
+            type: string
+            length: 250
+            fixed: false
+            nullable: false
+    lifecycleCallbacks: {  }
