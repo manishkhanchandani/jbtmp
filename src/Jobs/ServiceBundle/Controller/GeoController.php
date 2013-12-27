@@ -21,28 +21,36 @@ class GeoController extends MainController
         $code = 200;
         $data = array();
         $res = array();
+        $cached = true;
         try {
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery(
-                'SELECT c from JobsServiceBundle:GeoCountries as c ORDER BY c.name'
-            );
+            $key = 'countries';
+            $cache = $this->get('jobs_service.cache')->load('users');
+            $res = $cache->getItem($key, $success);
+            if (!$success) {
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery(
+                    'SELECT c from JobsServiceBundle:GeoCountries as c ORDER BY c.name'
+                );
 
-            $data = $query->getResult();
-            //$repository = $this->getDoctrine()->getRepository('JobsServiceBundle:GeoCountries');
-            //$data = $repository->findAll();
-            if (!empty($data)) {
-                foreach ($data as $k => $v) {
-                    //$res[$v->getName()] = $v->getConId();
-                    $res[$k]['name'] = $v->getName();
-                    $res[$k]['id'] = $v->getConId();
+                $data = $query->getResult();
+                //$repository = $this->getDoctrine()->getRepository('JobsServiceBundle:GeoCountries');
+                //$data = $repository->findAll();
+                if (!empty($data)) {
+                    foreach ($data as $k => $v) {
+                        //$res[$v->getName()] = $v->getConId();
+                        $res[$k]['name'] = $v->getName();
+                        $res[$k]['id'] = $v->getConId();
+                    }
                 }
+                $cache->setItem($key, $res);
+                $cached = false;
             }
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $result = 0;
             $code = $e->getCode();
         }
-        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $res);
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $res, 'cache' => $cached);
         $json = json_encode($arr);
         return new Response($json);
         
@@ -59,30 +67,38 @@ class GeoController extends MainController
         $code = 200;
         $data = array();
         $res = array();
+        $cached = true;
         try {
             $id = $request->query->get('id');
             if (empty($id)) throw new \Exception('Please choose country', 1112);
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery(
-                'SELECT s from JobsServiceBundle:GeoStates as s WHERE s.conId = :id ORDER BY s.name'
-            )->setParameter('id', $id);
+            $key = 'state_'.$id;
+            $cache = $this->get('jobs_service.cache')->load('users');
+            $res = $cache->getItem($key, $success);
+            if (!$success) {
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery(
+                    'SELECT s from JobsServiceBundle:GeoStates as s WHERE s.conId = :id ORDER BY s.name'
+                )->setParameter('id', $id);
 
-            $data = $query->getResult();
-            //$repository = $this->getDoctrine()->getRepository('JobsServiceBundle:GeoCountries');
-            //$data = $repository->findAll();
-            if (!empty($data)) {
-                foreach ($data as $k => $v) {
-                    $res[$k]['name'] = $v->getName();
-                    $res[$k]['id'] = $v->getStaId();
-                    $res[$k]['con_id'] = $v->getConId();
+                $data = $query->getResult();
+                //$repository = $this->getDoctrine()->getRepository('JobsServiceBundle:GeoCountries');
+                //$data = $repository->findAll();
+                if (!empty($data)) {
+                    foreach ($data as $k => $v) {
+                        $res[$k]['name'] = $v->getName();
+                        $res[$k]['id'] = $v->getStaId();
+                        $res[$k]['con_id'] = $v->getConId();
+                    }
                 }
+                $cache->setItem($key, $res);
+                $cached = false;
             }
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $result = 0;
             $code = $e->getCode();
         }
-        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $res);
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $res, 'cache' => $cached);
         $json = json_encode($arr);
         return new Response($json);
         
@@ -101,33 +117,41 @@ class GeoController extends MainController
         $code = 200;
         $data = array();
         $res = array();
+        $cached = true;
         try {
             $id = $request->query->get('id');
             if (empty($id)) throw new \Exception('Please choose state', 1113);
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery(
-                'SELECT c from JobsServiceBundle:GeoCities as c WHERE c.staId = :id ORDER BY c.name'
-            )->setParameter('id', $id);
+            $key = 'city_'.$id;
+            $cache = $this->get('jobs_service.cache')->load('users');
+            $res = $cache->getItem($key, $success);
+            if (!$success) {
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery(
+                    'SELECT c from JobsServiceBundle:GeoCities as c WHERE c.staId = :id ORDER BY c.name'
+                )->setParameter('id', $id);
 
-            $data = $query->getResult();
-            //$repository = $this->getDoctrine()->getRepository('JobsServiceBundle:GeoCountries');
-            //$data = $repository->findAll();
-            if (!empty($data)) {
-                foreach ($data as $k => $v) {
-                    $res[$k]['name'] = $v->getName();
-                    $res[$k]['id'] = $v->getStaId();
-                    $res[$k]['con_id'] = $v->getConId();
-                    $res[$k]['sta_id'] = $v->getStaId();
-                    $res[$k]['latitude'] = $v->getLatitude();
-                    $res[$k]['longitude'] = $v->getLongitude();
+                $data = $query->getResult();
+                //$repository = $this->getDoctrine()->getRepository('JobsServiceBundle:GeoCountries');
+                //$data = $repository->findAll();
+                if (!empty($data)) {
+                    foreach ($data as $k => $v) {
+                        $res[$k]['name'] = $v->getName();
+                        $res[$k]['id'] = $v->getStaId();
+                        $res[$k]['con_id'] = $v->getConId();
+                        $res[$k]['sta_id'] = $v->getStaId();
+                        $res[$k]['latitude'] = $v->getLatitude();
+                        $res[$k]['longitude'] = $v->getLongitude();
+                    }
                 }
+                $cache->setItem($key, $res);
+                $cached = false;
             }
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $result = 0;
             $code = $e->getCode();
         }
-        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $res);
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $res, 'cache' => $cached);
         $json = json_encode($arr);
         return new Response($json);
         
