@@ -138,4 +138,10 @@ Jobs\ServiceBundle\Entity\Jobs:
             unsigned: false
             nullable: false
             column: job_status
+        latitude:
+            type: float
+            nullable: true
+        longitude:
+            type: float
+            nullable: true
     lifecycleCallbacks: {  }
