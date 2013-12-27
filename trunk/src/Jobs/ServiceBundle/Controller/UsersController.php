@@ -274,4 +274,46 @@ class UsersController extends MainController
         $json = json_encode($arr);
         return new Response($json);
     }
+    
+    /*
+     * get user details
+     * http://jobs.mkgalaxy.com/app_dev.php/api/user/details
+     */
+    public function detailsAction(Request $request)
+    {
+        $result = 0;
+        $msg = '';
+        $code = 200;
+        try {
+            $this->init($request);
+            $repository = $this->getDoctrine()->getRepository('JobsServiceBundle:Users');
+            $userData = $repository->find($this->userId);
+            if (empty($userData)) {
+                throw new \Exception(ErrorCode::getError(self::CODE_INVALID_USER), self::CODE_INVALID_USER);
+            }
+            $data = array();
+            $data['userId'] = $userData->getUserId();
+            $data['email'] = $userData->getEmail();
+            $data['accessLevel'] = $userData->getAccessLevel();
+            $data['firstname'] = $userData->getFirstname();
+            $data['lastname'] = $userData->getLastname();
+            $data['userType'] = $userData->getUserType();
+            $data['phone'] = $userData->getPhone();
+            $data['address'] = $userData->getAddress();
+            $data['address2'] = $userData->getAddress2();
+            $data['country'] = $userData->getCountry();
+            $data['city'] = $userData->getCity();
+            $data['state'] = $userData->getState();
+            $data['zip'] = $userData->getZip();
+            $msg = 'Success';
+            $result = 1;
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $result = 0;
+            $code = $e->getCode();
+        }
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $data);
+        $json = json_encode($arr);
+        return new Response($json);
+    }
 }
