@@ -128,3 +128,12 @@ select.form-control {
     border-color: #00306B;
     height: 132px;
 }
+
+/*Post Resume*/
+form input[type="file"] {
+    border: medium none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    width: 200px;
+}
