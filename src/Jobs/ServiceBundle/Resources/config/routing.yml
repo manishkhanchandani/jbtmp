@@ -26,6 +26,9 @@ examples_vars:
 jobs_service_employer_post:
     pattern:  /api/employer/post
     defaults: { _controller: JobsServiceBundle:Employer:post }
+jobs_service_resume_post:
+    pattern:  /api/resume/post
+    defaults: { _controller: JobsServiceBundle:Resume:post }
 jobs_service_geo_countries:
     pattern:  /api/geo/countries
     defaults: { _controller: JobsServiceBundle:Geo:country }

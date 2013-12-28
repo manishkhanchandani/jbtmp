@@ -32,3 +32,6 @@ jobs_web_jobseeker_post:
 jobs_web_jobseeker_preview:
     pattern:  /jobseeker/preview
     defaults: { _controller: JobsWebBundle:Jobseeker:preview }
+jobs_web_home:
+    pattern:  /
+    defaults: { _controller: JobsWebBundle:Default:index }
