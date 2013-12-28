@@ -29,3 +29,6 @@ jobs_web_employer_post_confirm:
 jobs_web_jobseeker_post:
     pattern:  /jobseeker/post
     defaults: { _controller: JobsWebBundle:Jobseeker:post }
+jobs_web_jobseeker_preview:
+    pattern:  /jobseeker/preview
+    defaults: { _controller: JobsWebBundle:Jobseeker:preview }

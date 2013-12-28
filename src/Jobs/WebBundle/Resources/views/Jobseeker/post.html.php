@@ -9,7 +9,7 @@
          <div class="form-group">
              <label class="col-md-2">Desired Job Title</label>
             <div class="col-md-4">
-                  <input class="form-control" type="text" ng-model="job.title"
+                  <input class="form-control" type="text" ng-model="resume.title"
                          name="title" required>
             </div>
         </div>
