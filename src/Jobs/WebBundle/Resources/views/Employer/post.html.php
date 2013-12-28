@@ -118,7 +118,7 @@
                 <br><input class="" type="checkbox" ng-model="job.contact_email" name="contact_Info"><span> Email:</span>
             </div>
          </div><hr>
-        
+         <div>{{job |json}}</div>
         <div class="form-group">
             <div class="col-md-5">
                 <button class="btn register" ng-disabled="jobForm.$invalid">Continue</button>{{jobForm.$invalid}}
