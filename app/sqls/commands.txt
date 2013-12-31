@@ -3,7 +3,13 @@ php app/console doctrine:mapping:import --force JobsServiceBundle yml
 
 Add this in each doctrine xml
 
+    repositoryClass: Jobs\ServiceBundle\Entity\GeoCodesRepository
+    repositoryClass: Jobs\ServiceBundle\Entity\GeoCountriesRepository
+    repositoryClass: Jobs\ServiceBundle\Entity\GeoStatesRepository
+    repositoryClass: Jobs\ServiceBundle\Entity\GeoCitiesRepository
     repositoryClass: Jobs\ServiceBundle\Entity\UsersRepository
+    repositoryClass: Jobs\ServiceBundle\Entity\JobsRepository
+    repositoryClass: Jobs\ServiceBundle\Entity\ResumesRepository
 
 To generate entity
 php app/console doctrine:generate:entities JobsServiceBundle --no-backup
