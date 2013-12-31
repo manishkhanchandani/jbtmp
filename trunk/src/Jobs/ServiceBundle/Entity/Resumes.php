@@ -345,4 +345,228 @@ class Resumes
     
         return $this;
     }
+    /**
+     * @var string
+     */
+    private $resumeContact;
+
+    /**
+     * @var string
+     */
+    private $resumeAvail;
+
+    /**
+     * @var string
+     */
+    private $resumeWork;
+
+    /**
+     * @var string
+     */
+    private $resumeEdu;
+
+    /**
+     * @var string
+     */
+    private $resumeSchool;
+
+    /**
+     * @var string
+     */
+    private $resumeWorkexp;
+
+    /**
+     * @var string
+     */
+    private $resumePrefloc;
+
+    /**
+     * @var string
+     */
+    private $resumeFilename;
+
+
+    /**
+     * Set resumeContact
+     *
+     * @param string $resumeContact
+     * @return Resumes
+     */
+    public function setResumeContact($resumeContact)
+    {
+        $this->resumeContact = $resumeContact;
+    
+        return $this;
+    }
+
+    /**
+     * Get resumeContact
+     *
+     * @return string 
+     */
+    public function getResumeContact()
+    {
+        return $this->resumeContact;
+    }
+
+    /**
+     * Set resumeAvail
+     *
+     * @param string $resumeAvail
+     * @return Resumes
+     */
+    public function setResumeAvail($resumeAvail)
+    {
+        $this->resumeAvail = $resumeAvail;
+    
+        return $this;
+    }
+
+    /**
+     * Get resumeAvail
+     *
+     * @return string 
+     */
+    public function getResumeAvail()
+    {
+        return $this->resumeAvail;
+    }
+
+    /**
+     * Set resumeWork
+     *
+     * @param string $resumeWork
+     * @return Resumes
+     */
+    public function setResumeWork($resumeWork)
+    {
+        $this->resumeWork = $resumeWork;
+    
+        return $this;
+    }
+
+    /**
+     * Get resumeWork
+     *
+     * @return string 
+     */
+    public function getResumeWork()
+    {
+        return $this->resumeWork;
+    }
+
+    /**
+     * Set resumeEdu
+     *
+     * @param string $resumeEdu
+     * @return Resumes
+     */
+    public function setResumeEdu($resumeEdu)
+    {
+        $this->resumeEdu = $resumeEdu;
+    
+        return $this;
+    }
+
+    /**
+     * Get resumeEdu
+     *
+     * @return string 
+     */
+    public function getResumeEdu()
+    {
+        return $this->resumeEdu;
+    }
+
+    /**
+     * Set resumeSchool
+     *
+     * @param string $resumeSchool
+     * @return Resumes
+     */
+    public function setResumeSchool($resumeSchool)
+    {
+        $this->resumeSchool = $resumeSchool;
+    
+        return $this;
+    }
+
+    /**
+     * Get resumeSchool
+     *
+     * @return string 
+     */
+    public function getResumeSchool()
+    {
+        return $this->resumeSchool;
+    }
+
+    /**
+     * Set resumeWorkexp
+     *
+     * @param string $resumeWorkexp
+     * @return Resumes
+     */
+    public function setResumeWorkexp($resumeWorkexp)
+    {
+        $this->resumeWorkexp = $resumeWorkexp;
+    
+        return $this;
+    }
+
+    /**
+     * Get resumeWorkexp
+     *
+     * @return string 
+     */
+    public function getResumeWorkexp()
+    {
+        return $this->resumeWorkexp;
+    }
+
+    /**
+     * Set resumePrefloc
+     *
+     * @param string $resumePrefloc
+     * @return Resumes
+     */
+    public function setResumePrefloc($resumePrefloc)
+    {
+        $this->resumePrefloc = $resumePrefloc;
+    
+        return $this;
+    }
+
+    /**
+     * Get resumePrefloc
+     *
+     * @return string 
+     */
+    public function getResumePrefloc()
+    {
+        return $this->resumePrefloc;
+    }
+
+    /**
+     * Set resumeFilename
+     *
+     * @param string $resumeFilename
+     * @return Resumes
+     */
+    public function setResumeFilename($resumeFilename)
+    {
+        $this->resumeFilename = $resumeFilename;
+    
+        return $this;
+    }
+
+    /**
+     * Get resumeFilename
+     *
+     * @return string 
+     */
+    public function getResumeFilename()
+    {
+        return $this->resumeFilename;
+    }
 }
