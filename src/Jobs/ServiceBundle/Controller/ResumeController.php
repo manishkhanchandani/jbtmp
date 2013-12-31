@@ -6,6 +6,8 @@ use Jobs\ServiceBundle\Controller\MainController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use Jobs\ServiceBundle\Entity\Resumes;
+use Jobs\ServiceBundle\Entity\ResumesRepository;
 use Jobs\ServiceBundle\Models\ErrorCode;
 
 class ResumeController extends MainController

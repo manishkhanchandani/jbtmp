@@ -42,6 +42,54 @@ Jobs\ServiceBundle\Entity\Resumes:
             fixed: false
             nullable: true
             column: resume_skills
+        resumeContact:
+            type: string
+            length: 200
+            fixed: false
+            nullable: false
+            column: resume_contact
+        resumeAvail:
+            type: string
+            length: 200
+            fixed: false
+            nullable: false
+            column: resume_avail
+        resumeWork:
+            type: string
+            length: 200
+            fixed: false
+            nullable: false
+            column: resume_work
+        resumeEdu:
+            type: string
+            length: 200
+            fixed: false
+            nullable: false
+            column: resume_edu
+        resumeSchool:
+            type: string
+            length: 200
+            fixed: false
+            nullable: false
+            column: resume_school
+        resumeWorkexp:
+            type: string
+            length: 200
+            fixed: false
+            nullable: false
+            column: resume_workexp
+        resumePrefloc:
+            type: string
+            length: 200
+            fixed: false
+            nullable: false
+            column: resume_prefloc
+        resumeFilename:
+            type: string
+            length: 200
+            fixed: false
+            nullable: false
+            column: resume_filename
         resumeCreatedDt:
             type: bigint
             nullable: true
