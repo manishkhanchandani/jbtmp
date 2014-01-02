@@ -18,7 +18,7 @@
             <label class="col-md-2">Contact Number</label>
             <div class="col-md-4">
                 <input class="form-control" type="text" 
-                       ng-model="resume.contactNumber" name="number">
+                       ng-model="resume.contactNumber">
             </div>
         </div>
         
@@ -93,8 +93,8 @@
              </div>
         </div>
         
-<div ng-controller="MyCtrl">
-  <input type="file" ng-file-select="onFileSelect($files)" multiple>
+<div>
+  <input type="file" ng-file-select="onFileSelect($files)" onchange="angular.element(this).scope().setFiles(this)">
 </div>
         
         <br/><br/>

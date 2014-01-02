@@ -137,13 +137,13 @@ class UsersController extends MainController
             setcookie('accessToken', $key, $tm, '/');
             setcookie('userType', $userData->getUserType(), $tm, '/');
             //update this key for this user
-            $cache = $this->get('jobs_service.cache')->load('users');
+            /*$cache = $this->get('jobs_service.cache')->load('users');
             $cache->removeItem($key);
             $result = $cache->getItem($key, $success);
             if (!$success) {
                 $result = $userData;
                 $cache->setItem($key, $result);
-            }
+            }*/
             $msg = 'Success';
             $result = 1;
         } catch (\Exception $e) {
@@ -152,6 +152,9 @@ class UsersController extends MainController
             $code = $e->getCode();
         }
         $redirectUrl = $this->session->get('_redirectURL');
+        if (empty($redirectUrl)) {
+            $redirectUrl = $this->generateUrl('jobs_web_home');
+        }
         $arr = array('success' => $result, 'message' => $msg, 'accessToken' => !empty($key) ? $key : '', 'code' => $code, 'redirectUrl' => $redirectUrl);
         $json = json_encode($arr);
         return new Response($json);
@@ -261,8 +264,9 @@ class UsersController extends MainController
             unset($_COOKIE['accessToken']);
             unset($_COOKIE['userType']);
             //update this key for this user
-            $cache = $this->get('jobs_service.cache')->load('users');
-            $cache->removeItem($key);
+            //$cache = $this->get('jobs_service.cache')->load('users');
+            //$cache->removeItem($key);
+
             $msg = 'Success';
             $result = 1;
         } catch (\Exception $e) {

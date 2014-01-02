@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Jobs\ServiceBundle\Entity\Resumes;
 use Jobs\ServiceBundle\Entity\ResumesRepository;
 use Jobs\ServiceBundle\Models\ErrorCode;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ResumeController extends MainController
 {
@@ -25,14 +26,14 @@ class ResumeController extends MainController
             $resumes = new Resumes();
             $resumes->setResumeId($resumeId);
             $resumes->setUserId($this->userId);
-            $resumes->setTitle($request->request->get('title'));
+            $resumes->setResumeTitle($request->request->get('title'));
             $resumes->setResumeContact($request->request->get('contactNumber'));
             $resumes->setResumeAvail($request->request->get('startDate'));
             $resumes->setResumeWork($request->request->get('workAuthorization'));
             $resumes->setResumeEdu($request->request->get('education'));
             $resumes->setResumeSchool($request->request->get('school'));
             $resumes->setResumeMajor($request->request->get('major'));
-            $resumes->setResumeWorkexp($request->request->get('experience'));
+            $resumes->setResumeWorkexp($request->request->get('workExperience'));
             $resumes->setResumeSkills($request->request->get('skillset'));
             $resumes->setResumePrefloc($request->request->get('location'));
             $resumes->setResumeCreatedDt($created);
@@ -40,6 +41,26 @@ class ResumeController extends MainController
             $resumes->setResumeDeletedTd(0);
             $resumes->setResumeModifiedDt($created);
             $resumes->setResumeStatus(1);
+            // change this with symfony file later
+            if (isset($_FILES['file']['name'])) {
+                $folder = substr($this->userId, 0, 2);
+                $dir = __DIR__.'/../../../../app/uploads/'.$folder.'/';
+                $path = 'app/uploads/'.$folder.'/';
+                $dir2 = $dir.$this->userId.'/';
+                $path = $path.$this->userId;
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0777);
+                    chmod($dir, 0777);
+                }
+                if (!is_dir($dir2)) {
+                    mkdir($dir2, 0777);
+                    chmod($dir2, 0777);
+                }
+                $filename = realpath($dir2).'/'.$resumeId.'_'.$_FILES['file']['name'];
+                $filesavepath = $path.'/'.$resumeId.'_'.$_FILES['file']['name'];
+                move_uploaded_file($_FILES['file']['tmp_name'], $filename);
+                $resumes->setResumeFilename($filesavepath);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($resumes);
             $em->flush();

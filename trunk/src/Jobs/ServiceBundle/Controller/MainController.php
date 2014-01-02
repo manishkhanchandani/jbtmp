@@ -14,6 +14,7 @@ class MainController extends Controller
     protected $email;
     protected $userType;
     protected $session;
+    
     public function __construct()
     {
         $this->session = new Session();
@@ -27,12 +28,12 @@ class MainController extends Controller
             if (empty($token)) {
                 throw new \Exception('Unauthorised Access. Valid token is required', 404);
             }
-            $cache = $this->get('jobs_service.cache')->load('users');
-            $result = $cache->getItem($token, $success);
-            if (!$success) {
+            //$cache = $this->get('jobs_service.cache')->load('users');
+            //$result = $cache->getItem($token, $success);
+            if (empty($success)) {
                 throw new \Exception('Unauthorised Access', 404);
             }
-            $cache->touchItem($token);
+            //$cache->touchItem($token);
             $this->userId = $result->getUserId();
             $this->email = $result->getEmail();
             $this->userType = $result->getUserType();
