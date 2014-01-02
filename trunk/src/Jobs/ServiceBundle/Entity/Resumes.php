@@ -569,4 +569,32 @@ class Resumes
     {
         return $this->resumeFilename;
     }
+    /**
+     * @var string
+     */
+    private $resumeMajor;
+
+
+    /**
+     * Set resumeMajor
+     *
+     * @param string $resumeMajor
+     * @return Resumes
+     */
+    public function setResumeMajor($resumeMajor)
+    {
+        $this->resumeMajor = $resumeMajor;
+    
+        return $this;
+    }
+
+    /**
+     * Get resumeMajor
+     *
+     * @return string 
+     */
+    public function getResumeMajor()
+    {
+        return $this->resumeMajor;
+    }
 }

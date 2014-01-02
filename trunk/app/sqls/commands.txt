@@ -1,5 +1,6 @@
 To get entity xml
 php app/console doctrine:mapping:import --force JobsServiceBundle yml 
+php app/console doctrine:mapping:import --force JobsServiceBundle --filter="Resume"  yml
 
 Add this in each doctrine xml
 
