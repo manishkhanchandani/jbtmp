@@ -19,7 +19,7 @@
         "sensio/framework-extra-bundle": "2.3.*",
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
-        "zendframework/zend-cache": "2.0.*"
+        "zendframework/zendframework1": "1.12.*@dev"
     },
     "scripts": {
         "post-install-cmd": [

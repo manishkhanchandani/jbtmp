@@ -24,9 +24,9 @@ class GeoController extends MainController
         $cached = true;
         try {
             $key = 'countries';
-            $cache = $this->get('jobs_service.cache')->load('users');
-            $res = $cache->getItem($key, $success);
-            if (!$success) {
+            //$cache = $this->get('jobs_service.cache')->load('users');
+            //$res = $cache->getItem($key, $success);
+            //if (!$success) {
                 $em = $this->getDoctrine()->getManager();
                 $query = $em->createQuery(
                     'SELECT c from JobsServiceBundle:GeoCountries as c ORDER BY c.name'
@@ -42,9 +42,9 @@ class GeoController extends MainController
                         $res[$k]['id'] = $v->getConId();
                     }
                 }
-                $cache->setItem($key, $res);
+                //$cache->setItem($key, $res);
                 $cached = false;
-            }
+            //}
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $result = 0;
@@ -72,9 +72,9 @@ class GeoController extends MainController
             $id = $request->query->get('id');
             if (empty($id)) throw new \Exception('Please choose country', 1112);
             $key = 'state_'.$id;
-            $cache = $this->get('jobs_service.cache')->load('users');
-            $res = $cache->getItem($key, $success);
-            if (!$success) {
+            //$cache = $this->get('jobs_service.cache')->load('users');
+            //$res = $cache->getItem($key, $success);
+            //if (!$success) {
                 $em = $this->getDoctrine()->getManager();
                 $query = $em->createQuery(
                     'SELECT s from JobsServiceBundle:GeoStates as s WHERE s.conId = :id ORDER BY s.name'
@@ -90,9 +90,9 @@ class GeoController extends MainController
                         $res[$k]['con_id'] = $v->getConId();
                     }
                 }
-                $cache->setItem($key, $res);
+                //$cache->setItem($key, $res);
                 $cached = false;
-            }
+            //}
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $result = 0;
@@ -122,9 +122,9 @@ class GeoController extends MainController
             $id = $request->query->get('id');
             if (empty($id)) throw new \Exception('Please choose state', 1113);
             $key = 'city_'.$id;
-            $cache = $this->get('jobs_service.cache')->load('users');
-            $res = $cache->getItem($key, $success);
-            if (!$success) {
+            //$cache = $this->get('jobs_service.cache')->load('users');
+            //$res = $cache->getItem($key, $success);
+            //if (!$success) {
                 $em = $this->getDoctrine()->getManager();
                 $query = $em->createQuery(
                     'SELECT c from JobsServiceBundle:GeoCities as c WHERE c.staId = :id ORDER BY c.name'
@@ -143,9 +143,9 @@ class GeoController extends MainController
                         $res[$k]['longitude'] = $v->getLongitude();
                     }
                 }
-                $cache->setItem($key, $res);
+                //$cache->setItem($key, $res);
                 $cached = false;
-            }
+            //}
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $result = 0;
