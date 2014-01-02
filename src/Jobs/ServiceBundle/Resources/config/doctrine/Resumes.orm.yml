@@ -34,7 +34,7 @@ Jobs\ServiceBundle\Entity\Resumes:
         resumeType:
             type: integer
             unsigned: false
-            nullable: false
+            nullable: true
             column: resume_type
         resumeSkills:
             type: string
@@ -46,49 +46,55 @@ Jobs\ServiceBundle\Entity\Resumes:
             type: string
             length: 200
             fixed: false
-            nullable: false
+            nullable: true
             column: resume_contact
         resumeAvail:
             type: string
             length: 200
             fixed: false
-            nullable: false
+            nullable: true
             column: resume_avail
         resumeWork:
             type: string
             length: 200
             fixed: false
-            nullable: false
+            nullable: true
             column: resume_work
         resumeEdu:
             type: string
             length: 200
             fixed: false
-            nullable: false
+            nullable: true
             column: resume_edu
         resumeSchool:
             type: string
             length: 200
             fixed: false
-            nullable: false
+            nullable: true
             column: resume_school
+        resumeMajor:
+            type: string
+            length: 200
+            fixed: false
+            nullable: true
+            column: resume_major
         resumeWorkexp:
             type: string
             length: 200
             fixed: false
-            nullable: false
+            nullable: true
             column: resume_workexp
         resumePrefloc:
             type: string
             length: 200
             fixed: false
-            nullable: false
+            nullable: true
             column: resume_prefloc
         resumeFilename:
             type: string
             length: 200
             fixed: false
-            nullable: false
+            nullable: true
             column: resume_filename
         resumeCreatedDt:
             type: bigint
