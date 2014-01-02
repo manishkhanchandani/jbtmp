@@ -89,13 +89,16 @@
         
         <div class="form-group">
             <div class="col-md-5">
-        <!--<button class="btn register" ng-click="uploadFile()" >Upload your resume</button>-->
         <label for="fileToUpload">Attach your resume in MS WORD or PDF format</label><br />
              </div>
         </div>
-        <input class="form-control" type="file" ng-model="resume.fileupload" id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" />
         
-        <br>
+<div ng-controller="MyCtrl">
+  <input type="file" ng-file-select="onFileSelect($files)" multiple>
+</div>
+        
+        <br/><br/>
+        <div>{{resume |json}}</div>
         <div class="form-group">
             <div class="col-md-5">
                 <button class="btn register" ng-disabled="resumeForm.$invalid">Continue</button>{{resumeForm.$invalid}}
