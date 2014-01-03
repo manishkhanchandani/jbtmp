@@ -13,7 +13,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ResumeController extends MainController
 {
-    
+    const CODE_MISSING_ID = 1010;
+    const CODE_INVALID_DATA = 1011;
+
     public function postAction(Request $request)
     {
         $result = 0;
@@ -44,8 +46,8 @@ class ResumeController extends MainController
             // change this with symfony file later
             if (isset($_FILES['file']['name'])) {
                 $folder = substr($this->userId, 0, 2);
-                $dir = __DIR__.'/../../../../app/uploads/'.$folder.'/';
-                $path = 'app/uploads/'.$folder.'/';
+                $dir = __DIR__.'/../../../../web/uploads/'.$folder.'/';
+                $path = 'uploads/'.$folder.'/';
                 $dir2 = $dir.$this->userId.'/';
                 $path = $path.$this->userId;
                 if (!is_dir($dir)) {
@@ -72,6 +74,55 @@ class ResumeController extends MainController
             $code = $e->getCode();
         }
         $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'id' => $resumeId, 'post' => $_POST, 'files' => $_FILES);
+        $json = json_encode($arr);
+        return new Response($json);
+    }
+    
+    
+    public function previewAction(Request $request)
+    {
+        $result = 0;
+        $msg = '';
+        $code = 200;
+        try {
+            $id = $request->query->get('id');
+            $id = trim($id);
+            if (empty($id)) {
+                throw new \Exception(ErrorCode::getError(self::CODE_MISSING_ID), self::CODE_MISSING_ID);
+            }
+            $em = $this->getDoctrine()->getManager();
+            $repository = $em->getRepository('JobsServiceBundle:Resumes');
+            $data = $repository->findOneByResumeId($id);
+            if (empty($data)) {
+                throw new \Exception(ErrorCode::getError(self::CODE_INVALID_DATA), self::CODE_INVALID_DATA);
+            }
+            $return = array();
+            $site_name = $this->container->getParameter('site_name');
+            $host_url = $this->container->getParameter('host_url');
+            //$data = new Resumes();
+            $return['resumeId'] = $data->getResumeId();
+            $return['userId'] = $data->getUserId();
+            $return['resumeTitle'] = $data->getResumeTitle();
+            $return['skillset'] = $data->getResumeSkills();
+            $return['startDate'] = $data->getResumeAvail();
+            $return['workAuthorization'] = $data->getResumeWork();
+            $return['education'] = $data->getResumeEdu();
+            $return['school'] = $data->getResumeSchool();
+            $return['major'] = $data->getResumeMajor();
+            $return['location'] = $data->getResumePrefloc();
+            $return['file'] = $data->getResumeFilename();
+            $return['url'] = !empty($return['file']) ? $host_url.'/'.$data->getResumeFilename() : null;
+            $return['embedded_url'] = !empty($return['file']) ? 'https://docs.google.com/viewer?url='.urlencode($return['url']).'&embedded=true' : null;
+            $return['workExperience'] = $data->getResumeWorkexp();
+            $site_name_url = $this->container->getParameter('site_name_url');
+            $msg = 'Success';
+            $result = 1;
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $result = 0;
+            $code = $e->getCode();
+        }
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $return);
         $json = json_encode($arr);
         return new Response($json);
     }

@@ -38,3 +38,6 @@ jobs_service_geo_states:
 jobs_service_geo_cities:
     pattern:  /api/geo/cities
     defaults: { _controller: JobsServiceBundle:Geo:city }
+jobs_service_resume_preview:
+    pattern:  /api/resume/preview
+    defaults: { _controller: JobsServiceBundle:Resume:preview }
