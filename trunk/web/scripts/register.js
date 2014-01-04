@@ -1,6 +1,8 @@
-var appModule = angular.module('App', []);
+'use strict';
 
-appModule.controller('Controller', function($scope, $http){
+var appModule = angular.module('App', ['shared']);
+
+appModule.controller('Controller', function($scope, $http) {
     $scope.user = {};
 
     $scope.submit = function() {
@@ -9,59 +11,16 @@ appModule.controller('Controller', function($scope, $http){
             url: globals.path + 'api/user/add',
             data: $.param($scope.user), /* pass in data as strings*/
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}  /* set the headers so angular passing info as form data (not request payload)*/
-        })
-        .success(function(data) {
+        }).success(function(data) {
             console.log(data);
 
             if (!data.success) {
                 // if not successful, bind errors to error variables
                 $scope.message = data.message;
-                $location.path( "/login" );
+                $location.path("/login");
             } else {
                 // if successful, bind success message to message
                 $scope.message = data.message;
-            }
-        });
-    };
-});
-
-
-appModule.controller('countriesController', function($scope) {
-    $scope.countries = [{
-            "name": "USA",
-            "id": 1
-        }, {
-            "name": "Canada",
-            "id": 2
-        }];
-    $scope.states = [{
-            "name": "Alabama",
-            "id": 1,
-            "countryId": 1
-        }, {
-            "name": "Alaska",
-            "id": 2,
-            "countryId": 1
-        }, {
-            "name": "Arizona",
-            "id": 3,
-            "countryId": 1
-        }, {
-            "name": "Alberta",
-            "id": 4,
-            "countryId": 2
-        }, {
-            "name": "British columbia",
-            "id": 5,
-            "countryId": 2
-        }];
-
-    $scope.updateCountry = function() {
-        $scope.availableStates = [];
-
-        angular.forEach($scope.states, function(value) {
-            if (value.countryId === $scope.user.country.id) {
-                $scope.availableStates.push(value);
             }
         });
     };
