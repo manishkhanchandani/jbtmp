@@ -121,6 +121,25 @@ a{
 .container .signIn {
     margin-left: 185px;
 }
+.dropdown:hover ul.dropdown-menu{
+    display: block;   
+    top:94%;
+}
+.dropdown .btn{
+    padding: 14px 12px;
+    border-radius: 0;
+    color:#FFF;
+}
+.dropdown:hover{
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+.dropdown:hover .btn{
+    background:#FFF;
+    height: 50px;
+    position: relative;
+    z-index: 1001;
+    color: #333333;
+}
 
 /*Employer Post */
 
