@@ -30,10 +30,12 @@ class MainController extends Controller
             }
             //$cache = $this->get('jobs_service.cache')->load('users');
             //$result = $cache->getItem($token, $success);
-            if (empty($success)) {
+            $cache = $this->get('jobs_service.cachev1')->init();
+            $res = $cache->load($token);
+            if (empty($res)) {
                 throw new \Exception('Unauthorised Access', 404);
             }
-            //$cache->touchItem($token);
+            $cache->touch($token, 3600);
             $this->userId = $result->getUserId();
             $this->email = $result->getEmail();
             $this->userType = $result->getUserType();
