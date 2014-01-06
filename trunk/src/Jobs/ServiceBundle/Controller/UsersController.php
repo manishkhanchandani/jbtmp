@@ -136,14 +136,9 @@ class UsersController extends MainController
             setcookie('email', $email, $tm, '/');
             setcookie('accessToken', $key, $tm, '/');
             setcookie('userType', $userData->getUserType(), $tm, '/');
-            //update this key for this user
-            /*$cache = $this->get('jobs_service.cache')->load('users');
-            $cache->removeItem($key);
-            $result = $cache->getItem($key, $success);
-            if (!$success) {
-                $result = $userData;
-                $cache->setItem($key, $result);
-            }*/
+            $cache = $this->get('jobs_service.cachev1')->init();
+            $cache->remove($key);
+            $cache->save($userData, $key);
             $msg = 'Success';
             $result = 1;
         } catch (\Exception $e) {
