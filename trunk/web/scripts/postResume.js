@@ -10,7 +10,7 @@ resumePostModule.controller('PostResumeController', function($scope, $http) {
             $scope.files = "";
             $scope.files = element.files[0];
             console.log($scope.files);
-            $scope.progressVisible = false
+            $scope.progressVisible = false;
         });
     };
     $scope.submitResume = function() {
