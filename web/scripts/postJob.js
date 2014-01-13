@@ -50,23 +50,56 @@ jobPostModule.controller('PostJobController', function($scope, $http, userServic
     });
 
     $scope.submitJob = function() {
-        $http({
-            method: 'POST',
-            url: globals.path + 'api/employer/post',
-            data: $.param($scope.job), /* pass in data as strings*/
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}  /* set the headers so angular passing info as form data (not request payload)*/
-        })
-                .success(function(data) {
-                    console.log(data);
 
-                    if (!data.success) {
-                        // if not successful, bind errors to error variables
-                        $scope.message = data.message;
-                    } else {
-                        // if successful, bind success message to message
-                        $scope.message = data.message;
-                        window.location.href = globals.path + 'employer/post/confirm';
-                    }
-                });
+        if ($scope.jobForm.$valid) {
+            $http({
+                method: 'POST',
+                url: globals.path + 'api/employer/post',
+                data: $.param($scope.job), /* pass in data as strings*/
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}  /* set the headers so angular passing info as form data (not request payload)*/
+            })
+                    .success(function(data) {
+                        console.log(data);
+
+                        if (!data.success) {
+                            // if not successful, bind errors to error variables
+                            $scope.message = data.message;
+                        } else {
+                            // if successful, bind success message to message
+                            $scope.message = data.message;
+                            window.location.href = globals.path + 'employer/post/confirm';
+                        }
+                    });
+        } else {
+            $scope.message = "There are required fields to complete";
+        }
     };
+});
+
+
+
+jobPostModule.controller('PopUpController', function($scope, $http, $templateCache) {
+
+    $scope.externalPopopen = function(popupid) {
+        console.log("external Controller");
+        var templateCacheId = 'example1-template';
+        var html = $templateCache.get(templateCacheId);
+        if (!html) {
+            $http.get('jobPreview.html.php').success(function(html) {
+                loadDidComplete(html);
+            });
+        }
+        else {
+            loadDidComplete(html);
+        }
+    };
+    $scope.loadDidComplete = function(html) {
+        $templateCache.put(templateCacheId, html);
+        $scope.$broadcast('open_ngpopup', {id: popupid, template: templateCacheId});
+    };
+
+    $scope.internalPopOpen = function(popupid, templateId) {
+        $scope.$broadcast('open_ngpopup', {id: popupid, template: templateId});
+    };
+
 });
