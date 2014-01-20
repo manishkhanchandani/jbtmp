@@ -6,7 +6,7 @@ resumePreviewModule.controller('previewController', function($scope, $http) {
     $scope.showpreview = function() {
      return http({
             method: 'GET',
-            url: '/api/resume/preview?id='+data.id,
+            url: '/api/resume/preview?id='+pageData.id,
             data: $.param($scope.resume), /* pass in data as strings*/
             headers: {'Content-Type': 'application/x-www-form-urlencoded'} /* set the headers so angular passing info as form data (not request payload)*/
         })
