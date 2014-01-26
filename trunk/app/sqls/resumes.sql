@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: remote-mysql3.servage.net
--- Generation Time: Dec 08, 2013 at 02:30 AM
+-- Generation Time: Jan 26, 2014 at 04:16 AM
 -- Server version: 5.5.25
 -- PHP Version: 5.2.42-servage26
 
@@ -31,8 +31,17 @@ CREATE TABLE IF NOT EXISTS `resumes` (
   `resume_title` varchar(200) DEFAULT NULL,
   `resume_show` int(1) DEFAULT '1',
   `resume_content` longtext,
-  `resume_type` int(4) NOT NULL DEFAULT '1',
+  `resume_type` int(4) DEFAULT '1',
   `resume_skills` varchar(255) DEFAULT NULL,
+  `resume_contact` varchar(200) DEFAULT NULL,
+  `resume_avail` varchar(200) DEFAULT NULL,
+  `resume_work` varchar(200) DEFAULT NULL,
+  `resume_edu` varchar(200) DEFAULT NULL,
+  `resume_school` varchar(200) DEFAULT NULL,
+  `resume_major` varchar(200) DEFAULT NULL,
+  `resume_workexp` varchar(200) DEFAULT NULL,
+  `resume_prefloc` varchar(200) DEFAULT NULL,
+  `resume_filename` varchar(500) DEFAULT NULL,
   `resume_created_dt` bigint(20) DEFAULT NULL,
   `resume_modified_dt` bigint(20) DEFAULT NULL,
   `resume_deleted_td` bigint(20) DEFAULT NULL,

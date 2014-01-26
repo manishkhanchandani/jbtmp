@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: remote-mysql3.servage.net
--- Generation Time: Dec 08, 2013 at 02:30 AM
+-- Generation Time: Jan 26, 2014 at 04:14 AM
 -- Server version: 5.5.25
 -- PHP Version: 5.2.42-servage26
 
@@ -37,21 +37,24 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   `zipcode` varchar(50) DEFAULT NULL,
   `skills` varchar(255) DEFAULT NULL,
   `description` text,
-  `application_method` int(4) DEFAULT NULL,
+  `application_method` varchar(10) DEFAULT NULL,
   `application_email` varchar(150) DEFAULT NULL,
   `application_email_cc` varchar(150) DEFAULT NULL,
   `application_url` varchar(500) DEFAULT NULL,
-  `show_name` int(1) NOT NULL DEFAULT '0',
-  `show_address1` int(1) NOT NULL DEFAULT '1',
-  `show_address_2` int(1) NOT NULL DEFAULT '1',
-  `show_city` int(1) NOT NULL DEFAULT '1',
-  `show_zipcode` int(1) NOT NULL DEFAULT '1',
-  `show_phone` int(1) NOT NULL DEFAULT '0',
-  `show_email` int(1) NOT NULL DEFAULT '0',
+  `show_name` tinyint(1) DEFAULT NULL,
+  `show_address1` tinyint(1) DEFAULT NULL,
+  `show_address_2` tinyint(1) DEFAULT NULL,
+  `show_city` tinyint(1) DEFAULT NULL,
+  `show_state` tinyint(1) DEFAULT NULL,
+  `show_zipcode` tinyint(1) DEFAULT NULL,
+  `show_phone` tinyint(1) DEFAULT NULL,
+  `show_email` tinyint(1) DEFAULT NULL,
   `job_created_dt` bigint(20) DEFAULT NULL,
   `job_modified_dt` bigint(20) DEFAULT NULL,
   `job_deleted_dt` bigint(20) DEFAULT NULL,
   `job_deleted` int(1) NOT NULL DEFAULT '0',
   `job_status` int(1) NOT NULL DEFAULT '1',
+  `latitude` float DEFAULT NULL,
+  `longitude` float DEFAULT NULL,
   PRIMARY KEY (`job_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
