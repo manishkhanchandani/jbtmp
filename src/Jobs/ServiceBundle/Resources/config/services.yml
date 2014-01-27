@@ -3,6 +3,7 @@ parameters:
     jobs_service.cache.class: Jobs\ServiceBundle\Models\Cache
     jobs_service.cachev1.class: Jobs\ServiceBundle\Models\Cachev1
     jobs_service.email.class: Jobs\ServiceBundle\Models\Email
+    jobs_service.dataprovider.class: Jobs\ServiceBundle\Models\DataProvider
 
 services:
 #    jobs_service.example:
@@ -17,3 +18,6 @@ services:
     jobs_service.email:
         class:     "%jobs_service.email.class%"
         arguments: ["@mailer", "@templating"]
+    jobs_service.dataprovider:
+      class: "%jobs_service.dataprovider.class%"
+      arguments: ["@service_container"]

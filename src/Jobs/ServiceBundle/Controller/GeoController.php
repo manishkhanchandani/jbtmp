@@ -120,7 +120,7 @@ class GeoController extends MainController
         try {
             $id = $request->query->get('id');
             if (empty($id)) throw new \Exception('Please choose state', 1113);
-            $key = 'city_'.$id;
+            $key = 'citys_'.$id;
             $cache = $this->get('jobs_service.cachev1')->init();
             $res = $cache->load($key);
             if (empty($res)) {
@@ -135,11 +135,11 @@ class GeoController extends MainController
                 if (!empty($data)) {
                     foreach ($data as $k => $v) {
                         $res[$k]['name'] = $v->getName();
-                        $res[$k]['id'] = $v->getStaId();
-                        //$res[$k]['con_id'] = $v->getConId();
-                        //$res[$k]['sta_id'] = $v->getStaId();
-                        //$res[$k]['latitude'] = $v->getLatitude();
-                        //$res[$k]['longitude'] = $v->getLongitude();
+                        $res[$k]['id'] = $v->getCtyId();
+                        $res[$k]['con_id'] = $v->getConId();
+                        $res[$k]['sta_id'] = $v->getStaId();
+                        $res[$k]['latitude'] = $v->getLatitude();
+                        $res[$k]['longitude'] = $v->getLongitude();
                     }
                 }
                 $cache->save($res, $key);
@@ -155,4 +155,6 @@ class GeoController extends MainController
         return new Response($json);
         
     }
+    
+    
 }
