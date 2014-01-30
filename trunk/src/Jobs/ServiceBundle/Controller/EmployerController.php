@@ -35,7 +35,7 @@ class EmployerController extends MainController
             $jobs->setApplicationUrl($request->request->get('url'));
             $city = $request->request->get('city');
             $cityId = isset($city['id']) ? $city['id'] : null;
-            $jobs->setCity($$cityId);
+            $jobs->setCity($cityId);
             $state = $request->request->get('state');
             $stateId = isset($state['id']) ? $state['id'] : null;
             $jobs->setState($stateId);
@@ -54,7 +54,7 @@ class EmployerController extends MainController
             $jobs->setShowEmail($this->setCheckbox($request->request->get('contact_email')));
             $jobs->setShowPhone($this->setCheckbox($request->request->get('contact_phone')));
             $jobs->setShowZipcode($this->setCheckbox($request->request->get('contact_zip')));
-            $latitdue = isset($city['latitude']) ? $city['latitude'] : null;
+            $latitude = isset($city['latitude']) ? $city['latitude'] : null;
             $longitude = isset($city['longitude']) ? $city['longitude'] : null;
             $jobs->setLatitude($latitude);
             $jobs->setLongitude($longitude);
