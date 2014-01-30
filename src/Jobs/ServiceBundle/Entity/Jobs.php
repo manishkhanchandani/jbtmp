@@ -240,17 +240,6 @@ class Jobs
     }
 
 
-    /**
-     * Set cityId
-     *
-     * @param integer $cityId
-     * @return Jobs
-     */
-    public function setCityId($cityId)
-    {
-        $this->cityId = $cityId;
-    }
-
 
     /**
      * Set city
@@ -876,5 +865,18 @@ class Jobs
     public function getLongitude()
     {
         return $this->longitude;
+    }
+
+    /**
+     * Set cityId
+     *
+     * @param integer $cityId
+     * @return Jobs
+     */
+    public function setCityId($cityId)
+    {
+        $this->cityId = $cityId;
+    
+        return $this;
     }
 }
