@@ -26,6 +26,11 @@ Jobs\ServiceBundle\Entity\Jobs:
             unsigned: false
             nullable: true
             column: position_type
+        cityId:
+            type: integer
+            unsigned: false
+            nullable: true
+            column: city_id
         city:
             type: string
             length: 50

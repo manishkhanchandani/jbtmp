@@ -41,3 +41,6 @@ jobs_service_geo_cities:
 jobs_service_resume_preview:
     pattern:  /api/resume/preview
     defaults: { _controller: JobsServiceBundle:Resume:preview }
+jobs_service_resume_preview:
+    pattern:  /api/myjobs
+    defaults: { _controller: JobsServiceBundle:Employer:jobs }
