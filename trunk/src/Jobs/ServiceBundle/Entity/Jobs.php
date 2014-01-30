@@ -30,6 +30,11 @@ class Jobs
     private $positionType;
 
     /**
+     * @var integer
+     */
+    private $cityId;
+
+    /**
      * @var string
      */
     private $city;
@@ -223,6 +228,29 @@ class Jobs
     {
         return $this->positionType;
     }
+
+    /**
+     * Get cityId
+     *
+     * @return integer 
+     */
+    public function getCityId()
+    {
+        return $this->cityId;
+    }
+
+
+    /**
+     * Set cityId
+     *
+     * @param integer $cityId
+     * @return Jobs
+     */
+    public function setCityId($cityId)
+    {
+        $this->cityId = $cityId;
+    }
+
 
     /**
      * Set city

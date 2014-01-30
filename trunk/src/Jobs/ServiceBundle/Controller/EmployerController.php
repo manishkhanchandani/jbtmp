@@ -34,13 +34,15 @@ class EmployerController extends MainController
             $jobs->setApplicationEmailCc($request->request->get('CCemail'));
             $jobs->setApplicationUrl($request->request->get('url'));
             $city = $request->request->get('city');
+            $city = isset($city['name']) ? $city['name'] : null;
+            $jobs->setCity($city);
             $cityId = isset($city['id']) ? $city['id'] : null;
-            $jobs->setCity($cityId);
+            $jobs->setCityId($cityId);
             $state = $request->request->get('state');
-            $stateId = isset($state['id']) ? $state['id'] : null;
+            $stateId = isset($state['name']) ? $state['name'] : null;
             $jobs->setState($stateId);
             $country = $request->request->get('country');
-            $countryId = isset($country['id']) ? $country['id'] : null;
+            $countryId = isset($country['name']) ? $country['name'] : null;
             $jobs->setCountry($countryId);
             $jobs->setAreaCode($request->request->get('areaCode'));
             $jobs->setZipcode($request->request->get('postalCode'));
@@ -63,6 +65,7 @@ class EmployerController extends MainController
             $jobs->setJobDeletedDt(0);
             $jobs->setJobModifiedDt($created);
             $jobs->setJobStatus(1);
+            pr($jobs);
             $em = $this->getDoctrine()->getManager();
             $em->persist($jobs);
             $em->flush();
@@ -76,5 +79,54 @@ class EmployerController extends MainController
         $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'post' => $_POST);
         $json = json_encode($arr);
         return new Response($json);
+    }
+
+    
+    public function jobsAction(Request $request)
+    {
+        $result = 0;
+        $msg = '';
+        $code = 200;
+        $data = array();
+        $res = array();
+        $cached = true;
+        try {
+            $this->init($request);
+            $key = 'countries';
+            //$cache = $this->get('jobs_service.cachev1')->init();
+            //$res = $cache->load($key);
+            //if (empty($res)) {
+                $res = array();
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery(
+                    'SELECT j from JobsServiceBundle:Jobs as j WHERE j.userId = ?1 ORDER BY j.jobCreatedDt'
+                );
+                $query->setParameter(1, $this->userId);
+
+                $data = $query->getResult();
+                if (!empty($data)) {
+                    foreach ($data as $k => $v) {
+                        pr($v);
+                        //$res[$v->getName()] = $v->getConId();
+                        $res[$k]['job_id'] = $v->getJobId();
+                        $res[$k]['user_id'] = $v->getUserId();
+                        $res[$k]['title'] = $v->getTitle();
+                        $res[$k]['position_type'] = $v->getPositionType();
+                    }
+                }
+                pr($res);
+                exit;
+                //$cache->save($res, $key);
+                //$cached = false;
+            //}
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $result = 0;
+            $code = $e->getCode();
+        }
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $res);
+        $json = json_encode($arr);
+        return new Response($json);
+        
     }
 }
