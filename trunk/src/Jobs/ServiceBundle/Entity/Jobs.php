@@ -229,17 +229,6 @@ class Jobs
         return $this->positionType;
     }
 
-    /**
-     * Get cityId
-     *
-     * @return integer 
-     */
-    public function getCityId()
-    {
-        return $this->cityId;
-    }
-
-
 
     /**
      * Set city
@@ -878,5 +867,15 @@ class Jobs
         $this->cityId = $cityId;
     
         return $this;
+    }
+
+    /**
+     * Get cityId
+     *
+     * @return integer 
+     */
+    public function getCityId()
+    {
+        return $this->cityId;
     }
 }
