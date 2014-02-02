@@ -44,3 +44,6 @@ jobs_service_resume_preview:
 jobs_service_myjobs:
     pattern:  /api/myjobs
     defaults: { _controller: JobsServiceBundle:Employer:jobs }
+jobs_service_myresumes:
+    pattern:  /api/myresumes
+    defaults: { _controller: JobsServiceBundle:Resume:manage }

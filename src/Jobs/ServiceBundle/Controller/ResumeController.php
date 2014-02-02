@@ -133,46 +133,57 @@ class ResumeController extends MainController
         $result = 0;
         $msg = '';
         $code = 200;
+        $data = array();
+        $res = array();
+        $cached = true;
         try {
-            $id = $request->query->get('id');
-            $id = trim($id);
-            if (empty($id)) {
-                throw new \Exception(ErrorCode::getError(self::CODE_MISSING_ID), self::CODE_MISSING_ID);
-            }
-            $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository('JobsServiceBundle:Resumes');
-            $data = $repository->findOneByResumeId($id);
-            if (empty($data)) {
-                throw new \Exception(ErrorCode::getError(self::CODE_INVALID_DATA), self::CODE_INVALID_DATA);
-            }
-            $return = array();
-            $site_name = $this->container->getParameter('site_name');
-            $host_url = $this->container->getParameter('host_url');
-            //$data = new Resumes();
-            $return['resumeId'] = $data->getResumeId();
-            $return['userId'] = $data->getUserId();
-            $return['resumeTitle'] = $data->getResumeTitle();
-            $return['skillset'] = $data->getResumeSkills();
-            $return['startDate'] = $data->getResumeAvail();
-            $return['workAuthorization'] = $data->getResumeWork();
-            $return['education'] = $data->getResumeEdu();
-            $return['school'] = $data->getResumeSchool();
-            $return['major'] = $data->getResumeMajor();
-            $return['location'] = $data->getResumePrefloc();
-            $return['file'] = $data->getResumeFilename();
-            $return['url'] = !empty($return['file']) ? $host_url.'/'.$data->getResumeFilename() : null;
-            $return['embedded_url'] = !empty($return['file']) ? 'https://docs.google.com/viewer?url='.urlencode($return['url']).'&embedded=true' : null;
-            $return['workExperience'] = $data->getResumeWorkexp();
-            $site_name_url = $this->container->getParameter('site_name_url');
-            $msg = 'Success';
-            $result = 1;
+            $this->init($request);
+            //$key = 'countries';
+            //$cache = $this->get('jobs_service.cachev1')->init();
+            //$res = $cache->load($key);
+            //if (empty($res)) {
+                $res = array();
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery(
+                    'SELECT r from JobsServiceBundle:Resumes as r WHERE r.userId = ?1'
+                );
+                $query->setParameter(1, $this->userId);
+
+                $dataResult = $query->getResult();
+				$site_name = $this->container->getParameter('site_name');
+            	$host_url = $this->container->getParameter('host_url');
+                if (!empty($dataResult)) {
+                    foreach ($dataResult as $k => $data) {
+						$return = array();
+						$return['resumeId'] = $data->getResumeId();
+						$return['userId'] = $data->getUserId();
+						$return['resumeTitle'] = $data->getResumeTitle();
+						$return['skillset'] = $data->getResumeSkills();
+						$return['startDate'] = $data->getResumeAvail();
+						$return['workAuthorization'] = $data->getResumeWork();
+						$return['education'] = $data->getResumeEdu();
+						$return['school'] = $data->getResumeSchool();
+						$return['major'] = $data->getResumeMajor();
+						$return['location'] = $data->getResumePrefloc();
+						$return['file'] = $data->getResumeFilename();
+						$return['url'] = !empty($return['file']) ? $host_url.'/'.$data->getResumeFilename() : null;
+						$return['embedded_url'] = !empty($return['file']) ? 'https://docs.google.com/viewer?url='.urlencode($return['url']).'&embedded=true' : null;
+						$return['workExperience'] = $data->getResumeWorkexp();
+                        //$res[$v->getName()] = $v->getConId();
+                        $res[$k] = $return;
+                    }
+                }
+                //$cache->save($res, $key);
+                //$cached = false;
+            //}
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $result = 0;
             $code = $e->getCode();
         }
-        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $return);
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $res);
         $json = json_encode($arr);
         return new Response($json);
+        
     }
 }
