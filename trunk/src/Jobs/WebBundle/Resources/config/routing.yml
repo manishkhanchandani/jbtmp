@@ -43,3 +43,9 @@ jobs_web_employer_myjobs:
 jobs_web_employer_myresumes:
     pattern:  /myresumes
     defaults: { _controller: JobsWebBundle:Jobseeker:myresumes }
+
+jobs_web_jobseeker_preview_template:
+    path: /jobseeker/preview_template
+    defaults:
+        _controller: FrameworkBundle:Template:template
+        template:    'JobsWebBundle:Jobseeker:preview_template.html.php'

@@ -1,25 +1,34 @@
 'use strict';
-
-var resumePreviewModule = angular.module('resumePreview', []);
-resumePreviewModule.controller('previewController', function($scope, $http) {
-    $scope.resume = {};
-    $scope.showpreview = function() {
-     return http({
-            method: 'GET',
-            url: '/api/resume/preview?id='+pageData.id,
-            data: $.param($scope.resume), /* pass in data as strings*/
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'} /* set the headers so angular passing info as form data (not request payload)*/
-        })
-           .success(function(data) {
-            if (!data.success) {
-                // if not successful, bind errors to error variables
-                $scope.message = data.message;
-            } else {
-                // if successful, bind success message to message
-                $scope.message = data.message;
-                //window.location.href = globals.path + 'jobseeker/preview?id='+data.id;
-            }
-        });
-    };
-});
-
+var _module = angular.module('resumePreview', [
+  'myDirective'
+]);
+angular.module('myDirective', [])
+	.factory('myServiceData', ['$http', function($http) {
+		var dataFactory = {};
+		dataFactory.getRecords = function () {
+		  return $http.get('/app_dev.php/api/resume/preview?id='+pageData.id);
+		};
+		return dataFactory;
+	}])
+	.directive('myClass', function(myServiceData) {
+		return {
+		  restrict: 'C',
+		  scope: true,
+		  link: function(scope, e, a) {
+			  myServiceData.getRecords()
+				.success(function (returnData) {
+					//console.log(returnData);
+					scope.data = returnData.data;
+					if (returnData.data.embedded_url) {
+						//document.getElementById('myresumedata').src = returnData.data.embedded_url;
+						jQuery('#myresumedata').attr('src', returnData.data.embedded_url);
+					}
+					//console.log(scope.data);
+				})
+				.error(function (error) {
+					scope.status = 'Unable to load data';
+				});
+		  },
+		  templateUrl: './preview_template'
+		};
+	})
