@@ -6,7 +6,7 @@ angular.module('myDirective', [])
 	.factory('myServiceData', ['$http', function($http) {
 		var dataFactory = {};
 		dataFactory.getRecords = function () {
-		  return $http.get('/app_dev.php/api/resume/preview?id='+pageData.id);
+		  return $http.get(globals.base_path+'api/resume/preview?id='+pageData.id);
 		};
 		return dataFactory;
 	}])
