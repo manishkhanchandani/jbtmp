@@ -26,4 +26,13 @@ class JobseekerController extends MainController
         $this->session->remove('_redirectURL');
         return $this->render('JobsWebBundle:Jobseeker:preview.html.php', array('id' => $id));
     }
+    public function myresumesAction()
+    {
+        if (empty($_COOKIE['accessToken'])) {
+            $this->session->set('_redirectURL', $url = $this->generateUrl('jobs_web_employer_myresumes'));
+            return $this->redirect($this->generateUrl('jobs_web_auth_login'));
+        }
+        $this->session->remove('_redirectURL');
+        return $this->render('JobsWebBundle:Jobseeker:myresumes.html.php', array());
+    }
 }
