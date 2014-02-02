@@ -15,4 +15,13 @@ class EmployerController extends MainController
         $this->session->remove('_redirectURL');
         return $this->render('JobsWebBundle:Employer:post.html.php', array());
     }
+    public function myjobsAction()
+    {
+        if (empty($_COOKIE['accessToken'])) {
+            $this->session->set('_redirectURL', $url = $this->generateUrl('jobs_web_employer_myjobs'));
+            return $this->redirect($this->generateUrl('jobs_web_auth_login'));
+        }
+        $this->session->remove('_redirectURL');
+        return $this->render('JobsWebBundle:Employer:myjobs.html.php', array());
+    }
 }
