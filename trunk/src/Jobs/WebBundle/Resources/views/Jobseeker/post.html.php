@@ -18,7 +18,7 @@
             <label class="col-md-2">Contact Number</label>
             <div class="col-md-4">
                 <input class="form-control" type="text" 
-                       ng-model="resume.contactNumber">
+                       ng-model="resume.contactNumber" name="contactNumber">
             </div>
         </div>
         
