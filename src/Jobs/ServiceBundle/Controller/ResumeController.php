@@ -36,7 +36,7 @@ class ResumeController extends MainController
             $resumes->setResumeSchool($request->request->get('school'));
             $resumes->setResumeMajor($request->request->get('major'));
             $resumes->setResumeWorkexp($request->request->get('workExperience'));
-            $resumes->setResumeSkills($request->request->get('skillset'));
+            $resumes->setResumeSkills($request->request->get('skillSet'));
             $resumes->setResumePrefloc($request->request->get('location'));
             $resumes->setResumeCreatedDt($created);
             $resumes->setResumeDeleted(0);
@@ -103,7 +103,7 @@ class ResumeController extends MainController
             $return['resumeId'] = $data->getResumeId();
             $return['userId'] = $data->getUserId();
             $return['resumeTitle'] = $data->getResumeTitle();
-            $return['skillset'] = $data->getResumeSkills();
+            $return['skillSet'] = $data->getResumeSkills();
             $return['startDate'] = $data->getResumeAvail();
             $return['workAuthorization'] = $data->getResumeWork();
             $return['education'] = $data->getResumeEdu();
@@ -111,6 +111,7 @@ class ResumeController extends MainController
             $return['major'] = $data->getResumeMajor();
             $return['location'] = $data->getResumePrefloc();
             $return['file'] = $data->getResumeFilename();
+            $return['contactNumber'] = $data->getResumeContact();
             $return['url'] = !empty($return['file']) ? $host_url.'/'.$data->getResumeFilename() : null;
             $return['embedded_url'] = !empty($return['file']) ? 'https://docs.google.com/viewer?url='.urlencode($return['url']).'&embedded=true' : null;
             $return['workExperience'] = $data->getResumeWorkexp();
