@@ -24,10 +24,26 @@
                                ng-model="job.number" name="number">
                     </div>
                 </div><hr>
+                <div class="form-group" ng-controller="datePickerCtrl">
+                    <label class="col-md-2">Job Expiry Date</label>
+                    <div class="col-md-4">
+                        <input class="form-control" type="text" readonly="readonly"
+                               ng-model="job.expiryDate" datepicker name="expiryDate" />
+                    </div>
+                </div><hr>
+                <div class="form-group">
+                    <label class="col-md-2">Job Status</label>
+                    <div class="col-md-4">
+                        <select class="form-control" ng-model="job.status" name="status">
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+                </div><hr>
                 <div class="form-group">
                     <label class="col-md-2">Job Position Type</label>
                     <div class="col-md-4">
-                        <select class="form-control" multiple="multiple" ng-model="job.position" name="position"
+                        <select class="form-control job-position" multiple="multiple" ng-model="job.position" name="position"
                                 ng-options="job.position for job in jobPosition"></select>
                     </div>
                 </div><hr>

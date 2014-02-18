@@ -145,9 +145,10 @@ a{
 
 select.form-control {
     border-color: #00306B;
+}
+select.job-position{
     height: 132px;
 }
-
 /*Post Resume*/
 form input[type="file"] {
     border: medium none;
@@ -183,4 +184,14 @@ form input[type="file"] {
 a.ngpopup {
     color: #0000FF;
     cursor:pointer;
+}
+
+/* manage jobs */
+table.jobsContainer {
+    box-shadow: 0 1px 8px 1px #CCCCCC;
+    width: 100%;
+}
+
+.jobsContainer thead {
+    border-bottom: 2px solid #CCCCCC;
 }
