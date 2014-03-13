@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Jobs\ServiceBundle\Entity\Jobs;
-use Jobs\ServiceBundle\Entity\JobsRepository;
-use Jobs\ServiceBundle\Models\ErrorCode;
 
 class EmployerController extends MainController
 {
@@ -138,6 +136,83 @@ class EmployerController extends MainController
                         $res[$k]['longitude'] = $v->getLongitude();
                     }
                 }
+                //$cache->save($res, $key);
+                //$cached = false;
+            //}
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $result = 0;
+            $code = $e->getCode();
+        }
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $res);
+        $json = json_encode($arr);
+        return new Response($json);
+        
+    }
+    
+    
+    public function previewAction(Request $request)
+    {
+        $result = 0;
+        $msg = '';
+        $code = 200;
+        $data = array();
+        $res = array();
+        $cached = true;
+        try {
+            $this->init($request);
+            $jobId = $request->query->get('jobId');
+            if (empty($jobId)) {
+                throw new \Exception('Job Id not found in url.');
+            }
+            $key = 'countries';
+            //$cache = $this->get('jobs_service.cachev1')->init();
+            //$res = $cache->load($key);
+            //if (empty($res)) {
+                $res = array();
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery(
+                    'SELECT j from JobsServiceBundle:Jobs as j WHERE j.jobId = ?1 ORDER BY j.jobCreatedDt'
+                );
+                $query->setParameter(1, $jobId);
+
+                $data = $query->getResult();
+                if (!empty($data)) {
+                    foreach ($data as $k => $v) {
+                        //$res[$v->getName()] = $v->getConId();
+                        $res[$k]['job_id'] = $v->getJobId();
+                        $res[$k]['user_id'] = $v->getUserId();
+                        $res[$k]['title'] = $v->getTitle();
+                        $res[$k]['position_type'] = $v->getPositionType();
+                        $res[$k]['city'] = $v->getCity();
+                        $res[$k]['state'] = $v->getState();
+                        $res[$k]['country'] = $v->getCountry();
+                        $res[$k]['area_code'] = $v->getAreaCode();
+                        $res[$k]['zip_code'] = $v->getZipcode();
+                        $res[$k]['skills'] = $v->getSkills();
+                        $res[$k]['description'] = $v->getDescription();
+                        $res[$k]['application_method'] = $v->getApplicationMethod();
+                        $res[$k]['application_email'] = $v->getApplicationEmail();
+                        $res[$k]['application_email_cc'] = $v->getApplicationEmailCc();
+                        $res[$k]['application_url'] = $v->getApplicationUrl();
+                        $res[$k]['show_name'] = $v->getShowName();
+                        $res[$k]['show_address1'] = $v->getShowAddress1();
+                        $res[$k]['show_address2'] = $v->getShowAddress2();
+                        $res[$k]['get_show_city'] = $v->getShowCity();
+                        $res[$k]['show_zipcode'] = $v->getShowZipcode();
+                        $res[$k]['show_phone'] = $v->getShowPhone();
+                        $res[$k]['show_email'] = $v->getShowEmail();
+                        $res[$k]['job_created_dt'] = $v->getJobCreatedDt();
+                        $res[$k]['job_modified_dt'] = $v->getJobModifiedDt();
+                        $res[$k]['job_deleted_dt'] = $v->getJobDeletedDt();
+                        $res[$k]['job_deleted'] = $v->getJobDeleted();
+                        $res[$k]['job_status'] = $v->getJobStatus();
+                        $res[$k]['show_state'] = $v->getShowState();
+                        $res[$k]['latitude'] = $v->getLatitude();
+                        $res[$k]['longitude'] = $v->getLongitude();
+                    }
+                }
+                $res = array_pop($res);
                 //$cache->save($res, $key);
                 //$cached = false;
             //}
