@@ -184,6 +184,39 @@ class EmployerController extends MainController
         return new Response($json);
     }
     
+    
+    
+    public function deleteAction(Request $request)
+    {
+        $result = 0;
+        $msg = '';
+        $code = 200;
+        try {
+            $this->init($request);
+            $delete = $request->request->get('delete');
+            //$delete = array('jobId', 'jobid2');
+            if (empty($delete)) {
+                throw new \Exception('JobIds not found.');
+            }
+            $em = $this->getDoctrine()->getManager();
+            foreach ($delete as $jobId) {
+                $jobs = $em->getRepository('JobsServiceBundle:Jobs')->find($jobId);
+                $em->remove($jobs);
+                $em->flush();
+            }
+            $msg = 'Success';
+            $result = 1;
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $result = 0;
+            $code = $e->getCode();
+        }
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'post' => $_POST);
+        $json = json_encode($arr);
+        return new Response($json);
+    }
+
+    
     public function jobsAction(Request $request)
     {
         $result = 0;
