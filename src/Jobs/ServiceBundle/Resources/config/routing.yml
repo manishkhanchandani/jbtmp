@@ -44,9 +44,15 @@ jobs_service_resume_preview:
 jobs_service_myjobs:
     pattern:  /api/myjobs
     defaults: { _controller: JobsServiceBundle:Employer:jobs }
-jobs_service_myjobs:
+jobs_service_previewjob:
     pattern:  /api/employer/preview
     defaults: { _controller: JobsServiceBundle:Employer:preview }
+jobs_service_updatejob:
+    pattern:  /api/employer/update
+    defaults: { _controller: JobsServiceBundle:Employer:update }
+jobs_service_statuschangejob:
+    pattern:  /api/employer/statuschange
+    defaults: { _controller: JobsServiceBundle:Employer:statuschange }
 jobs_service_myresumes:
     pattern:  /api/myresumes
     defaults: { _controller: JobsServiceBundle:Resume:manage }
