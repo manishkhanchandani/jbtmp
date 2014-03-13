@@ -53,6 +53,9 @@ jobs_service_updatejob:
 jobs_service_statuschangejob:
     pattern:  /api/employer/statuschange
     defaults: { _controller: JobsServiceBundle:Employer:statuschange }
+jobs_service_deletejob:
+    pattern:  /api/employer/delete
+    defaults: { _controller: JobsServiceBundle:Employer:delete }
 jobs_service_myresumes:
     pattern:  /api/myresumes
     defaults: { _controller: JobsServiceBundle:Resume:manage }
