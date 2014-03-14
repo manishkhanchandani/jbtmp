@@ -153,6 +153,76 @@ class EmployerController extends MainController
     }
 
     
+    public function activeAction(Request $request)
+    {
+        $result = 0;
+        $msg = '';
+        $code = 200;
+        try {
+            $this->init($request);
+            $statusTxt = $request->request->get('status');
+            //$status = array('jobId' => status, 'jobid2' => status);
+            if (empty($statusTxt)) {
+                throw new \Exception('Status not found.');
+            }
+            $status = explode(',', $statusTxt);
+            $created = tstobts(time());
+            $em = $this->getDoctrine()->getManager();
+            $value = 1;
+            foreach ($status as $jobId) {
+                $jobId = trim($jobId);
+                $jobs = $em->getRepository('JobsServiceBundle:Jobs')->find($jobId);
+                $jobs->setJobStatus($value);
+                $em->flush();
+            }
+            $msg = 'Success';
+            $result = 1;
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $result = 0;
+            $code = $e->getCode();
+        }
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'post' => $_POST);
+        $json = json_encode($arr);
+        return new Response($json);
+    }
+    
+    
+    public function inactiveAction(Request $request)
+    {
+        $result = 0;
+        $msg = '';
+        $code = 200;
+        try {
+            $this->init($request);
+            $statusTxt = $request->request->get('status');
+            //$status = array('jobId' => status, 'jobid2' => status);
+            if (empty($statusTxt)) {
+                throw new \Exception('Status not found.');
+            }
+            $status = explode(',', $statusTxt);
+            $created = tstobts(time());
+            $em = $this->getDoctrine()->getManager();
+            $value = 0;
+            foreach ($status as $jobId) {
+                $jobId = trim($jobId);
+                $jobs = $em->getRepository('JobsServiceBundle:Jobs')->find($jobId);
+                $jobs->setJobStatus($value);
+                $em->flush();
+            }
+            $msg = 'Success';
+            $result = 1;
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $result = 0;
+            $code = $e->getCode();
+        }
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'post' => $_POST);
+        $json = json_encode($arr);
+        return new Response($json);
+    }
+    
+    
     public function statuschangeAction(Request $request)
     {
         $result = 0;
@@ -193,13 +263,15 @@ class EmployerController extends MainController
         $code = 200;
         try {
             $this->init($request);
-            $delete = $request->request->get('delete');
+            $deleteTxt = $request->request->get('status');
             //$delete = array('jobId', 'jobid2');
-            if (empty($delete)) {
+            if (empty($deleteTxt)) {
                 throw new \Exception('JobIds not found.');
             }
+            $delete = explode(',', $deleteTxt);
             $em = $this->getDoctrine()->getManager();
             foreach ($delete as $jobId) {
+                $jobId = trim($jobId);
                 $jobs = $em->getRepository('JobsServiceBundle:Jobs')->find($jobId);
                 $em->remove($jobs);
                 $em->flush();
@@ -264,9 +336,9 @@ class EmployerController extends MainController
                         $res[$k]['show_zipcode'] = $v->getShowZipcode();
                         $res[$k]['show_phone'] = $v->getShowPhone();
                         $res[$k]['show_email'] = $v->getShowEmail();
-                        $res[$k]['job_created_dt'] = $v->getJobCreatedDt();
-                        $res[$k]['job_modified_dt'] = $v->getJobModifiedDt();
-                        $res[$k]['job_deleted_dt'] = $v->getJobDeletedDt();
+                        $res[$k]['job_created_dt'] = date('Y-m-d', btstots($v->getJobCreatedDt()));
+                        $res[$k]['job_modified_dt'] = date('Y-m-d', $v->getJobModifiedDt());
+                        $res[$k]['job_deleted_dt'] = date('Y-m-d', $v->getJobDeletedDt());
                         $res[$k]['job_deleted'] = $v->getJobDeleted();
                         $res[$k]['job_status'] = $v->getJobStatus();
                         $res[$k]['show_state'] = $v->getShowState();
