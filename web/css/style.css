@@ -28,7 +28,7 @@ input[required].ng-valid.ng-dirty {
 
 form[novalidate] input{
     border-left-width: 8px;
-    border-color:#00306B; //#3498db;
+    border-color:#00306B; /*#3498db;*/
     border-style: solid;
 }
 .form-control {
@@ -194,4 +194,16 @@ table.jobsContainer {
 
 .jobsContainer thead {
     border-bottom: 2px solid #CCCCCC;
+}
+
+.jobsContainer .active > td, .jobsContainer .inActive > td, .jobsContainer thead td{
+    border: 1px solid #CCCCCC;
+    padding: 2px 10px;
+}
+.jobsContainer .active > td{
+    background: none repeat scroll 0 0 #FFF;
+}
+
+.jobsContainer .inActive > td{
+    background: none repeat scroll 0 0 #EEE;
 }
