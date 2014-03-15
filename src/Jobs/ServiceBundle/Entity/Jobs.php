@@ -25,6 +25,11 @@ class Jobs
     private $title;
 
     /**
+     * @var string
+     */
+    private $number;
+
+    /**
      * @var integer
      */
     private $positionType;
@@ -206,6 +211,32 @@ class Jobs
         return $this->title;
     }
 
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+
+    /**
+     * Set number
+     *
+     * @param string $number
+     * @return Jobs
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    
     /**
      * Set positionType
      *

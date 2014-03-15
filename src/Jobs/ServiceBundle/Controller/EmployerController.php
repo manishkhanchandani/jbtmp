@@ -42,6 +42,7 @@ class EmployerController extends MainController
             $country = $request->request->get('country');
             $countryId = isset($country['name']) ? $country['name'] : null;
             $jobs->setCountry($countryId);
+            $jobs->setNumber($request->request->get('number'));
             $jobs->setAreaCode($request->request->get('areaCode'));
             $jobs->setZipcode($request->request->get('postalCode'));
             $jobs->setSkills($request->request->get('skills'));
@@ -103,6 +104,7 @@ class EmployerController extends MainController
             $position = $request->request->get('position');
             $position_type = $position[0]['id'];
             $jobs->setPositionType($position_type);
+            $jobs->setNumber($request->request->get('number'));
             $jobs->setApplicationMethod($request->request->get('apply'));
             $jobs->setApplicationEmail($request->request->get('email'));
             $jobs->setApplicationEmailCc($request->request->get('CCemail'));
@@ -317,6 +319,7 @@ class EmployerController extends MainController
                         $res[$k]['job_id'] = $v->getJobId();
                         $res[$k]['user_id'] = $v->getUserId();
                         $res[$k]['title'] = $v->getTitle();
+                        $res[$k]['number'] = $v->getNumber();
                         $res[$k]['position_type'] = $v->getPositionType();
                         $res[$k]['city'] = $v->getCity();
                         $res[$k]['state'] = $v->getState();
@@ -393,6 +396,7 @@ class EmployerController extends MainController
                         $res[$k]['job_id'] = $v->getJobId();
                         $res[$k]['user_id'] = $v->getUserId();
                         $res[$k]['title'] = $v->getTitle();
+                        $res[$k]['number'] = $v->getNumber();
                         $res[$k]['position_type'] = $v->getPositionType();
                         $res[$k]['city'] = $v->getCity();
                         $res[$k]['state'] = $v->getState();

@@ -21,6 +21,11 @@ Jobs\ServiceBundle\Entity\Jobs:
             length: 200
             fixed: false
             nullable: true
+        number:
+            type: string
+            length: 255
+            fixed: false
+            nullable: true
         positionType:
             type: integer
             unsigned: false
