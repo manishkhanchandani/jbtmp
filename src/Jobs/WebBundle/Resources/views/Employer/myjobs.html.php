@@ -41,14 +41,13 @@
                         <td ng-if="job.job_status == 1">Active</td>
                         <td>{{job.job_created_dt}}</td>
                         <td>
-                            <a>Edit</a>
+                            <a href="preview?jobId={{job.job_id}}">Edit</a>
                             <a>Preview</a>
                             <a>Applications</a>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            {{selectedJobs}}
         </form>
     </div>
 </div>
