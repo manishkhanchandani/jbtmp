@@ -64,7 +64,7 @@ getJobsModule.controller('getJobsController', function($scope, $http, $filter, m
         var activeJob = $http({
             method: 'POST',
             data: "status="+$scope.selectedJobs,
-            url: globals.path + 'api/employer/statuschange',
+            url: globals.path + 'api/employer/active',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
 
@@ -79,7 +79,7 @@ getJobsModule.controller('getJobsController', function($scope, $http, $filter, m
         var inActiveJob = $http({
             method: 'POST',
             data: "status="+$scope.selectedJobs,
-            url: globals.path + 'api/employer/statuschange',
+            url: globals.path + 'api/employer/inactive',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
 
