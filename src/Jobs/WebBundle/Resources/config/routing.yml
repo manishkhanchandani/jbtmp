@@ -37,12 +37,18 @@ jobs_web_home:
     defaults: { _controller: JobsWebBundle:Default:index }
 
 jobs_web_employer_myjobs:
-    pattern:  /myjobs
+    pattern:  /employer/myjobs
     defaults: { _controller: JobsWebBundle:Employer:myjobs }
 
-jobs_web_employer_myresumes:
-    pattern:  /myresumes
+
+jobs_web_jobseeker_myresumes:
+    pattern:  /jobseeker/myresumes
     defaults: { _controller: JobsWebBundle:Jobseeker:myresumes }
+
+jobs_web_employer_previewjobs:
+    pattern:  /employer/preview
+    defaults: { _controller: JobsWebBundle:Employer:preview }
+
 
 jobs_web_jobseeker_preview_template:
     path: /jobseeker/preview_template
