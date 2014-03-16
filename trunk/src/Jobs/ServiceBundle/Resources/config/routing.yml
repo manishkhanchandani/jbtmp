@@ -65,3 +65,6 @@ jobs_service_deletejob:
 jobs_service_myresumes:
     pattern:  /api/myresumes
     defaults: { _controller: JobsServiceBundle:Resume:manage }
+jobs_service_home:
+    pattern:  /api/home
+    defaults: { _controller: JobsServiceBundle:Default:home }

@@ -18,6 +18,12 @@ class EmployerController extends MainController
         $code = 200;
         try {
             $this->init($request);
+            if (!$request->request->get('number')) {
+                throw new \Exception('Job Number is Empty');
+            }
+            if (!$request->request->get('title')) {
+                throw new \Exception('Job Title is Empty');
+            }
             $jobId = guid();
             $created = tstobts(time());
             $jobs = new Jobs();
@@ -90,6 +96,12 @@ class EmployerController extends MainController
             $jobId = $request->query->get('jobId');
             if (empty($jobId)) {
                 throw new \Exception('Job Id not found in url.');
+            }
+            if (!$request->request->get('number')) {
+                throw new \Exception('Job Number is Empty');
+            }
+            if (!$request->request->get('title')) {
+                throw new \Exception('Job Title is Empty');
             }
             $created = tstobts(time());
             $em = $this->getDoctrine()->getManager();
