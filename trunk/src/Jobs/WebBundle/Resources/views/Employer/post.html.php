@@ -21,7 +21,7 @@
                     <label class="col-md-2">Job Number</label>
                     <div class="col-md-4">
                         <input class="form-control" type="text" 
-                               ng-model="job.number" name="number">
+                               ng-model="job.number" name="number" required>
                     </div>
                 </div><hr>
                 <div class="form-group" ng-controller="datePickerCtrl">
@@ -129,7 +129,7 @@
                 <h5>Required Skills: Enter keywords for required position</h5>
                 <div class="form-group">            
                     <div class="col-md-4">
-                        <input class="form-control" type="text" 
+                        <input class="form-control" type="text"
                                ng-model="job.skills" name="skills" required style="margin: 0px 150px;">
                     </div>
                 </div>
@@ -144,14 +144,14 @@
                 <h5>Contact Information</h5>
                 <div class="form-group">
                     <div class="col-md-4">
-                        <input class="" type="checkbox" ng-model="job.contact_name" name="contact_Info"><span> Name: {{userDetails.firstname}} {{userDetails.lastname}}</span>
-                        <br><input class="" type="checkbox" ng-model="job.contact_address1" name="contact_Info"><span> Address Line 1: {{userDetails.address}}</span>
-                        <br><input class="" type="checkbox" ng-model="job.contact_address2" name="contact_Info"><span> Address Line 2: {{userDetails.address1}}</span>
-                        <br><input class="" type="checkbox" ng-model="job.contact_city" name="contact_Info"><span> City: {{userDetails.city}}</span>
-                        <br><input class="" type="checkbox" ng-model="job.contact_state" name="contact_Info"><span> State: {{userDetails.state}}</span>
-                        <br><input class="" type="checkbox" ng-model="job.contact_zip" name="contact_Info"><span> Zip: {{userDetails.zip}}</span>
-                        <br><input class="" type="checkbox" ng-model="job.contact_phone" name="contact_Info"><span> Phone: {{userDetails.phone}}</span>
-                        <br><input class="" type="checkbox" ng-model="job.contact_email" name="contact_Info"><span> Email: {{userDetails.email}}</span>
+                        <input class="" type="checkbox" ng-model="job.contact_name" name="contact_Info"><span> Name: {{userDetails.firstname}} {{userDetails.lastname}}</span><br>
+                        <input class="" type="checkbox" ng-model="job.contact_address1" name="contact_Info"><span> Address Line 1: {{userDetails.address}}</span><br>
+                        <input class="" type="checkbox" ng-model="job.contact_address2" name="contact_Info"><span> Address Line 2: {{userDetails.address1}}</span><br>
+                        <input class="" type="checkbox" ng-model="job.contact_city" name="contact_Info"><span> City: {{userDetails.city}}</span><br>
+                        <input class="" type="checkbox" ng-model="job.contact_state" name="contact_Info"><span> State: {{userDetails.state}}</span><br>
+                        <input class="" type="checkbox" ng-model="job.contact_zip" name="contact_Info"><span> Zip: {{userDetails.zip}}</span><br>
+                        <input class="" type="checkbox" ng-model="job.contact_phone" name="contact_Info"><span> Phone: {{userDetails.phone}}</span><br>
+                        <input class="" type="checkbox" ng-model="job.contact_email" name="contact_Info"><span> Email: {{userDetails.email}}</span><br>
                     </div>
                 </div><hr>
             </form>

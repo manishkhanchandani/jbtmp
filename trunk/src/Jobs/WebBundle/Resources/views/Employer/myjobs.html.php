@@ -25,7 +25,7 @@
             <table class="jobsContainer">
                 <thead>
                     <tr>
-                        <td>Number</td>
+                        <td><input type="checkbox" ng-model="master"/> Number</td>
                         <td>Title</td>
                         <td>Status</td>
                         <td>Edit Date</td>
@@ -35,15 +35,15 @@
                 <tbody>
                 <!--<input type='search' ng-model="jobList.job_status" />-->
                     <tr ng-repeat="job in myJob| filter:jobList" ng-class="(job.job_status == 1)?'active':'inActive'";>
-                        <td><input type="checkbox" ng-model="selectedJobs[job.job_id]" value="job.job_status" name="job.job_id" ng-change="updateSelectedJobs(job.job_id)" /> </td>
+                        <td><input type="checkbox"  ng-checked="master" ng-model="selectedJobs[job.job_id]" value="job.job_status" name="job.job_id" ng-change="updateSelectedJobs(job.job_id)" /> {{job.number}}</td>
                         <td>{{job.title}}</td>
                         <td ng-if="job.job_status == 0">Inactive</td>
                         <td ng-if="job.job_status == 1">Active</td>
                         <td>{{job.job_created_dt}}</td>
                         <td>
-                            <a href="preview?jobId={{job.job_id}}">Edit</a>
-                            <a>Preview</a>
-                            <a>Applications</a>
+                            <a href=""><img src="/images/edit.jpg" width="20px" alt="Edit"/> </a>
+                            <a href="preview?jobId={{job.job_id}}"><img src="/images/preview.jpg" width="20px" alt="Preview"/></a>
+                            <a href=""><span class="appTotal">0</span></a>
                         </td>
                     </tr>
                 </tbody>
