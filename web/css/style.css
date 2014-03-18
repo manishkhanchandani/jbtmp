@@ -207,3 +207,21 @@ table.jobsContainer {
 .jobsContainer .inActive > td{
     background: none repeat scroll 0 0 #EEE;
 }
+
+/* preview job */
+
+.action-btns{
+    background: none repeat scroll 0 0 #DCDADA;
+    height: 43px;
+    padding: 5px 20px;
+}
+.appTotal{
+    background: none repeat scroll 0 0 #ADD8E6;
+    border: 1px solid #76A1AF;
+    border-radius: 5px;
+    color: #0000FF;
+    display: inline-block;
+    height: 22px;
+    padding: 0 5px;
+    width: 20px;
+}
