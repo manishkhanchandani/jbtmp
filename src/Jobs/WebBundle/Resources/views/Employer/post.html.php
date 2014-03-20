@@ -32,30 +32,32 @@
                     </div>
                 </div><hr>
                 <div class="form-group">
-                    <label class="col-md-2">Job Status</label>
+                    <!-- <label class="col-md-2">Job Status</label>
                     <div class="col-md-4">
                         <select class="form-control" ng-model="job.status" name="status">
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>
                         </select>
-                    </div>
+                    </div> -->
+                    <input type="hidden" ng-model="job.status" name="status"/>
                 </div><hr>
                 <div class="form-group">
                     <label class="col-md-2">Job Position Type</label>
                     <div class="col-md-4">
-                        <select class="form-control job-position" multiple="multiple" ng-model="job.position" name="position"
-                                ng-options="job.position for job in jobPosition"></select>
+                        <select class="form-control job-position" multiple="multiple"
+                                ng-model="job.position" name="position"
+                                ng-options="job.id as job.position for job in jobPosition"></select>
                     </div>
                 </div><hr>
                 <h5>Choose your Prefer method to receive Applications.</h5>
                 <div class="form-group">
-                    <div class="col-md-5 text-right">
+                    <div class="col-md-5 text-left">
                         <input class="btn-group" type="radio" 
                                ng-model="job.apply" value="email" 
                                name="apply" required > Apply to Email
-                        <input class="btn-group" type="radio" 
-                               ng-model="job.apply" value="url" 
-                               name="apply" required> Apply to Url
+                        <!--<input class="btn-group" type="radio"
+                               ng-model="job.apply" value="url"
+                               name="apply" required> Apply to Url -->
                     </div>
                 </div>
                 <div class="form-group" ng-show="job.apply !== 'url'">
@@ -85,9 +87,9 @@
                     <div class="form-group">
                         <label class="col-md-2">Job Country</label>
                         <div class="col-md-4">
-                            <select ng-model="job.country" name="country" 
-                                    ng-options="country.name for country in countries" 
-                                    ng-change="updateState(job.country.id)" required>
+                            <select ng-model="job.country" name="country"
+                                    ng-options="country.id as country.name for country in countries"
+                                    ng-change="updateState(job.country)" required>
                                 <option value="">Select Country</option>
                             </select>
                         </div>
@@ -95,9 +97,14 @@
                     <div class="form-group">
                         <label class="col-md-2">Job State</label>
                         <div class="col-md-4">
-                            <select ng-model="job.state" name="state" 
-                                    ng-options="state.name for state in states" 
-                                    ng-change="updateCity(job.state.id)" required>
+                            <select ng-if="states == ''" ng-model="job.state" name="state"
+                                    ng-options="state.id as state.name for state in state_info"
+                                    ng-change="updateCity(job.state)" required>
+                                <option value="">Select State</option>
+                            </select>
+                            <select ng-if="states != ''" ng-model="job.state" name="state"
+                                    ng-options="state.id as state.name for state in states"
+                                    ng-change="updateCity(job.state)" required>
                                 <option value="">Select State</option>
                             </select>
                         </div>
@@ -105,8 +112,12 @@
                     <div class="form-group">
                         <label class="col-md-2">Job City</label>
                         <div class="col-md-4">
-                            <select ng-model="job.city" name="city" 
-                                    ng-options="city.name for city in cities"  required>
+                            <select ng-if="cities == ''" ng-model="job.city" name="city"
+                                    ng-options="city.id as city.name for city in city_info" required>
+                                <option value="">Select City</option>
+                            </select>
+                            <select ng-if="cities != ''" ng-model="job.city" name="city"
+                                    ng-options="city.id as city.name for city in cities" required>
                                 <option value="">Select City</option>
                             </select>
                         </div>
@@ -163,6 +174,7 @@
             </div>
             <div class="response_messages" ng-show="message">{{message}}</div>
         </div>
+        {{job|json}}
     </div><br>
     <div ng-controller="PopUpController">
         <div id="previewButtons" ng-show="showpreviewbtns">
@@ -178,7 +190,9 @@
             <p>You will need to click 'Post' or 'Save as inactive' in order to complete the job posting process.</p>
             <button class="btn">Edit</button>
             <button class="btn" ng-disabled="jobForm.$invalid" ng-click="submitJob()">Save as Inactive</button>
-            <button class="btn register" ng-disabled="jobForm.$invalid" ng-click="submitJob()">Post</button>
+            <button ng-if="jobUpdate == ''" class="btn register" ng-disabled="jobForm.$invalid" ng-click="submitJob()">Post</button>
+            <button ng-if="jobUpdate != ''" class="btn register" ng-disabled="jobForm.$invalid" ng-click="updateJob(jobId)">Update</button><br>
+            <div style="color:blue;">{{message}}</div>
         </div>
     </div>
 
@@ -194,9 +208,9 @@
                     </div><br>
                     <div>
                         <b>Location: </b> <br>
-                        {{job.city.name}}, <br>
-                        {{job.state.name}}, <br>
-                        {{job.country.name}}
+                        {{job.city}}, <br>
+                        {{job.state}}, <br>
+                        {{job.country}}
                     </div><br>
                     <div>
                         <b>Skills: </b><br>
@@ -208,13 +222,16 @@
                     </div><br>
                     <div>
                         <b>Contact: </b><br>
-                        {{job.contact_name}},
-                        {{job.contact_address1}},
-                        {{job.contact_city}},
-                        {{job.contact_phone}},
-                        {{job.contact_email}}
+                        <span ng-if="ob.contact_name">{{userDetails.firstname}} {{userDetails.lastname}}</span><br>
+                        <span ng-if="job.contact_address1">{{userDetails.address}} {{userDetails.address1}}</span><br>
+                        <span ng-if="job.contact_city">{{userDetails.city}}</span><br>
+                        <span ng-if="job.contact_state">{{userDetails.state}}</span><br>
+                        <span ng-if="job.contact_zip">{{userDetails.zip}}</span><br>
+                        <span ng-if="job.contact_phone">{{userDetails.phone}}</span><br>
+                        <span ng-if="job.contact_email">{{userDetails.email}}</span>
                     </div>
-                    <button class="btn register" ng-disabled="jobForm.$invalid" ng-click="submitJob()">Post</button>
+                    <button ng-if="jobUpdate == ''" class="btn register" ng-disabled="jobForm.$invalid" ng-click="submitJob()">Post</button>
+                    <button ng-if="jobUpdate != ''" class="btn register" ng-disabled="jobForm.$invalid" ng-click="updateJob(jobId)">Update</button><br>
                 </div>
             </div>
         </div>

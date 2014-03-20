@@ -27,9 +27,8 @@ input[required].ng-valid.ng-dirty {
 }
 
 form[novalidate] input{
+    border: solid 1px #00306B;
     border-left-width: 8px;
-    border-color:#00306B; /*#3498db;*/
-    border-style: solid;
 }
 .form-control {
     width: 96%;
