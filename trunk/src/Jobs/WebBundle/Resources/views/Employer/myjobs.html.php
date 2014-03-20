@@ -41,7 +41,7 @@
                         <td ng-if="job.job_status == 1">Active</td>
                         <td>{{job.job_created_dt}}</td>
                         <td>
-                            <a href=""><img src="/images/edit.jpg" width="20px" alt="Edit"/> </a>
+                            <a href="post?jobId={{job.job_id}}"><img src="/images/edit.jpg" width="20px" alt="Edit"/> </a>
                             <a href="preview?jobId={{job.job_id}}"><img src="/images/preview.jpg" width="20px" alt="Preview"/></a>
                             <a href=""><span class="appTotal">0</span></a>
                         </td>
