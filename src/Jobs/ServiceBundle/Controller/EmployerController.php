@@ -10,7 +10,27 @@ use Jobs\ServiceBundle\Entity\Jobs;
 
 class EmployerController extends MainController
 {
-    
+    /*
+     * [apply] => email
+    [status] => 0
+    [title] => test123
+    [number] => 123
+    [expiryDate] => 26/03/2014
+    [position] => Array
+        (
+            [0] => 1
+        )
+
+    [email] => mkgxy@mkgalaxy.com
+    [country] => 223
+    [state] => 3469
+    [city] => 143877
+    [areaCode] => 22
+    [postalCode] => 22
+    [skills] => 22
+    [description] => 222
+    [contact_zip] => true
+     */
     public function postAction(Request $request)
     {
         $result = 0;
@@ -31,23 +51,29 @@ class EmployerController extends MainController
             $jobs->setUserId($this->userId);
             $jobs->setTitle($request->request->get('title'));
             $position = $request->request->get('position');
-            $position_type = $position[0]['id'];
+            $position_type = isset($position[0]) ? $position[0] : null;
             $jobs->setPositionType($position_type);
             $jobs->setApplicationMethod($request->request->get('apply'));
             $jobs->setApplicationEmail($request->request->get('email'));
             $jobs->setApplicationEmailCc($request->request->get('CCemail'));
             $jobs->setApplicationUrl($request->request->get('url'));
             $city = $request->request->get('city');
-            $cityName = isset($city['name']) ? $city['name'] : null;
-            $jobs->setCity($cityName);
-            $cityId = isset($city['id']) ? $city['id'] : null;
-            $jobs->setCityId($cityId);
+            $emGet = $this->getDoctrine()->getManager();
+            $query = $emGet->createQuery(
+                    'SELECT c from JobsServiceBundle:GeoCities as c WHERE c.ctyId = ?1'
+                );
+            $query->setParameter(1, $city);
+            $dataCity = $query->getResult();
+            //$cityName = isset($city['name']) ? $city['name'] : $city;
+            $jobs->setCity($city);
+            //$cityId = isset($city['id']) ? $city['id'] : null;
+            //$jobs->setCityId($cityId);
             $state = $request->request->get('state');
-            $stateId = isset($state['name']) ? $state['name'] : null;
-            $jobs->setState($stateId);
+            //$stateId = isset($state['name']) ? $state['name'] : null;
+            $jobs->setState($state);
             $country = $request->request->get('country');
-            $countryId = isset($country['name']) ? $country['name'] : null;
-            $jobs->setCountry($countryId);
+            //$countryId = isset($country['name']) ? $country['name'] : null;
+            $jobs->setCountry($country);
             $jobs->setNumber($request->request->get('number'));
             $jobs->setAreaCode($request->request->get('areaCode'));
             $jobs->setZipcode($request->request->get('postalCode'));
@@ -61,8 +87,9 @@ class EmployerController extends MainController
             $jobs->setShowEmail($this->setCheckbox($request->request->get('contact_email')));
             $jobs->setShowPhone($this->setCheckbox($request->request->get('contact_phone')));
             $jobs->setShowZipcode($this->setCheckbox($request->request->get('contact_zip')));
-            $latitude = isset($city['latitude']) ? $city['latitude'] : null;
-            $longitude = isset($city['longitude']) ? $city['longitude'] : null;
+            
+            $latitude = ($dataCity[0]->getLatitude()) ? $dataCity[0]->getLatitude() : null;
+            $longitude = ($dataCity[0]->getLongitude()) ? $dataCity[0]->getLongitude() : null;
             $jobs->setLatitude($latitude);
             $jobs->setLongitude($longitude);
             $jobs->setJobCreatedDt($created);
@@ -114,7 +141,7 @@ class EmployerController extends MainController
             $jobs->setUserId($this->userId);
             $jobs->setTitle($request->request->get('title'));
             $position = $request->request->get('position');
-            $position_type = $position[0]['id'];
+            $position_type = isset($position[0]) ? $position[0] : null;
             $jobs->setPositionType($position_type);
             $jobs->setNumber($request->request->get('number'));
             $jobs->setApplicationMethod($request->request->get('apply'));
@@ -122,16 +149,22 @@ class EmployerController extends MainController
             $jobs->setApplicationEmailCc($request->request->get('CCemail'));
             $jobs->setApplicationUrl($request->request->get('url'));
             $city = $request->request->get('city');
-            $cityName = isset($city['name']) ? $city['name'] : null;
-            $jobs->setCity($cityName);
-            $cityId = isset($city['id']) ? $city['id'] : null;
-            $jobs->setCityId($cityId);
+            $emGet = $this->getDoctrine()->getManager();
+            $query = $emGet->createQuery(
+                    'SELECT c from JobsServiceBundle:GeoCities as c WHERE c.ctyId = ?1'
+                );
+            $query->setParameter(1, $city);
+            $dataCity = $query->getResult();
+            //$cityName = isset($city['name']) ? $city['name'] : $city;
+            $jobs->setCity($city);
+            //$cityId = isset($city['id']) ? $city['id'] : null;
+            //$jobs->setCityId($cityId);
             $state = $request->request->get('state');
-            $stateId = isset($state['name']) ? $state['name'] : null;
-            $jobs->setState($stateId);
+            //$stateId = isset($state['name']) ? $state['name'] : null;
+            $jobs->setState($state);
             $country = $request->request->get('country');
-            $countryId = isset($country['name']) ? $country['name'] : null;
-            $jobs->setCountry($countryId);
+            //$countryId = isset($country['name']) ? $country['name'] : null;
+            $jobs->setCountry($country);
             $jobs->setAreaCode($request->request->get('areaCode'));
             $jobs->setZipcode($request->request->get('postalCode'));
             $jobs->setSkills($request->request->get('skills'));
@@ -144,8 +177,8 @@ class EmployerController extends MainController
             $jobs->setShowEmail($this->setCheckbox($request->request->get('contact_email')));
             $jobs->setShowPhone($this->setCheckbox($request->request->get('contact_phone')));
             $jobs->setShowZipcode($this->setCheckbox($request->request->get('contact_zip')));
-            $latitude = isset($city['latitude']) ? $city['latitude'] : null;
-            $longitude = isset($city['longitude']) ? $city['longitude'] : null;
+            $latitude = ($dataCity[0]->getLatitude()) ? $dataCity[0]->getLatitude() : null;
+            $longitude = ($dataCity[0]->getLongitude()) ? $dataCity[0]->getLongitude() : null;
             $jobs->setLatitude($latitude);
             $jobs->setLongitude($longitude);
             //$jobs->setJobCreatedDt($created);
@@ -397,22 +430,23 @@ class EmployerController extends MainController
                 $res = array();
                 $em = $this->getDoctrine()->getManager();
                 $query = $em->createQuery(
-                    'SELECT j from JobsServiceBundle:Jobs as j WHERE j.jobId = ?1 ORDER BY j.jobCreatedDt'
+                    'SELECT j, c, co, s from JobsServiceBundle:Jobs as j LEFT JOIN JobsServiceBundle:GeoCities as c WITH c.ctyId = j.city LEFT JOIN JobsServiceBundle:GeoCountries as co WITH co.conId = j.country  LEFT JOIN JobsServiceBundle:GeoStates as s WITH s.staId = j.state WHERE j.jobId = ?1 ORDER BY j.jobCreatedDt'
                 );
                 $query->setParameter(1, $jobId);
 
                 $data = $query->getResult();
                 if (!empty($data)) {
-                    foreach ($data as $k => $v) {
+                        $k = 0;
+                        $v = $data[$k];
                         //$res[$v->getName()] = $v->getConId();
                         $res[$k]['job_id'] = $v->getJobId();
                         $res[$k]['user_id'] = $v->getUserId();
                         $res[$k]['title'] = $v->getTitle();
                         $res[$k]['number'] = $v->getNumber();
                         $res[$k]['position_type'] = $v->getPositionType();
-                        $res[$k]['city'] = $v->getCity();
-                        $res[$k]['state'] = $v->getState();
-                        $res[$k]['country'] = $v->getCountry();
+                        $res[$k]['cityId'] = $v->getCity();
+                        $res[$k]['stateId'] = $v->getState();
+                        $res[$k]['countryId'] = $v->getCountry();
                         $res[$k]['area_code'] = $v->getAreaCode();
                         $res[$k]['zip_code'] = $v->getZipcode();
                         $res[$k]['skills'] = $v->getSkills();
@@ -436,7 +470,15 @@ class EmployerController extends MainController
                         $res[$k]['show_state'] = $v->getShowState();
                         $res[$k]['latitude'] = $v->getLatitude();
                         $res[$k]['longitude'] = $v->getLongitude();
-                    }
+                        $k = 1;
+                        $v = $data[$k];
+                        $res[0]['city'] = $v->getName();
+                        $k = 2;
+                        $v = $data[$k];
+                        $res[0]['country'] = $v->getName();
+                        $k = 3;
+                        $v = $data[$k];
+                        $res[0]['state'] = $v->getName();
                 }
                 $res = array_pop($res);
                 //$cache->save($res, $key);
