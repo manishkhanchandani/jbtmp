@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: remote-mysql3.servage.net
--- Generation Time: Jan 26, 2014 at 04:14 AM
+-- Generation Time: Mar 25, 2014 at 06:21 AM
 -- Server version: 5.5.25
 -- PHP Version: 5.2.42-servage26
 
@@ -29,7 +29,9 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   `job_id` varchar(100) NOT NULL,
   `user_id` varchar(100) DEFAULT NULL,
   `title` varchar(200) DEFAULT NULL,
+  `number` varchar(255) DEFAULT NULL,
   `position_type` int(4) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL,
   `city` varchar(50) DEFAULT NULL,
   `state` varchar(50) DEFAULT NULL,
   `country` varchar(50) DEFAULT NULL,

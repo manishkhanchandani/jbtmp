@@ -430,7 +430,7 @@ class EmployerController extends MainController
                 $res = array();
                 $em = $this->getDoctrine()->getManager();
                 $query = $em->createQuery(
-                    'SELECT j, c, co, s from JobsServiceBundle:Jobs as j LEFT JOIN JobsServiceBundle:GeoCities as c WITH c.ctyId = j.city LEFT JOIN JobsServiceBundle:GeoCountries as co WITH co.conId = j.country  LEFT JOIN JobsServiceBundle:GeoStates as s WITH s.staId = j.state WHERE j.jobId = ?1 ORDER BY j.jobCreatedDt'
+                    'SELECT j, c, co, s, u from JobsServiceBundle:Jobs as j LEFT JOIN JobsServiceBundle:GeoCities as c WITH c.ctyId = j.city LEFT JOIN JobsServiceBundle:GeoCountries as co WITH co.conId = j.country  LEFT JOIN JobsServiceBundle:GeoStates as s WITH s.staId = j.state LEFT JOIN JobsServiceBundle:Users as u WITH u.userId = j.userId WHERE j.jobId = ?1 ORDER BY j.jobCreatedDt'
                 );
                 $query->setParameter(1, $jobId);
 
@@ -479,6 +479,18 @@ class EmployerController extends MainController
                         $k = 3;
                         $v = $data[$k];
                         $res[0]['state'] = $v->getName();
+                        $k = 4;
+                        $v = $data[$k];
+                        $res[0]['user']['firstname'] = $v->getFirstname();
+                        $res[0]['user']['lastname'] = $v->getLastname();
+                        $res[0]['user']['name'] = $v->getFirstname().' '.$v->getLastname();
+                        $res[0]['user']['address'] = $v->getAddress();
+                        $res[0]['user']['address2'] = $v->getAddress2();
+                        $res[0]['user']['country'] = $v->getCountry();
+                        $res[0]['user']['city'] = $v->getCity();
+                        $res[0]['user']['state'] = $v->getState();
+                        $res[0]['user']['zip'] = $v->getZip();
+                        $res[0]['user']['phone'] = $v->getPhone();
                 }
                 $res = array_pop($res);
                 //$cache->save($res, $key);
