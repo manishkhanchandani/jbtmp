@@ -464,6 +464,8 @@ class EmployerController extends MainController
                         $res[$k]['show_email'] = $v->getShowEmail();
                         $res[$k]['job_created_dt'] = $v->getJobCreatedDt();
                         $res[$k]['job_modified_dt'] = $v->getJobModifiedDt();
+                        $res[$k]['modified'] = date('Y-m-d H:i:s', btstots($res[$k]['job_created_dt']));
+                        $res[$k]['created'] = date('Y-m-d H:i:s', btstots($res[$k]['job_modified_dt']));
                         $res[$k]['job_deleted_dt'] = $v->getJobDeletedDt();
                         $res[$k]['job_deleted'] = $v->getJobDeleted();
                         $res[$k]['job_status'] = $v->getJobStatus();
