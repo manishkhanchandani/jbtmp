@@ -59,31 +59,34 @@ jobPostModule.controller('PostJobController', function($scope, $rootScope, $http
 
     $scope.jobId = $location.search()['jobId'];
     $scope.jobUpdate = angular.isDefined($location.search()['jobId']);
-    if($scope.jobUpdate != ''){
+    if($scope.jobUpdate !== ''){
         userService.updateJobDetails($scope.jobId).success(function(response) {
+
             $scope.job = response.data;
-            $scope.job.expiryDate = response.data.job_modified_dt;
+            $scope.job.expiryDate = response.data.modified;
             $scope.job.status = response.data.job_status;
-            $scope.job.position = response.data.position_type;
+            $scope.job.position = [response.data.position_type];
             $scope.job.apply = response.data.application_method;
             $scope.job.email = response.data.application_email;
             $scope.job.CCemail = response.data.application_email_cc;
             $scope.job.url = response.data.application_url;
             $scope.job.url = response.data.application_url;
 
-            $scope.job.country = '223';
+            $scope.job.countryName = response.data.country;
+            $scope.job.country = response.data.countryId;
 
             countryApiService.getStates($scope.job.country).success(function(response) {
                 $scope.state_info = response.data;
             });
-
-            $scope.job.state = '3464';
+            $scope.job.stateName = response.data.state;
+            $scope.job.state = response.data.stateId;
 
             countryApiService.getCities($scope.job.state).success(function(response) {
                 $scope.city_info = response.data;
             });
+            $scope.job.cityName = response.data.city;
+            $scope.job.city = response.data.cityId;
 
-            $scope.job.city = '141892';
             $scope.job.areaCode = response.data.area_code;
             $scope.job.postalCode = response.data.zip_code;
             $scope.job.skills = response.data.skills;

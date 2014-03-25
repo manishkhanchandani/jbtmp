@@ -32,17 +32,19 @@
                         <span>{{job.position_type}} (update value with description)</span><br>
                         <label>Length: </label><br>
                         <label class="title">Date Posted: </label>
-                        <span>{{job.job_created_dt}}</span>
+                        <span>{{job.created}}</span>
                     </div>
                     <hr style="border:#999 solid 1px;">
                     <div>{{job.description}}</div><br>
                     <hr>
                     <div>
-                        <span>{{job.show_name}}</span><br>
-                        <span>{{job.show_address1}}</span><br>
-                        <span>{{job.show_address2}}</span><br>
-                        <span>{{job.get_show_city}} {{job.show_state}} {{job.show_zipcode}}</span><br>
-                        <span>Web {{job.website}}</span>
+                        <span ng-if="job.show_name">{{job.user.name}}</span><br>
+                        <span ng-if="job.show_address">{{job.user.address}} {{job.user.address2}}</span><br>
+                        <span ng-if="job.show_city">{{job.user.city}}</span><br>
+                        <span ng-if="job.show_state">{{job.user.state}}</span><br>
+                        <span ng-if="job.show_zip">{{job.user.zip}}</span><br>
+                        <span ng-if="job.show_phone">{{job.user.phone}}</span><br>
+                        <span ng-if="job.show_email">{{job.user.email}}</span>
                     </div>
                 </div>
             </div>
