@@ -174,7 +174,6 @@
             </div>
             <div class="response_messages" ng-show="message">{{message}}</div>
         </div>
-        {{job|json}}
     </div><br>
     <div ng-controller="PopUpController">
         <div id="previewButtons" ng-show="showpreviewbtns">
@@ -208,9 +207,9 @@
                     </div><br>
                     <div>
                         <b>Location: </b> <br>
-                        {{job.city}}, <br>
-                        {{job.state}}, <br>
-                        {{job.country}}
+                        {{job.cityName}}, <br>
+                        {{job.stateName}}, <br>
+                        {{job.countryName}}
                     </div><br>
                     <div>
                         <b>Skills: </b><br>
@@ -222,8 +221,8 @@
                     </div><br>
                     <div>
                         <b>Contact: </b><br>
-                        <span ng-if="ob.contact_name">{{userDetails.firstname}} {{userDetails.lastname}}</span><br>
-                        <span ng-if="job.contact_address1">{{userDetails.address}} {{userDetails.address1}}</span><br>
+                        <span ng-if="job.contact_name">{{userDetails.firstname}} {{userDetails.lastname}}</span><br>
+                        <span ng-if="job.contact_address">{{userDetails.address}} {{userDetails.address1}}</span><br>
                         <span ng-if="job.contact_city">{{userDetails.city}}</span><br>
                         <span ng-if="job.contact_state">{{userDetails.state}}</span><br>
                         <span ng-if="job.contact_zip">{{userDetails.zip}}</span><br>
