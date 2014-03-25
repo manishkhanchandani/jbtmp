@@ -1,6 +1,6 @@
 'use strict';
 
-var getJobsModule = angular.module('getJobs', ['shared']);
+var getJobsModule = angular.module('getJobs', ['shared', 'ngSanitize']);
 
 getJobsModule.factory('myJobsService', function($http) {
 
@@ -15,12 +15,14 @@ getJobsModule.factory('myJobsService', function($http) {
     return jobInfo;
 });
 
-getJobsModule.controller('getJobsController', function($scope, $http, $filter, myJobsService) {
+getJobsModule.controller('getJobsController', function($scope, $http, $filter, $window, myJobsService) {
 
     $scope.jobs = [ {name : "Active jobs", value:"1"},
                     {name:"Inactive jobs", value:"0"} ];
     $scope.myJob = {};
-
+    $scope.jobStatusInactive = '1';
+    $scope.jobStatusActive = '1';
+    
     myJobsService.getjobDetails().success(function(response) {
         $scope.myJob = response.data;
     });
@@ -44,8 +46,6 @@ getJobsModule.controller('getJobsController', function($scope, $http, $filter, m
 
 
     $scope.deleteJobs = function(){
-        console.log($scope.selectedJobs);
-
         var deleteJob = $http({
             method: 'POST',
             data: "status="+$scope.selectedJobs,
@@ -54,28 +54,32 @@ getJobsModule.controller('getJobsController', function($scope, $http, $filter, m
         });
 
         deleteJob.success(function(response){
-           console.log(response);
+           $scope.jobDelete = {};
+           angular.forEach($scope.selectedJobs, function(value, key) {
+               $scope.jobDelete['job_'+value] = '1';
+            });
         });
     };
 
     $scope.activeJobs = function(){
-        console.log($scope.selectedJobs);
-
         var activeJob = $http({
             method: 'POST',
             data: "status="+$scope.selectedJobs,
             url: globals.path + 'api/employer/active',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
-
+        
         activeJob.success(function(response){
-            console.log(response);
+            $window.location.reload();
+            /*$scope.jobStatusInactive = '0';
+            $scope.jobStatus = {};
+            angular.forEach($scope.selectedJobs, function(value, key) {
+               $scope.jobStatus['job_'+value] = 'Active';
+            });*/
         });
     };
 
     $scope.inActiveJobs = function(){
-        console.log($scope.selectedJobs);
-
         var inActiveJob = $http({
             method: 'POST',
             data: "status="+$scope.selectedJobs,
@@ -84,7 +88,12 @@ getJobsModule.controller('getJobsController', function($scope, $http, $filter, m
         });
 
         inActiveJob.success(function(response){
-            console.log(response);
+            $window.location.reload();
+            /*$scope.jobStatusActive = '0';
+            $scope.jobStatus = {};
+            angular.forEach($scope.selectedJobs, function(value, key) {
+               $scope.jobStatus['job_'+value] = 'Inactive';
+            });*/
         });
     };
 });
