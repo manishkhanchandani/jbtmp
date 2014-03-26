@@ -34,13 +34,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                <!--<input type='search' ng-model="jobList.job_status" />-->
                     <tr ng-repeat="job in myJob| filter:jobList" ng-class="(job.job_status == 1)?'active':'inActive'" ng-hide='jobDelete["job_"+this.job.job_id]'>
                         <td>
-                            <input type="checkbox"  ng-checked="master" 
+                            <a href="preview?jobId={{job.job_id}}"><input type="checkbox"  ng-checked="master" 
                                    ng-model="selectedJobs[job.job_id]" 
                                    value="job.job_status" name="job.job_id" 
-                                   ng-change="updateSelectedJobs(job.job_id)"/> {{job.number}}
+                                   ng-change="updateSelectedJobs(job.job_id)"/> {{job.number}}</a>
                         </td>
                         <td>{{job.title}} {{jobStatusInactive}}</td>
                         <td ng-if="job.job_status === 0 && jobStatusInactive === '1'">Inactive</td>

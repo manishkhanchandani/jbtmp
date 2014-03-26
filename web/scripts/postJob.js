@@ -27,7 +27,7 @@ jobPostModule.factory('userService', function($http) {
     return userInfo;
 });
 
-jobPostModule.controller('PostJobController', function($scope, $rootScope, $http, userService, $location, countryApiService) {
+jobPostModule.controller('PostJobController', function($scope, $rootScope, $http, $templateCache, userService, $location, countryApiService) {
 
     $scope.jobPosition = [{
             "position": "Full-time",
@@ -54,12 +54,15 @@ jobPostModule.controller('PostJobController', function($scope, $rootScope, $http
 
     $scope.job = {};
     $scope.job.apply = 'email';
-    $scope.job.status = '0';
+    $scope.job.status = '1'; // active job
     $scope.userDetails = [];
+    
+    $rootScope.showpreviewbtns = 'no';
 
     $scope.jobId = $location.search()['jobId'];
     $scope.jobUpdate = angular.isDefined($location.search()['jobId']);
-    if($scope.jobUpdate !== ''){
+
+    if($scope.jobUpdate){
         userService.updateJobDetails($scope.jobId).success(function(response) {
 
             $scope.job = response.data;
@@ -75,17 +78,17 @@ jobPostModule.controller('PostJobController', function($scope, $rootScope, $http
             $scope.job.countryName = response.data.country;
             $scope.job.country = response.data.countryId;
 
+            $scope.job.stateName = response.data.state;
+            $scope.job.state = response.data.stateId;
             countryApiService.getStates($scope.job.country).success(function(response) {
                 $scope.state_info = response.data;
             });
-            $scope.job.stateName = response.data.state;
-            $scope.job.state = response.data.stateId;
-
+            
+            $scope.job.cityName = response.data.city;
+            $scope.job.city = response.data.cityId;
             countryApiService.getCities($scope.job.state).success(function(response) {
                 $scope.city_info = response.data;
             });
-            $scope.job.cityName = response.data.city;
-            $scope.job.city = response.data.cityId;
 
             $scope.job.areaCode = response.data.area_code;
             $scope.job.postalCode = response.data.zip_code;
@@ -130,6 +133,11 @@ jobPostModule.controller('PostJobController', function($scope, $rootScope, $http
             $scope.message = "There are required fields to complete";
         }
     };
+    
+    $scope.submitJobasInactive = function() {
+        $scope.job.status = '0'; // inActive job
+        $scope.submitJob();
+    };
 
     $scope.updateJob = function(jobId) {
 
@@ -156,12 +164,9 @@ jobPostModule.controller('PostJobController', function($scope, $rootScope, $http
             $scope.message = "There are required fields to complete";
         }
     };
-});
-
-
-
-jobPostModule.controller('PopUpController', function($scope, $http, $templateCache) {
-
+    
+    
+    //popup
     $scope.externalPopopen = function(popupid) {
         console.log("external Controller");
         var templateCacheId = 'example1-template';
@@ -183,28 +188,8 @@ jobPostModule.controller('PopUpController', function($scope, $http, $templateCac
     $scope.internalPopOpen = function(popupid, templateId) {
         $scope.$broadcast('open_ngpopup', {id: popupid, template: templateId});
     };
-
+    
+    
 });
-jobPostModule.controller('datePickerCtrl', function($scope) {
-});
 
-
-jobPostModule.directive('datepicker', function() {
-    return {
-        restrict: 'A',
-        require: 'ngModel',
-        link: function(scope, element, attrs, ngModelCtrl) {
-            $(function() {
-                element.datepicker({
-                    dateFormat: 'dd/mm/yy',
-                    onSelect: function(date) {
-                        scope.$apply(function() {
-                            ngModelCtrl.$setViewValue(date);
-                        });
-                    }
-                });
-            });
-        }
-    };
-});
 
