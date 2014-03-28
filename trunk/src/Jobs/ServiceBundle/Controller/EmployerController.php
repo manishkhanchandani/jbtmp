@@ -96,7 +96,8 @@ class EmployerController extends MainController
             $jobs->setJobDeleted(0);
             $jobs->setJobDeletedDt(0);
             $jobs->setJobModifiedDt($created);
-            $jobs->setJobStatus(1);
+            $status = $request->request->get('status');
+            $jobs->setJobStatus($status);
             $em = $this->getDoctrine()->getManager();
             $em->persist($jobs);
             $em->flush();
@@ -418,7 +419,7 @@ class EmployerController extends MainController
         $res = array();
         $cached = true;
         try {
-            $this->init($request);
+            //$this->init($request);
             $jobId = $request->query->get('jobId');
             if (empty($jobId)) {
                 throw new \Exception('Job Id not found in url.');
@@ -493,6 +494,7 @@ class EmployerController extends MainController
                         $res[0]['user']['state'] = $v->getState();
                         $res[0]['user']['zip'] = $v->getZip();
                         $res[0]['user']['phone'] = $v->getPhone();
+                        $res[0]['user']['email'] = $v->getEmail();
                 }
                 $res = array_pop($res);
                 //$cache->save($res, $key);
