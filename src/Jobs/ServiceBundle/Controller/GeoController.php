@@ -157,4 +157,55 @@ class GeoController extends MainController
     }
     
     
+    /*
+     * Get state list based on country
+     * http://jobs.mkgalaxy.com/app_dev.php/api/geo/cities?id=3469
+     */
+    public function cityfAction(Request $request)
+    {
+        $result = 0;
+        $msg = '';
+        $code = 200;
+        $data = array();
+        $res = array();
+        $cached = true;
+        try {
+            $id = $request->query->get('q');
+            if (empty($id)) throw new \Exception('Please choose city', 1113);
+            $key = 'cityfinder_'.md5($id);
+            $cache = $this->get('jobs_service.cachev1')->init();
+            $res = $cache->load($key);
+            if (empty($res) || 1) {
+                $em = $this->getDoctrine()->getManager();
+                $query = $em->createQuery(
+                    'SELECT c, co from JobsServiceBundle:GeoCities as c LEFT JOIN JobsServiceBundle:GeoCountries as co WITH co.conId = c.conId WHERE c.name like :id ORDER BY c.name'
+                )->setParameter('id', '%'.$id.'%');
+
+                $data = $query->getResult();
+                pr($data);exit;
+                //$repository = $this->getDoctrine()->getRepository('JobsServiceBundle:GeoCountries');
+                //$data = $repository->findAll();
+                if (!empty($data)) {
+                    foreach ($data as $k => $v) {
+                        $res[$k]['name'] = $v->getName();
+                        $res[$k]['id'] = $v->getCtyId();
+                        $res[$k]['con_id'] = $v->getConId();
+                        $res[$k]['sta_id'] = $v->getStaId();
+                        $res[$k]['latitude'] = $v->getLatitude();
+                        $res[$k]['longitude'] = $v->getLongitude();
+                    }
+                }
+                $cache->save($res, $key);
+                $cached = false;
+            }
+        } catch (\Exception $e) {
+            $msg = $e->getMessage();
+            $result = 0;
+            $code = $e->getCode();
+        }
+        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $res, 'cache' => $cached);
+        $json = json_encode($arr);
+        return new Response($json);
+        
+    }
 }
