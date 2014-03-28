@@ -1,12 +1,8 @@
 
-<?php $view->extend('JobsWebBundle::layout.html.php') ?>
-
-<script src="<?php echo $view['assets']->getUrl('scripts/loginApp.js') ?>"></script>
-
-<div class="col-md-9" ng-app="jobApp">
+<div class="container" ng-app="loginApp">
     <div class="row">
         <div class="signIn">
-            <div class="col-xs-12 col-sm-4 col-md-5 wrap">
+            <div class="col-xs-12 col-sm-4 col-sm-offset-3">
                 <h6 class="signin_title">Registered users: Sign in here</h6><br>
 
                 <form name="loginForm" novalidate ng-controller="LoginController" ng-submit="login()" class="loginMargin">
@@ -37,7 +33,7 @@
         </div>
 
         <div class="signUp">
-            <div class="col-xs-12 col-sm-4 col-md-5 wrap">
+            <div class="col-xs-12 col-sm-4 col-sm-offset-3">
                 <h6 class="signup_title">New to WorkOnOpt.com</h6>
                 <div class="loginMargin">
                     <h5>Enjoy the features of WorkOnOpt.com</h5>
