@@ -36,10 +36,10 @@
                 <tbody>
                     <tr ng-repeat="job in myJob| filter:jobList" ng-class="(job.job_status == 1)?'active':'inActive'" ng-hide='jobDelete["job_"+this.job.job_id]'>
                         <td>
-                            <a href="preview?jobId={{job.job_id}}"><input type="checkbox"  ng-checked="master" 
+                            <input type="checkbox"  ng-checked="master" 
                                    ng-model="selectedJobs[job.job_id]" 
                                    value="job.job_status" name="job.job_id" 
-                                   ng-change="updateSelectedJobs(job.job_id)"/> {{job.number}}</a>
+                                   ng-change="updateSelectedJobs(job.job_id)"/> <a href="preview?jobId={{job.job_id}}">{{job.number}}</a>
                         </td>
                         <td>{{job.title}} {{jobStatusInactive}}</td>
                         <td ng-if="job.job_status === 0 && jobStatusInactive === '1'">Inactive</td>
