@@ -33,22 +33,15 @@
                                 ng-options="job.id as job.position for job in jobPosition"></select>
                     </div>
                 </div><hr>
-                <h5>Choose your Prefer method to receive Applications.</h5>
+                <h5>Enter email id to receive Applications</h5>
                 <div class="form-group">
-                    <div class="col-md-5 text-left">
-                        <input class="btn-group" type="radio" 
-                               ng-model="job.apply" value="email" 
-                               name="apply" > Apply to Email
-                    </div>
-                </div>
-                <div class="form-group" ng-show="job.apply !== 'url'">
                     <label class="col-md-2">Email</label>
                     <div class="col-md-4">
                         <input class="form-control" type="email" 
                                ng-model="job.email" name="email" ng-required="job.apply !== 'url'">
                     </div>
                 </div>
-                <div class="form-group" ng-show="job.apply !== 'url'">
+                <div class="form-group">
                     <label class="col-md-2">CC Email</label>
                     <div class="col-md-4">
                         <input class="form-control" type="email" 
