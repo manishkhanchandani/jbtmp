@@ -35,7 +35,7 @@
         <div class="container" id="workOpt">
             <?php echo $view->render('::header.html.php') ?>
 
-            <div class="starter-template" style="margin: 50px; min-height: 450px;">
+            <div class="starter-template" style="margin: 50px 20px; min-height: 450px;">
                 <?php $view['slots']->output('_content') ?>
             </div>
 

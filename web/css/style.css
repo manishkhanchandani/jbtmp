@@ -6,7 +6,9 @@
     width: 970px;
     padding:0px;
 }
-
+.row{
+    margin:0;
+}
 #workOpt.container {
     box-shadow: 0 8px 15px 1px #CACACA;
 }
@@ -41,11 +43,12 @@ input[required].ng-prestine{
     border-color: #e74c3c;
 }
 
-.col-xs-12.col-sm-4.col-sm-offset-3 {
+.signIn .wrap, .signUp .wrap{
     border: 1px solid #CCCCCC;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     padding: 0;
+    margin:0 10px;
 }
 
 /*  login   */
@@ -118,7 +121,7 @@ a{
     padding:0 20px 20px;
 }
 .container .signIn {
-    margin-left: 185px;
+    /*margin-left: 185px;*/
 }
 .dropdown:hover ul.dropdown-menu{
     display: block;   
@@ -223,4 +226,53 @@ table.jobsContainer {
     height: 22px;
     padding: 0 5px;
     width: 20px;
+}
+
+/* Find Jobs */
+
+.findJobs{
+    background:#CCB9FF;
+    padding: 0;
+    margin:0 0 50px 0;
+}
+.findJobs h4{
+    margin: 5px;
+    color:#666;
+}
+button.findJob{
+    background: none repeat scroll 0 0 #FF6600;
+    border: 1px solid #FF6600;
+    border-radius: 6px;
+    box-shadow: 1px 1px #DCDADA inset;
+    color: #FFFFFF;
+    margin: 5px 0;
+    padding: 5px 10px;
+}
+
+.recentJobs .tab-content{
+    border-bottom: 1px solid #DCDADA;
+    border-left: 1px solid #DCDADA;
+    border-right: 1px solid #DCDADA;
+    padding: 10px;
+    height: 400px;
+    overflow: scroll;
+}
+
+#jobs .row {
+    border-bottom: 1px solid #DCDADA;
+    padding: 7px 0;
+}
+
+.recentJobs .nav .active a{
+    color:#FF6600;
+    font-weight: bold;
+}
+
+#jobs .row h5 {
+    color: #0000FF;
+    word-wrap: break-word;
+}
+
+#jobs .row div{
+    word-wrap: break-word;
 }

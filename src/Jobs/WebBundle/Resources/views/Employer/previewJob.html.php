@@ -17,7 +17,7 @@
                 <div class="row action-btns">
                     <a href="saveJob">Save Job</a> &nbsp;
                     <a href="shareJob">Share Job</a> &nbsp;
-                    <a class="btn btn-default" href="applyNow" style="margin-left: 365px;">Apply Now</a> &nbsp;
+                    <a class="btn btn-default" href="applyNow" style="margin-left: 325px;">Apply Now</a> &nbsp;
                 </div><br>
                 <div class="row">
                     <div>
