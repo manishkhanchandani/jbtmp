@@ -5,6 +5,8 @@ namespace Jobs\ServiceBundle\Controller;
 use Jobs\ServiceBundle\Controller\MainController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+
 
 use Jobs\ServiceBundle\Entity\Jobs;
 
@@ -51,62 +53,89 @@ class DefaultController extends MainController
         $cached = true;
         try {
             $key = 'home';
+            $zipcode = $request->query->get('zipcode');
+            $keyword = $request->query->get('q');
+            /*$distance = ", (ROUND(
+DEGREES(ACOS(SIN(RADIANS(“.GetSQLValueString($lat, 'double').”)) * SIN(RADIANS(c.lat)) + COS(RADIANS(“.GetSQLValueString($lat, 'double').”)) * COS(RADIANS(c.lat)) * COS(RADIANS(“.GetSQLValueString($lon, 'double').” -(c.lon)))))*60*1.1515,2)) as distance";*/
+            if (!empty($zipcode)) {
+                $distance = '';
+                /*$sql = sprintf(“select city_id, url, city, state, country, lat, lon, (ROUND(
+DEGREES(ACOS(SIN(RADIANS(“.GetSQLValueString($lat, 'double').”)) * SIN(RADIANS(c.lat)) + COS(RADIANS(“.GetSQLValueString($lat, 'double').”)) * COS(RADIANS(c.lat)) * COS(RADIANS(“.GetSQLValueString($lon, 'double').” -(c.lon)))))*60*1.1515,2)) as distance from c_cities as c WHERE (ROUND(
+DEGREES(ACOS(SIN(RADIANS(“.GetSQLValueString($lat, 'double').”)) * SIN(RADIANS(c.lat)) + COS(RADIANS(“.GetSQLValueString($lat, 'double').”)) * COS(RADIANS(c.lat)) * COS(RADIANS(“.GetSQLValueString($lon, 'double').” -(c.lon)))))*60*1.1515,2)) <= “.GetSQLValueString($radius, 'int').” ORDER BY “.$order.” LIMIT “.$limit);*/
+            }
             //$cache = $this->get('jobs_service.cachev1')->init();
             //$res = $cache->load($key);
             //if (empty($res)) {
                 $res = array();
                 $em = $this->getDoctrine()->getManager();
-                $query = $em->createQuery(
-                    'SELECT j from JobsServiceBundle:Jobs as j ORDER BY j.jobCreatedDt'
-                );
-
-                $data = $query->getResult();
-                if (!empty($data)) {
-                    foreach ($data as $k => $v) {
-                        //$res[$v->getName()] = $v->getConId();
-                        $res[$k]['job_id'] = $v->getJobId();
-                        $res[$k]['user_id'] = $v->getUserId();
-                        $res[$k]['title'] = $v->getTitle();
-                        $res[$k]['number'] = $v->getNumber();
-                        $res[$k]['position_type'] = $v->getPositionType();
-                        $res[$k]['city'] = $v->getCity();
-                        $res[$k]['state'] = $v->getState();
-                        $res[$k]['country'] = $v->getCountry();
-                        $res[$k]['area_code'] = $v->getAreaCode();
-                        $res[$k]['zip_code'] = $v->getZipcode();
-                        $res[$k]['skills'] = $v->getSkills();
-                        $res[$k]['description'] = $v->getDescription();
-                        $res[$k]['application_method'] = $v->getApplicationMethod();
-                        $res[$k]['application_email'] = $v->getApplicationEmail();
-                        $res[$k]['application_email_cc'] = $v->getApplicationEmailCc();
-                        $res[$k]['application_url'] = $v->getApplicationUrl();
-                        $res[$k]['show_name'] = $v->getShowName();
-                        $res[$k]['show_address1'] = $v->getShowAddress1();
-                        $res[$k]['show_address2'] = $v->getShowAddress2();
-                        $res[$k]['get_show_city'] = $v->getShowCity();
-                        $res[$k]['show_zipcode'] = $v->getShowZipcode();
-                        $res[$k]['show_phone'] = $v->getShowPhone();
-                        $res[$k]['show_email'] = $v->getShowEmail();
-                        $res[$k]['job_created_dt'] = date('Y-m-d', btstots($v->getJobCreatedDt()));
-                        $res[$k]['job_modified_dt'] = date('Y-m-d', $v->getJobModifiedDt());
-                        $res[$k]['job_deleted_dt'] = date('Y-m-d', $v->getJobDeletedDt());
-                        $res[$k]['job_deleted'] = $v->getJobDeleted();
-                        $res[$k]['job_status'] = $v->getJobStatus();
-                        $res[$k]['show_state'] = $v->getShowState();
-                        $res[$k]['latitude'] = $v->getLatitude();
-                        $res[$k]['longitude'] = $v->getLongitude();
+                $maxRows_rsView = 10;
+                $pageNum_rsView = 0;
+                if ($request->query->get('pageNum_rsView')) {
+                    $pageNum_rsView = $request->query->get('pageNum_rsView');
+                }
+                if ($request->query->get('maxRows_rsView')) {
+                    $maxRows_rsView = $request->query->get('maxRows_rsView');
+                }
+                $startRow_rsView = $pageNum_rsView * $maxRows_rsView;
+                if (!$request->query->get('totalRows_rsView')) {
+                    $query = $em->createQuery(
+                        //'SELECT j from JobsServiceBundle:Jobs as j ORDER BY j.jobCreatedDt'
+                        'SELECT count(j) as cnt from JobsServiceBundle:Jobs as j LEFT JOIN JobsServiceBundle:GeoCities as c WITH c.ctyId = j.city LEFT JOIN JobsServiceBundle:GeoCountries as co WITH co.conId = j.country  LEFT JOIN JobsServiceBundle:GeoStates as s WITH s.staId = j.state LEFT JOIN JobsServiceBundle:Users as u WITH u.userId = j.userId ORDER BY j.jobModifiedDt ASC'
+                    );
+                    $res = $query->getOneOrNullResult();
+                    $totalRows_rsView = $res['cnt'];
+                } else {
+                    $totalRows_rsView = $request->query->get('totalRows_rsView');
+                }
+                $totalPages_rsView = ceil($totalRows_rsView/$maxRows_rsView)-1;
+                $queryString_rsView = '';
+                if (!empty($_SERVER['QUERY_STRING'])) {
+                    $params = explode('&', $_SERVER['QUERY_STRING']);
+                    $newParams = array();
+                    foreach ($params as $param) {
+                        if (stristr($param, 'pageNum_rsView') == false &&
+                            stristr($param, 'totalRows_rsView') == false) {
+                                array_push($newParams, $param);
+                        }
+                    }
+                    if (count($newParams) != 0) {
+                        $queryString_rsView = '&' . htmlentities(implode('&', $newParams));
                     }
                 }
+                $queryString_rsView = sprintf('&totalRows_rsView=%d%s', $totalRows_rsView, $queryString_rsView);
+                $query = $em->createQuery(
+                    //'SELECT j from JobsServiceBundle:Jobs as j ORDER BY j.jobCreatedDt'
+                    'SELECT j.jobId, j.userId, j.title, u.firstname, u.lastname, j.number, c.name as city, s.name as state, co.name as country, c.latitude as latitude, c.longitude as longitude from JobsServiceBundle:Jobs as j LEFT JOIN JobsServiceBundle:GeoCities as c WITH c.ctyId = j.city LEFT JOIN JobsServiceBundle:GeoCountries as co WITH co.conId = j.country  LEFT JOIN JobsServiceBundle:GeoStates as s WITH s.staId = j.state LEFT JOIN JobsServiceBundle:Users as u WITH u.userId = j.userId ORDER BY j.jobModifiedDt ASC'
+                );
+                $query->setFirstResult( $startRow_rsView );
+                $query->setMaxResults( $maxRows_rsView );
+                $res = $query->getResult();
                 //$cache->save($res, $key);
                 //$cached = false;
             //}
             $result = 1;
+            $arr = array('success' => $result, 
+                'message' => $msg, 
+                'code' => $code, 
+                'data' => $res, 
+                'totalRows_rsView' => $totalRows_rsView, 
+                'queryString_rsView' => $queryString_rsView, 
+                'totalPages_rsView' => $totalPages_rsView,
+                'startRow_rsView' => $startRow_rsView,
+                'maxRows_rsView' => $maxRows_rsView, 
+                'pageNum_rsView' => $pageNum_rsView, 
+                'first' => ($pageNum_rsView > 0) ? 0 : null,
+                
+                'previous' => ($pageNum_rsView > 0) ? max(0, $pageNum_rsView - 1) : null, 
+                'next' => ($pageNum_rsView < $totalPages_rsView) ? min($totalPages_rsView, $pageNum_rsView + 1) : null, 
+                'last' => ($pageNum_rsView < $totalPages_rsView) ? $totalPages_rsView : null
+                );
         } catch (\Exception $e) {
             $msg = $e->getMessage();
             $result = 0;
             $code = $e->getCode();
+            $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $res);
         }
-        $arr = array('success' => $result, 'message' => $msg, 'code' => $code, 'data' => $res);
         $json = json_encode($arr);
         return new Response($json);
         
