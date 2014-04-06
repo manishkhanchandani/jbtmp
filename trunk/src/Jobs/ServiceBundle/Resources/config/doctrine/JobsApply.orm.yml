@@ -1,0 +1,41 @@
+Jobs\ServiceBundle\Entity\JobsApply:
+    type: entity
+    table: jobs_apply
+    repositoryClass: Jobs\ServiceBundle\Entity\JobsApplyRepository
+    fields:
+        aid:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            generator:
+                strategy: IDENTITY
+        jobId:
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+            column: job_id
+        applyId:
+            type: string
+            length: 100
+            fixed: false
+            nullable: true
+            column: apply_id
+        applyDate:
+            type: datetime
+            nullable: true
+            column: apply_date
+        applyName:
+            type: string
+            length: 100
+            fixed: false
+            nullable: true
+            column: apply_name
+        applyEmail:
+            type: string
+            length: 150
+            fixed: false
+            nullable: true
+            column: apply_email
+    lifecycleCallbacks: {  }
