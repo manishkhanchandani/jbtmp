@@ -1,0 +1,25 @@
+Jobs\ServiceBundle\Entity\JobsPositionType:
+    type: entity
+    table: jobs_position_type
+    repositoryClass: Jobs\ServiceBundle\Entity\JobsPositionTypeRepository
+    fields:
+        positionId:
+            id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            column: position_id
+            generator:
+                strategy: IDENTITY
+        jobId:
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+            column: job_id
+        positionType:
+            type: integer
+            unsigned: false
+            nullable: false
+            column: position_type
+    lifecycleCallbacks: {  }

@@ -1,0 +1,19 @@
+Jobs\ServiceBundle\Entity\ResumeKeywords:
+    type: entity
+    table: resume_keywords
+    repositoryClass: Jobs\ServiceBundle\Entity\ResumesKeywordsRepository
+    fields:
+        resumeId:
+            id: true
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+            column: resume_id
+        keyword:
+            id: true
+            type: string
+            length: 40
+            fixed: false
+            nullable: false
+    lifecycleCallbacks: {  }
