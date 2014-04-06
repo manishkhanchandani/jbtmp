@@ -14,3 +14,6 @@ Add this in each doctrine xml
 
 To generate entity
 php app/console doctrine:generate:entities JobsServiceBundle --no-backup
+
+svn revert src/Jobs/ServiceBundle/Resources/config/doctrine/GeoCities.orm.yml src/Jobs/ServiceBundle/Resources/config/doctrine/GeoCodes.orm.yml src/Jobs/ServiceBundle/Resources/config/doctrine/GeoCountries.orm.yml  src/Jobs/ServiceBundle/Resources/config/doctrine/GeoStates.orm.yml src/Jobs/ServiceBundle/Resources/config/doctrine/Jobs.orm.yml src/Jobs/ServiceBundle/Resources/config/doctrine/Resumes.orm.yml src/Jobs/ServiceBundle/Resources/config/doctrine/Users.orm.yml 
+
