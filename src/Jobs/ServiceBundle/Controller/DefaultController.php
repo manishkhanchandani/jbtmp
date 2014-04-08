@@ -54,7 +54,11 @@ class DefaultController extends MainController
         try {
             $key = 'home';
             $zipcode = $request->query->get('zipcode');
-            $keyword = $request->query->get('q');
+            $q = $request->query->get('q');
+            $extension = '';
+            if (!empty($q)) {
+                $extension .= " AND k.keyword LIKE '%$q%'";
+            }
             /*$distance = ", (ROUND(
 DEGREES(ACOS(SIN(RADIANS(“.GetSQLValueString($lat, 'double').”)) * SIN(RADIANS(c.lat)) + COS(RADIANS(“.GetSQLValueString($lat, 'double').”)) * COS(RADIANS(c.lat)) * COS(RADIANS(“.GetSQLValueString($lon, 'double').” -(c.lon)))))*60*1.1515,2)) as distance";*/
             if (!empty($zipcode)) {
@@ -68,7 +72,7 @@ DEGREES(ACOS(SIN(RADIANS(“.GetSQLValueString($lat, 'double').”)) * SIN(RADIA
             //if (empty($res)) {
                 $res = array();
                 $em = $this->getDoctrine()->getManager();
-                $maxRows_rsView = 10;
+                $maxRows_rsView = 100;
                 $pageNum_rsView = 0;
                 if ($request->query->get('pageNum_rsView')) {
                     $pageNum_rsView = $request->query->get('pageNum_rsView');
@@ -80,7 +84,7 @@ DEGREES(ACOS(SIN(RADIANS(“.GetSQLValueString($lat, 'double').”)) * SIN(RADIA
                 if (!$request->query->get('totalRows_rsView')) {
                     $query = $em->createQuery(
                         //'SELECT j from JobsServiceBundle:Jobs as j ORDER BY j.jobCreatedDt'
-                        'SELECT count(j) as cnt from JobsServiceBundle:Jobs as j LEFT JOIN JobsServiceBundle:GeoCities as c WITH c.ctyId = j.city LEFT JOIN JobsServiceBundle:GeoCountries as co WITH co.conId = j.country  LEFT JOIN JobsServiceBundle:GeoStates as s WITH s.staId = j.state LEFT JOIN JobsServiceBundle:Users as u WITH u.userId = j.userId ORDER BY j.jobModifiedDt ASC'
+                        "SELECT count(j) as cnt from JobsServiceBundle:Jobs as j LEFT JOIN JobsServiceBundle:GeoCities as c WITH c.ctyId = j.city LEFT JOIN JobsServiceBundle:GeoCountries as co WITH co.conId = j.country  LEFT JOIN JobsServiceBundle:GeoStates as s WITH s.staId = j.state LEFT JOIN JobsServiceBundle:Users as u WITH u.userId = j.userId LEFT JOIN JobsServiceBundle:JobsKeywords as k WITH k.jobId = j.jobId WHERE 1 $extension ORDER BY j.jobModifiedDt ASC"
                     );
                     $res = $query->getOneOrNullResult();
                     $totalRows_rsView = $res['cnt'];

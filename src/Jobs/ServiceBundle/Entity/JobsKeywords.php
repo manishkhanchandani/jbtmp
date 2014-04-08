@@ -65,4 +65,32 @@ class JobsKeywords
     {
         return $this->keyword;
     }
+    /**
+     * @var \Jobs\ServiceBundle\Entity\Jobs
+     */
+    private $job;
+
+
+    /**
+     * Set job
+     *
+     * @param \Jobs\ServiceBundle\Entity\Jobs $job
+     * @return JobsKeywords
+     */
+    public function setJob(\Jobs\ServiceBundle\Entity\Jobs $job = null)
+    {
+        $this->job = $job;
+    
+        return $this;
+    }
+
+    /**
+     * Get job
+     *
+     * @return \Jobs\ServiceBundle\Entity\Jobs 
+     */
+    public function getJob()
+    {
+        return $this->job;
+    }
 }
