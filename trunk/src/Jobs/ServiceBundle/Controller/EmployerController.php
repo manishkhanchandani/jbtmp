@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Jobs\ServiceBundle\Entity\Jobs;
+use Jobs\ServiceBundle\Entity\JobsPositionType;
+use Jobs\ServiceBundle\Entity\JobsKeywords;
 
 class EmployerController extends MainController
 {
@@ -50,9 +52,6 @@ class EmployerController extends MainController
             $jobs->setJobId($jobId);
             $jobs->setUserId($this->userId);
             $jobs->setTitle($request->request->get('title'));
-            $position = $request->request->get('position');
-            $position_type = isset($position[0]) ? $position[0] : null;
-            $jobs->setPositionType($position_type);
             $jobs->setApplicationMethod($request->request->get('apply'));
             $jobs->setApplicationEmail($request->request->get('email'));
             $jobs->setApplicationEmailCc($request->request->get('CCemail'));
@@ -77,7 +76,6 @@ class EmployerController extends MainController
             $jobs->setNumber($request->request->get('number'));
             $jobs->setAreaCode($request->request->get('areaCode'));
             $jobs->setZipcode($request->request->get('postalCode'));
-            $jobs->setSkills($request->request->get('skills'));
             $jobs->setDescription($request->request->get('description'));
             $jobs->setShowName($this->setCheckbox($request->request->get('contact_name')));
             $jobs->setShowAddress1($this->setCheckbox($request->request->get('contact_address1')));
@@ -100,6 +98,30 @@ class EmployerController extends MainController
             $jobs->setJobStatus($status);
             $em = $this->getDoctrine()->getManager();
             $em->persist($jobs);
+            $position = $request->request->get('position');
+            if (!empty($position)) {
+                $counter = 0;
+                foreach ($position as $type) {
+                    $JobsPositionType[$counter] = new JobsPositionType();
+                    $JobsPositionType[$counter]->setJobId($jobId);
+                    $JobsPositionType[$counter]->setPositionType($type);
+                    $em->persist($JobsPositionType[$counter]);
+                    $counter++;
+                }
+            }
+            $skills = $request->request->get('skills');
+            $skills = trim($skills);
+            if (!empty($skills)) {
+                $counter = 0;
+                $skill = explode(',', $skills);
+                foreach ($skill as $keyword) {
+                    $JobsKeywords[$counter] = new JobsKeywords();
+                    $JobsKeywords[$counter]->setJobId($jobId);
+                    $JobsKeywords[$counter]->setKeyword(trim($keyword));
+                    $em->persist($JobsKeywords[$counter]);
+                    $counter++;
+                }
+            }
             $em->flush();
             $msg = 'Success';
             $result = 1;
