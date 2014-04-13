@@ -55,25 +55,38 @@ class DefaultController extends MainController
             $key = 'home';
             $location = $request->query->get('location');
             $q = $request->query->get('q');
-            $extArray = [];
+            $extArray = array();
             $extension = '';
             if (!empty($q)) {
                 $extArray[] = "k.keyword LIKE '%$q%'";
             }
-            if (!empty($extArray)) {
-                $extension = 'WHERE '.implode(' AND ', $extArray);
-            }
             /*$distance = ", (ROUND(
 DEGREES(ACOS(SIN(RADIANS(“.GetSQLValueString($lat, 'double').”)) * SIN(RADIANS(c.lat)) + COS(RADIANS(“.GetSQLValueString($lat, 'double').”)) * COS(RADIANS(c.lat)) * COS(RADIANS(“.GetSQLValueString($lon, 'double').” -(c.lon)))))*60*1.1515,2)) as distance";*/
             if (!empty($location)) {
+				$url = 'https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($location).'&sensor=false';
+				$content = file_get_contents($url);
+				$result = json_decode($content, true);
+				if ($result['status'] != 'OK') {
+					throw new \Exception('Locaiton not found.');
+				}
+				foreach ($result['results'] as $res) {
+					$location = $res['geometry']['location'];
+					break;
+				}
+				
+				$radius = 10;
                 $distance = '';
-                /*$sql = sprintf(“select city_id, url, city, state, country, lat, lon, (ROUND(
-DEGREES(ACOS(SIN(RADIANS(“.GetSQLValueString($lat, 'double').”)) * SIN(RADIANS(c.lat)) + COS(RADIANS(“.GetSQLValueString($lat, 'double').”)) * COS(RADIANS(c.lat)) * COS(RADIANS(“.GetSQLValueString($lon, 'double').” -(c.lon)))))*60*1.1515,2)) as distance from c_cities as c WHERE (ROUND(
-DEGREES(ACOS(SIN(RADIANS(“.GetSQLValueString($lat, 'double').”)) * SIN(RADIANS(c.lat)) + COS(RADIANS(“.GetSQLValueString($lat, 'double').”)) * COS(RADIANS(c.lat)) * COS(RADIANS(“.GetSQLValueString($lon, 'double').” -(c.lon)))))*60*1.1515,2)) <= “.GetSQLValueString($radius, 'int').” ORDER BY “.$order.” LIMIT “.$limit);*/
+                $sql = "(ROUND(
+DEGREES(ACOS(SIN(RADIANS(".$location['lat'].")) * SIN(RADIANS(j.latitude)) + COS(RADIANS(".$location['lat'].")) * COS(RADIANS(j.latitude)) * COS(RADIANS(".$location['lng']." -(j.longitude)))))*60*1.1515,2)) as distance";
+				$sql2 = "(ROUND(
+DEGREES(ACOS(SIN(RADIANS(".$location['lat'].")) * SIN(RADIANS(j.latitude)) + COS(RADIANS(".$location['lat'].")) * COS(RADIANS(j.latitude)) * COS(RADIANS(".$location['lng']." -(j.longitude)))))*60*1.1515,2)) <= ".$radius;
             }
             //$cache = $this->get('jobs_service.cachev1')->init();
             //$res = $cache->load($key);
             //if (empty($res)) {
+				if (!empty($extArray)) {
+					$extension = 'WHERE '.implode(' AND ', $extArray);
+				}
                 $res = array();
                 $em = $this->getDoctrine()->getManager();
                 $maxRows_rsView = 100;
@@ -88,7 +101,7 @@ DEGREES(ACOS(SIN(RADIANS(“.GetSQLValueString($lat, 'double').”)) * SIN(RADIA
                 if (!$request->query->get('totalRows_rsView')) {
                     $query = $em->createQuery(
                         //'SELECT j from JobsServiceBundle:Jobs as j ORDER BY j.jobCreatedDt'
-                        "SELECT count(j) as cnt from JobsServiceBundle:Jobs as j LEFT JOIN JobsServiceBundle:GeoCities as c WITH c.ctyId = j.city LEFT JOIN JobsServiceBundle:GeoCountries as co WITH co.conId = j.country  LEFT JOIN JobsServiceBundle:GeoStates as s WITH s.staId = j.state LEFT JOIN JobsServiceBundle:Users as u WITH u.userId = j.userId LEFT JOIN JobsServiceBundle:JobsKeywords as k WITH k.jobId = j.jobId $extension ORDER BY j.jobModifiedDt ASC"
+                        "SELECT count(j.jobId) as cnt from JobsServiceBundle:Jobs as j LEFT JOIN JobsServiceBundle:GeoCities as c WITH c.ctyId = j.city LEFT JOIN JobsServiceBundle:GeoCountries as co WITH co.conId = j.country  LEFT JOIN JobsServiceBundle:GeoStates as s WITH s.staId = j.state LEFT JOIN JobsServiceBundle:Users as u WITH u.userId = j.userId LEFT JOIN JobsServiceBundle:JobsKeywords as k WITH k.jobId = j.jobId $extension ORDER BY j.jobModifiedDt ASC"
                     );
                     $res = $query->getOneOrNullResult();
                     $totalRows_rsView = $res['cnt'];
@@ -113,11 +126,13 @@ DEGREES(ACOS(SIN(RADIANS(“.GetSQLValueString($lat, 'double').”)) * SIN(RADIA
                 $queryString_rsView = sprintf('&totalRows_rsView=%d%s', $totalRows_rsView, $queryString_rsView);
                 $query = $em->createQuery(
                     //'SELECT j from JobsServiceBundle:Jobs as j ORDER BY j.jobCreatedDt'
-                    "SELECT j.jobId, j.userId, j.title, u.firstname, u.lastname, j.number, c.name as city, s.name as state, co.name as country, c.latitude as latitude, c.longitude as longitude from JobsServiceBundle:Jobs as j LEFT JOIN JobsServiceBundle:GeoCities as c WITH c.ctyId = j.city LEFT JOIN JobsServiceBundle:GeoCountries as co WITH co.conId = j.country  LEFT JOIN JobsServiceBundle:GeoStates as s WITH s.staId = j.state LEFT JOIN JobsServiceBundle:Users as u WITH u.userId = j.userId LEFT JOIN JobsServiceBundle:JobsKeywords as k WITH k.jobId = j.jobId $extension ORDER BY j.jobModifiedDt ASC"
+                    "SELECT DISTINCT j.jobId, j.userId, j.title, u.firstname, u.lastname, j.number, c.name as city, s.name as state, co.name as country, c.latitude as latitude, c.longitude as longitude, $sql from JobsServiceBundle:Jobs as j LEFT JOIN JobsServiceBundle:GeoCities as c WITH c.ctyId = j.city LEFT JOIN JobsServiceBundle:GeoCountries as co WITH co.conId = j.country  LEFT JOIN JobsServiceBundle:GeoStates as s WITH s.staId = j.state LEFT JOIN JobsServiceBundle:Users as u WITH u.userId = j.userId LEFT JOIN JobsServiceBundle:JobsKeywords as k WITH k.jobId = j.jobId $extension ORDER BY j.jobModifiedDt ASC"
                 );
                 $query->setFirstResult( $startRow_rsView );
                 $query->setMaxResults( $maxRows_rsView );
                 $res = $query->getResult();
+				pr($res);
+				exit;
                 //$cache->save($res, $key);
                 //$cached = false;
             //}
