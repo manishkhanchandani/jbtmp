@@ -3,6 +3,13 @@ Jobs\ServiceBundle\Entity\JobsKeywords:
     table: jobs_keywords
     repositoryClass: Jobs\ServiceBundle\Entity\JobsKeywordsRepository
     fields:
+        jobId:
+            id: true
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+            column: job_id
         keyword:
             id: true
             type: string

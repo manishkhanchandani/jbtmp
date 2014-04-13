@@ -3,6 +3,13 @@ Jobs\ServiceBundle\Entity\JobsPositionType:
     table: jobs_position_type
     repositoryClass: Jobs\ServiceBundle\Entity\JobsPositionTypeRepository
     fields:
+        jobId:
+            id: true
+            type: string
+            length: 100
+            fixed: false
+            nullable: false
+            column: job_id
         positionType:
             id: true
             type: integer
