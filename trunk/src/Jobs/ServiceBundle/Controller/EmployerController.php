@@ -165,7 +165,7 @@ class EmployerController extends MainController
             $jobs->setTitle($request->request->get('title'));
             $position = $request->request->get('position');
             $position_type = isset($position[0]) ? $position[0] : null;
-            $jobs->setPositionType($position_type);
+            //$jobs->setPositionType($position_type);
             $jobs->setNumber($request->request->get('number'));
             $jobs->setApplicationMethod($request->request->get('apply'));
             $jobs->setApplicationEmail($request->request->get('email'));
@@ -190,7 +190,7 @@ class EmployerController extends MainController
             $jobs->setCountry($country);
             $jobs->setAreaCode($request->request->get('areaCode'));
             $jobs->setZipcode($request->request->get('postalCode'));
-            $jobs->setSkills($request->request->get('skills'));
+            //$jobs->setSkills($request->request->get('skills'));
             $jobs->setDescription($request->request->get('description'));
             $jobs->setShowName($this->setCheckbox($request->request->get('contact_name')));
             $jobs->setShowAddress1($this->setCheckbox($request->request->get('contact_address1')));
