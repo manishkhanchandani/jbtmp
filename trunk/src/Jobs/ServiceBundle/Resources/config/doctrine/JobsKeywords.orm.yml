@@ -3,27 +3,23 @@ Jobs\ServiceBundle\Entity\JobsKeywords:
     table: jobs_keywords
     repositoryClass: Jobs\ServiceBundle\Entity\JobsKeywordsRepository
     fields:
-        jobId:
+        keywordId:
             id: true
+            type: integer
+            unsigned: false
+            nullable: false
+            column: keyword_id
+            generator:
+                strategy: IDENTITY
+        jobId:
             type: string
             length: 100
             fixed: false
             nullable: false
             column: job_id
         keyword:
-            id: true
             type: string
             length: 40
             fixed: false
             nullable: false
-    oneToOne:
-        job:
-            targetEntity: Jobs
-            cascade: {  }
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                job_id:
-                    referencedColumnName: job_id
-            orphanRemoval: false
     lifecycleCallbacks: {  }

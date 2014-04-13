@@ -93,4 +93,19 @@ class JobsKeywords
     {
         return $this->job;
     }
+    /**
+     * @var integer
+     */
+    private $keywordId;
+
+
+    /**
+     * Get keywordId
+     *
+     * @return integer 
+     */
+    public function getKeywordId()
+    {
+        return $this->keywordId;
+    }
 }

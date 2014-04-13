@@ -10,11 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 class JobsPositionType
 {
     /**
-     * @var integer
-     */
-    private $positionId;
-
-    /**
      * @var string
      */
     private $jobId;
@@ -23,17 +18,6 @@ class JobsPositionType
      * @var integer
      */
     private $positionType;
-
-
-    /**
-     * Get positionId
-     *
-     * @return integer 
-     */
-    public function getPositionId()
-    {
-        return $this->positionId;
-    }
 
     /**
      * Set jobId
@@ -107,5 +91,20 @@ class JobsPositionType
     public function getJob()
     {
         return $this->job;
+    }
+    /**
+     * @var integer
+     */
+    private $positionId;
+
+
+    /**
+     * Get positionId
+     *
+     * @return integer 
+     */
+    public function getPositionId()
+    {
+        return $this->positionId;
     }
 }
