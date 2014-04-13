@@ -51,6 +51,12 @@ $extArray = array();
 $extension = '';
 $sql = '';
 $sql2 = '';
+$location = '';
+$loc = '';
+$radius = 50;
+if (!empty($_GET['r'])) {
+	$radius = $_GET['r'];
+}
 
 if (isset($_GET['location'])) {
   $location = $_GET['location'];
@@ -62,17 +68,17 @@ if (isset($_GET['location'])) {
 			throw new \Exception('Locaiton not found.');
 		}
 		foreach ($result['results'] as $res) {
-			$location = $res['geometry']['location'];
+			$loc = $res['geometry']['location'];
 			break;
 		}
-		$radius = 50;
 		$distance = '';
 		$sql = ", (ROUND(
-		DEGREES(ACOS(SIN(RADIANS(".$location['lat'].")) * SIN(RADIANS(jobs.latitude)) + COS(RADIANS(".$location['lat'].")) * COS(RADIANS(jobs.latitude)) * COS(RADIANS(".$location['lng']." -(jobs.longitude)))))*60*1.1515,2)) as distance";
+		DEGREES(ACOS(SIN(RADIANS(".$loc['lat'].")) * SIN(RADIANS(jobs.latitude)) + COS(RADIANS(".$loc['lat'].")) * COS(RADIANS(jobs.latitude)) * COS(RADIANS(".$loc['lng']." -(jobs.longitude)))))*60*1.1515,2)) as distance";
 		$sql2 = "AND (ROUND(
-		DEGREES(ACOS(SIN(RADIANS(".$location['lat'].")) * SIN(RADIANS(jobs.latitude)) + COS(RADIANS(".$location['lat'].")) * COS(RADIANS(jobs.latitude)) * COS(RADIANS(".$location['lng']." -(jobs.longitude)))))*60*1.1515,2)) <= ".$radius;
+		DEGREES(ACOS(SIN(RADIANS(".$loc['lat'].")) * SIN(RADIANS(jobs.latitude)) + COS(RADIANS(".$loc['lat'].")) * COS(RADIANS(jobs.latitude)) * COS(RADIANS(".$loc['lng']." -(jobs.longitude)))))*60*1.1515,2)) <= ".$radius;
 	}
 }
+$q = '';
 if (isset($_GET['q'])) {
   $q = $_GET['q'];
   $extArray[] = "jobs_keywords.keyword LIKE '%$q%'";
@@ -133,10 +139,13 @@ do {
 		'maxRows_rsView' => $maxRows_rsView, 
 		'pageNum_rsView' => $pageNum_rsView, 
 		'first' => ($pageNum_rsView > 0) ? 0 : null,
-		
 		'previous' => ($pageNum_rsView > 0) ? max(0, $pageNum_rsView - 1) : null, 
 		'next' => ($pageNum_rsView < $totalPages_rsView) ? min($totalPages_rsView, $pageNum_rsView + 1) : null, 
-		'last' => ($pageNum_rsView < $totalPages_rsView) ? $totalPages_rsView : null
+		'last' => ($pageNum_rsView < $totalPages_rsView) ? $totalPages_rsView : null,
+		'location' => $location,
+		'q' => $q,
+		'radius' => $radius,
+		'loc' => $loc
 		);
 } catch (Exception $e) {
 	$msg = $e->getMessage();
