@@ -39,4 +39,8 @@ class EmployerController extends MainController
         }
         return $this->render('JobsWebBundle:Employer:previewJob.html.php', array('jobId' => $jobId));
     }
+    public function searchAction()
+    {
+        return $this->render('JobsWebBundle:Employer:search.html.php', array());
+    }
 }
