@@ -49,9 +49,9 @@ jobs_web_employer_previewjobs:
     pattern:  /employer/preview
     defaults: { _controller: JobsWebBundle:Employer:preview }
     
-#jobs_web_employer_searchjobs:
-#pattern:  /employer/search
-#defaults: { _controller: JobsWebBundle:Employer:search }
+jobs_web_employer_searchjobs:
+    pattern:  /employer/search
+    defaults: { _controller: JobsWebBundle:Employer:search }
 
 
 jobs_web_jobseeker_preview_template:
