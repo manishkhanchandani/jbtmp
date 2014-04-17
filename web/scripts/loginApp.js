@@ -57,7 +57,7 @@ app.controller('LoginController', function($scope, $http) {
 app.controller('jobController', function($scope, $http) {
     $http({
             method: 'GET',
-            url: globals.path + 'api/home'
+            url: globals.path + 'custom/home'
             //headers: {'Content-Type': 'application/x-www-form-urlencoded'}  // set the headers so angular passing info as form data (not request payload)
         }).success(function(response) {
             console.log(response);

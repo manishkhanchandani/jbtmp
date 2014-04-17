@@ -11,12 +11,12 @@
                 <div class="col-xs-6 col-sn-6 col-md-6">
                     <label>Keywords:</label>
                     <input type="text" ng-model="findJob.keyword" />
-                    <a href="" class="">Advanced Search</a>
+                    <a href="employer/search" class="">Advanced Search</a>
                 </div>
                 <div class="col-xs-6 col-sn-6 col-md-6">
                     <label>Location:</label>
                     <input type="text" ng-model="findJob.location" /><br>
-                    <button ng-click="findJob()" class="findJob pull-right">Find Job</button>
+                    <a href="employer/search?q={{findJob.keyword}}&location={{findJob.location}}" class="findJob pull-right">Find Job</a>
                 </div>
             </div>
             <div class="recentJobs">
