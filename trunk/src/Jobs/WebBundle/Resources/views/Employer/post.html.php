@@ -3,14 +3,15 @@
 
 <script src="<?php echo $view['assets']->getUrl('scripts/postJob.js') ?>"></script>
 <div id="curtain" style="display:none;"></div>
-<div ng-app="postJob" ng-controller="PostJobController">
+<div ng-app="postJob" ng-controller="PostJobController" class="postJob">
     <div id="postJob"  ng-show="showpreviewbtns == 'no'">
         <h2>Post Job</h2>
+        <h5><b>Create your job posting</b></h5>
+        <div>* Required Fields</div><hr>
         <div>
             <form novalidate class="form-horizontal" ng-submit="submitJob()" name="jobForm">
-                <h4>Create your job posting</h4><hr>
                 <div class="form-group">
-                    <label class="col-md-2">Job title</label>
+                    <label class="col-md-2">Job title <span class="req">*</span></label>
                     <div class="col-md-4">
                         <input class="form-control" type="text" ng-model="job.title"
                                name="title" required>
@@ -18,7 +19,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-2">Job Number</label>
+                    <label class="col-md-2">Job Number <span class="req">*</span></label>
                     <div class="col-md-4">
                         <input class="form-control" type="text" 
                                ng-model="job.number" name="number" required>
@@ -26,7 +27,7 @@
                     </div>
                 </div><hr>
                 <div class="form-group">
-                    <label class="col-md-2">Job Position Type</label>
+                    <label class="col-md-2">Job Position Type <span class="req">*</span></label>
                     <div class="col-md-4">
                         <select class="form-control job-position" multiple="multiple"
                                 ng-model="job.position" name="position"
@@ -35,7 +36,7 @@
                 </div><hr>
                 <h5>Enter email id to receive Applications</h5>
                 <div class="form-group">
-                    <label class="col-md-2">Email</label>
+                    <label class="col-md-2">Email <span class="req">*</span></label>
                     <div class="col-md-4">
                         <input class="form-control" type="email" 
                                ng-model="job.email" name="email" ng-required="job.apply !== 'url'">
@@ -47,19 +48,12 @@
                         <input class="form-control" type="email" 
                                ng-model="job.CCemail" name="CCemail">
                     </div>
-                </div>
-                <div class="form-group" ng-show="job.apply === 'url'">
-                    <label class="col-md-2">URL</label>
-                    <div class="col-md-4">
-                        <input class="form-control" type="text" 
-                               ng-model="job.url" name="url"  ng-required="job.apply === 'url'">>
-                    </div>
                 </div><hr>
 
                 <h5>Job Location</h5><hr>
                 <div ng-controller="countriesController">
                     <div class="form-group">
-                        <label class="col-md-2">Job Country</label>
+                        <label class="col-md-2">Job Country <span class="req">*</span></label>
                         <div class="col-md-4">
                             <select ng-model="job.country" name="country"
                                     ng-change="updateState(job.country)" required>
@@ -70,7 +64,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2">Job State</label>
+                        <label class="col-md-2">Job State <span class="req">*</span></label>
                         <div class="col-md-4">
                             <select ng-if="states == ''" ng-model="job.state" name="state"
                                     ng-change="updateCity(job.state)" required>
@@ -89,7 +83,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-2">Job City</label>
+                        <label class="col-md-2">Job City <span class="req">*</span></label>
                         <div class="col-md-4">
                             <select ng-if="cities == ''" ng-model="job.city" name="city" required>
                                 <option value="">Select City</option>
@@ -106,20 +100,20 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2">Job Area Code</label>
+                    <label class="col-md-2">Job Area Code <span class="req">*</span></label>
                     <div class="col-md-4">
                         <input class="form-control" type="text" 
                                ng-model="job.areaCode" name="areaCode" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2">Job Postal Code</label>
+                    <label class="col-md-2">Job Postal Code <span class="req">*</span></label>
                     <div class="col-md-4">
                         <input class="form-control" type="text" 
                                ng-model="job.postalCode" name="postalCode" required>
                     </div>
                 </div>
-                <h5>Required Skills: Enter keywords for required position</h5>
+                <h5>Required Skills: Enter keywords for required position <span class="req">*</span></h5>
                 <div class="form-group">            
                     <div class="col-md-4">
                         <input class="form-control" type="text"
@@ -128,7 +122,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-2">Job Description</label>
+                    <label class="col-md-2">Job Description <span class="req">*</span></label>
                     <div class="col-md-7">
                         <textarea class="form-control" type="text" cols="10" rows="10"
                                   ng-model="job.description" name="description" required></textarea>

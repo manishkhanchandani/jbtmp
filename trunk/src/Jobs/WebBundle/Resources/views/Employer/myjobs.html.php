@@ -17,12 +17,12 @@
         <div>
             <a href="javascript:void(0);" ng-click="activeJobs()">Repost</a><br>
             <a href="javascript:void(0);" ng-click="inActiveJobs()">Inactivate</a><br>
-            <a href="javascript:void(0);" ng-click="deleteJobs()">Delete</a><br>
+            <a href="javascript:void(0);" ng-really-message="Are you sure?" ng-really-click="deleteJobs()">Delete</a><br>
         </div>
     </div>
 
     <div class="rightCol col-md-10">
-        <form name="job-form" id="job-form">
+        <form name="job-form" id="job-form" ng-if="myJob">
             <table class="jobsContainer">
                 <thead>
                     <tr>
@@ -55,5 +55,6 @@
                 </tbody>
             </table>
         </form>
+        <div>No Jobs to display</div>
     </div>
 </div>

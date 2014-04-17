@@ -14,15 +14,28 @@ getJobsModule.factory('myJobsService', function($http) {
     };
     return jobInfo;
 });
+getJobsModule.directive('ngReallyClick', [function() {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                element.bind('click', function() {
+                    var message = attrs.ngReallyMessage;
+                    if (message && confirm(message)) {
+                        scope.$apply(attrs.ngReallyClick);
+                    }
+                });
+            }
+        }
+    }]);
 
 getJobsModule.controller('getJobsController', function($scope, $http, $filter, $window, myJobsService) {
 
-    $scope.jobs = [ {name : "Active jobs", value:"1"},
-                    {name:"Inactive jobs", value:"0"} ];
+    $scope.jobs = [{name: "Active jobs", value: "1"},
+        {name: "Inactive jobs", value: "0"}];
     $scope.myJob = {};
     $scope.jobStatusInactive = '1';
     $scope.jobStatusActive = '1';
-    
+
     myJobsService.getjobDetails().success(function(response) {
         $scope.myJob = response.data;
     });
@@ -45,55 +58,56 @@ getJobsModule.controller('getJobsController', function($scope, $http, $filter, $
 
 
 
-    $scope.deleteJobs = function(){
+    $scope.deleteJobs = function() {
+        
         var deleteJob = $http({
             method: 'POST',
-            data: "status="+$scope.selectedJobs,
+            data: "status=" + $scope.selectedJobs,
             url: globals.path + 'api/employer/delete',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
 
-        deleteJob.success(function(response){
-           $scope.jobDelete = {};
-           angular.forEach($scope.selectedJobs, function(value, key) {
-               $scope.jobDelete['job_'+value] = '1';
+        deleteJob.success(function(response) {
+            $scope.jobDelete = {};
+            angular.forEach($scope.selectedJobs, function(value, key) {
+                $scope.jobDelete['job_' + value] = '1';
             });
         });
     };
 
-    $scope.activeJobs = function(){
+    $scope.activeJobs = function() {
         var activeJob = $http({
             method: 'POST',
-            data: "status="+$scope.selectedJobs,
+            data: "status=" + $scope.selectedJobs,
             url: globals.path + 'api/employer/active',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
-        
-        activeJob.success(function(response){
+
+        activeJob.success(function(response) {
             $window.location.reload();
             /*$scope.jobStatusInactive = '0';
-            $scope.jobStatus = {};
-            angular.forEach($scope.selectedJobs, function(value, key) {
-               $scope.jobStatus['job_'+value] = 'Active';
-            });*/
+             $scope.jobStatus = {};
+             angular.forEach($scope.selectedJobs, function(value, key) {
+             $scope.jobStatus['job_'+value] = 'Active';
+             });*/
         });
     };
 
-    $scope.inActiveJobs = function(){
+    $scope.inActiveJobs = function() {
         var inActiveJob = $http({
             method: 'POST',
-            data: "status="+$scope.selectedJobs,
+            data: "status=" + $scope.selectedJobs,
             url: globals.path + 'api/employer/inactive',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         });
 
-        inActiveJob.success(function(response){
+        inActiveJob.success(function(response) {
             $window.location.reload();
             /*$scope.jobStatusActive = '0';
-            $scope.jobStatus = {};
-            angular.forEach($scope.selectedJobs, function(value, key) {
-               $scope.jobStatus['job_'+value] = 'Inactive';
-            });*/
+             $scope.jobStatus = {};
+             angular.forEach($scope.selectedJobs, function(value, key) {
+             $scope.jobStatus['job_'+value] = 'Inactive';
+             });*/
         });
     };
 });
