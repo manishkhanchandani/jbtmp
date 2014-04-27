@@ -31,6 +31,8 @@
         </form>
     </div>
     <div ng-if="hasJobData">
+        <br><hr>
+        <h3>Jobs Found</h3>
         <div class="row" ng-repeat="job in jobList">
             <a href="preview?jobId={{job.job_id}}" target="_blank"><h5>{{job.title}}</h5></a>
             <div>{{job.description}}</div>
