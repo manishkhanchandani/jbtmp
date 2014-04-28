@@ -74,14 +74,25 @@ if (isset($_GET['location'])) {
 		$distance = '';
 		$sql = ", (ROUND(
 		DEGREES(ACOS(SIN(RADIANS(".$loc['lat'].")) * SIN(RADIANS(jobs.latitude)) + COS(RADIANS(".$loc['lat'].")) * COS(RADIANS(jobs.latitude)) * COS(RADIANS(".$loc['lng']." -(jobs.longitude)))))*60*1.1515,2)) as distance";
-		$sql2 = "AND (ROUND(
-		DEGREES(ACOS(SIN(RADIANS(".$loc['lat'].")) * SIN(RADIANS(jobs.latitude)) + COS(RADIANS(".$loc['lat'].")) * COS(RADIANS(jobs.latitude)) * COS(RADIANS(".$loc['lng']." -(jobs.longitude)))))*60*1.1515,2)) <= ".$radius;
+		$sql2 = "AND ((ROUND(
+		DEGREES(ACOS(SIN(RADIANS(".$loc['lat'].")) * SIN(RADIANS(jobs.latitude)) + COS(RADIANS(".$loc['lat'].")) * COS(RADIANS(jobs.latitude)) * COS(RADIANS(".$loc['lng']." -(jobs.longitude)))))*60*1.1515,2)) <= ".$radius.")";
 	}
 }
-$q = '';
+//q=php&location=&areaCode=&jobTitle=&jobType=&jobPosted=2
+/*$q = '';
 if (isset($_GET['q'])) {
   $q = $_GET['q'];
   $extArray[] = "jobs_keywords.keyword LIKE '%$q%'";
+}*/
+if (!empty($_GET['areaCode'])) {
+  $extArray[] = "jobs.area_code = ".GetSQLValueString($_GET['areaCode'], 'text');
+}
+if (!empty($_GET['jobType'])) {
+  $extArray[] = "jobs_position_type.position_type = ".GetSQLValueString($_GET['jobType'], 'int');
+}
+if (!empty($_GET['jobPosted'])) {
+	$time = time() - (60 * 60 * 24 * $_GET['jobPosted']);
+  $extArray[] = "jobs.job_modified_dt > ".GetSQLValueString($time, 'int');
 }
 
 if (!empty($extArray)) {
@@ -93,7 +104,7 @@ if (isset($_GET['q'])) {
   $colkw_rsView = $_GET['q'];
 }
 mysql_select_db($database_conn, $conn);
-$query_rsView = sprintf("SELECT distinct jobs.job_id, jobs.*, geo_cities.cty_id as city_id, geo_cities.name as city, geo_countries.con_id as country_id, geo_countries.name as country, geo_states.sta_id as state_id, geo_states.name as state $sql FROM jobs LEFT JOIN jobs_keywords ON jobs.job_id = jobs_keywords.job_id LEFT JOIN geo_cities ON geo_cities.cty_id = jobs.city LEFT JOIN geo_countries ON geo_countries.con_id = jobs.country LEFT JOIN geo_states ON geo_states.sta_id = jobs.state WHERE 1 $sql2 AND jobs_keywords.keyword LIKE %s", GetSQLValueString("%" . $colkw_rsView . "%", "text"));
+$query_rsView = sprintf("SELECT distinct jobs.job_id, jobs.*, geo_cities.cty_id as city_id, geo_cities.name as city, geo_countries.con_id as country_id, geo_countries.name as country, geo_states.sta_id as state_id, geo_states.name as state $sql FROM jobs LEFT JOIN jobs_keywords ON jobs.job_id = jobs_keywords.job_id LEFT JOIN jobs_position_type ON jobs.job_id = jobs_position_type.job_id LEFT JOIN geo_cities ON geo_cities.cty_id = jobs.city LEFT JOIN geo_countries ON geo_countries.con_id = jobs.country LEFT JOIN geo_states ON geo_states.sta_id = jobs.state WHERE 1 $sql2 AND jobs_keywords.keyword LIKE %s $extension", GetSQLValueString("%" . $colkw_rsView . "%", "text"));
 $query_limit_rsView = sprintf("%s LIMIT %d, %d", $query_rsView, $startRow_rsView, $maxRows_rsView);
 $rsView = mysql_query($query_limit_rsView, $conn) or die(mysql_error());
 $row_rsView = mysql_fetch_assoc($rsView);
@@ -144,6 +155,8 @@ do {
 		'last' => ($pageNum_rsView < $totalPages_rsView) ? $totalPages_rsView : null,
 		'location' => $location,
 		'q' => $q,
+		'query' => $_SERVER['QUERY_STRING'],
+		'qs' => $query_rsView,
 		'radius' => $radius,
 		'loc' => $loc
 		);
